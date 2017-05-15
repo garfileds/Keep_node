@@ -1,0 +1,27 @@
+{
+  "name": "keep",
+  "version": "1.0.0",
+  "description": "a web app generates review plan",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webapp",
+    "pwa",
+    "vue2"
+  ],
+  "author": "adoug",
+  "license": "MIT",
+  "devDependencies": {
+    "fis-parser-babel-6.x": "^6.24.1",
+    "fis3-deploy-local-deliver": "^1.0.0",
+    "fis3-hook-commonjs": "^0.1.22",
+    "fis3-hook-node_modules": "^2.2.3",
+    "fis3-packager-deps-pack": "^0.1.2",
+    "fis3-parser-vue-component": "^5.2.0",
+    "fis3-postpackager-loader": "^1.5.2"
+  },
+  "dependencies": {
+    "vue": "^2.3.3"
+  }
+}
