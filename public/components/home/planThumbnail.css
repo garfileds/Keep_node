@@ -1,0 +1,51 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.plan {
+  display: flex;
+  align-items: center;
+
+  position: relative;
+
+  color: #ffffff;
+}
+
+.plan__content {
+  width: 80%;
+  padding: .5em;
+  text-align: left;
+}
+
+.plan__content__name, .plan__content__next {
+  padding: .5em;
+}
+
+.plan__badge {
+  width: 20%;
+  padding: .5em;
+}
+
+.plan__progress {
+  position: absolute;
+  top: 0;
+
+  height: 2px;
+}

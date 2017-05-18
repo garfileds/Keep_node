@@ -11,13 +11,34 @@ define('public/components/App.vue', function(require, exports, module) {
   //
   //
   //
-  //
+  
+  var apiGetPlans = '/api/plans';
   
   module.exports = {
     data: function data() {
       return {
-        message: 'Hi, I\'m vue.'
+        plans: [],
+        plansDone: [],
+        plansIng: []
       };
+    },
+  
+    created: function created() {
+      var self = this;
+  
+      this.$http.get(apiGetPlans, {
+        responseType: 'json'
+      }).then(function (response) {
+        self.plans = response.body;
+  
+        self.plans.forEach(function (plan) {
+          if (plan.statu === 'done') {
+            self.plansDone.push(plan);
+          } else {
+            self.plansIng.push(plan);
+          }
+        });
+      });
     }
   };
   var __vue__options__;
@@ -26,7 +47,7 @@ define('public/components/App.vue', function(require, exports, module) {
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('h2',[_vm._v(_vm._s(_vm.message))])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('router-view',{attrs:{"plans":_vm.plans,"plansDone":_vm.plansDone,"plansIng":_vm.plansIng}})],1)}
   __vue__options__.staticRenderFns =[]
   
 

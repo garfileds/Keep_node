@@ -1,0 +1,59 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.content {
+  width: 100%;
+}
+
+.plans-switch {
+  text-align: center;
+  margin: .5em 0;
+}
+
+.plans-switch__content {
+  display: inline-block;
+  font-size: .625em;
+
+  padding: .5em;
+  background: #76FF7B;
+  color: #ffffff;
+}
+
+.add-plan-btn {
+  position: fixed;
+  bottom: 2em;
+  left: 0;
+  right: 0;
+
+  width: 72px;
+  margin-left: auto;
+  margin-right: auto;
+}
