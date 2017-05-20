@@ -14,11 +14,11 @@ Vue.config.productionTip = false;
 
 var App = require('public/components/App.vue');
 var home = require('public/components/home/home.vue');
+var planAdd = require('public/components/plan/planAdd.vue');
 
-var routes = [{ path: '/', component: home } /*,
-                                             { path: '/setting', component: Setting },
-                                             { path: '/cup', component: Cup },
-                                             { path: '/plan', component: Plan }*/
+var routes = [{ path: '/', component: home }, { path: '/plan/add', component: planAdd } /*,
+                                                                                        { path: '/setting', component: Setting },
+                                                                                        { path: '/cup', component: Cup }*/
 ];
 
 var router = new VueRouter({

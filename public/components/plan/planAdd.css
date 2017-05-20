@@ -1,0 +1,40 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.header {
+  overflow: hidden;
+}
+
+.header__side {
+  width: 15%;
+  padding: 1em;
+}
+
+.content {
+  width: 100vw;
+  height: 100vh;
+
+  color: #ffffff;
+
+  background: url(/images/planAdd_bg.jpg)
+}

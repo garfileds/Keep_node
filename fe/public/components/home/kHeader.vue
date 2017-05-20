@@ -10,7 +10,7 @@
   </header>
 </template>
 
-<style>
+<style scoped>
   .header {
     display: flex;
     flex-wrap: nowrap;

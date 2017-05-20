@@ -59,10 +59,6 @@ define('public/components/home/home.vue', function(require, exports, module) {
   //
   //
   //
-  //
-  //
-  //
-  //
   
   var kHeader = require('public/components/home/kHeader.vue');
   var planThumbnail = require('public/components/home/planThumbnail.vue');

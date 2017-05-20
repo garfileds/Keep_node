@@ -12,12 +12,13 @@ Vue.config.productionTip = false
 
 const App = require('../components/App')
 const home = require('../components/home/home')
+const planAdd = require('../components/plan/planAdd')
 
 const routes = [
-  { path: '/', component: home }/*,
+  { path: '/', component: home },
+  { path: '/plan/add', component: planAdd }/*,
   { path: '/setting', component: Setting },
-  { path: '/cup', component: Cup },
-  { path: '/plan', component: Plan }*/
+  { path: '/cup', component: Cup }*/
 ]
 
 const router = new VueRouter({

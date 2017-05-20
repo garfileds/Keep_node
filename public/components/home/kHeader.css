@@ -11,7 +11,7 @@
 
 
 
-.header {
+.header[_v-658cee7a] {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -22,11 +22,11 @@
   margin-bottom: 1em;
 }
 
-.header__side {
+.header__side[_v-658cee7a] {
   width: 10%;
   padding: .5em;
 }
-.header__center {
+.header__center[_v-658cee7a] {
   width: 80%;
   text-align: center;
 

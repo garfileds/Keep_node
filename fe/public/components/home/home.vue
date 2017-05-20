@@ -29,10 +29,6 @@
 </template>
 
 <style>
-  .content {
-    width: 100%;
-  }
-
   .plans-switch {
     text-align: center;
     margin: .5em 0;
