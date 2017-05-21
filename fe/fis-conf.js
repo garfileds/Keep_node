@@ -87,19 +87,19 @@ fis.match('/public/js/mod.js', {
 fis.match('/public/(**)', {
   url: '/$1',
   deploy: fis.plugin('local-deliver', {
-    to: 'D:/freetime/Keep_node/'
+    to: 'D:/JavaScript/Keep_node/'
   })
 })
 
 fis.match('/views/(**)', {
   deploy: fis.plugin('local-deliver', {
-    to: 'D:/freetime/Keep_node/'
+    to: 'D:/JavaScript/Keep_node/'
   })
 })
 
 fis.match('node_modules/**', {
   deploy: fis.plugin('local-deliver', {
-    to: 'D:/freetime/Keep_node/public'
+    to: 'D:/JavaScript/Keep_node/public'
   })
 })
 

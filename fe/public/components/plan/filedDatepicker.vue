@@ -3,12 +3,15 @@
     <div class="filed__name">时间</div>
     <div class="filed__content">
       <el-date-picker class="el-date-editor--keep"
+        v-show="editorVisible"
+
         v-model="val"
         type="date"
         size="large"
-        editabble="false"
-        placeholder="选择日期"
-        :picker-options="pickerOptions">
+        :editable="false"
+        placeholder=""
+        :picker-options="pickerOptions"
+        @changeVisible="handlePickerVisible">
       </el-date-picker>
     </div>
   </section>
@@ -27,7 +30,9 @@
   import { DatePicker } from 'element-ui'
   Vue.component(DatePicker.name, DatePicker)
 
-  module.exports = {
+  import { formatDate } from '../../js/module/utils'
+
+  export default {
     name: 'filedDatepicker',
 
     data: function () {
@@ -39,10 +44,22 @@
             return time.getTime() < Date.now() - 8.64e7;
           }
         },
+
+        editorVisible: true
+      }
+    },
+
+    computed: {
+      today: function () {
+        return this.val.length > 0 ? this.val : formatDate(new Date())
       }
     },
 
     methods: {
+      handlePickerVisible(statu) {
+        this.$emit('changeVisible', statu)
+//        this.editorVisible = !statu
+      }
     }
   }
 </script>

@@ -46,7 +46,7 @@
 </style>
 
 <script>
-  module.exports = {
+  export default {
     name: 'filedInput',
 
     data: function() {

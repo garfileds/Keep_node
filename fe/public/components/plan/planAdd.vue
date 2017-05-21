@@ -9,19 +9,11 @@
       </span>
     </header>
 
-    <section
-     @click="checkDatePicker">
+    <section>
       <form id="addPlanForm">
         <filedInputText></filedInputText>
-        <filedDatepicker></filedDatepicker>
-
-        <div class="filed--other"
-         v-show="!nowDatePicker">
-          <p>haha</p>
-          <p>uiui</p>
-        </div>
-        <section class="filed"></section>
-        <section class="filed"></section>
+        <filedDatepicker @changeVisible="handleChangeVisible"></filedDatepicker>
+        <filedColor v-show="!datePickerVisible"></filedColor>
       </form>
     </section>
   </main>
@@ -48,28 +40,25 @@
 </style>
 
 <script>
-  const filedInputText = require('./filedInputText')
-  const filedDatepicker = require('./filedDatepicker')
-
-  import utils from '../../js/module/utils'
+  import filedInputText from './filedInputText'
+  import filedDatepicker from './filedDatepicker'
+  import filedColor from './filedColor'
 
   module.exports = {
     name: 'planAdd',
 
     data: function () {
       return {
-        nowDatePicker: false
+        datePickerVisible: false
       }
     },
 
     methods: {
-      checkDatePicker: function () {
-        const pannelEl = document.querySelector('.el-picker-panel.el-date-picker')
-
-        this.nowDatePicker = pannelEl && pannelEl.style.display !== 'none'
+      handleChangeVisible(statu) {
+        this.datePickerVisible = statu
       }
     },
 
-    components: { filedInputText, filedDatepicker }
+    components: { filedInputText, filedDatepicker, filedColor }
   }
 </script>

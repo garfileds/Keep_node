@@ -2,6 +2,9 @@ define('public/components/plan/filedInputText.vue', function(require, exports, m
 
   'use strict';
   
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
   //
   //
   //
@@ -50,7 +53,7 @@ define('public/components/plan/filedInputText.vue', function(require, exports, m
   //
   //
   
-  module.exports = {
+  exports.default = {
     name: 'filedInput',
   
     data: function data() {
