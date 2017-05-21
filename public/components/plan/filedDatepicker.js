@@ -47,8 +47,10 @@ define('public/components/plan/filedDatepicker.vue', function(require, exports, 
     name: 'filedDatepicker',
   
     data: function data() {
+      var defaultDay = (0, _utils.formatDate)(new Date());
+  
       return {
-        val: '',
+        val: defaultDay,
   
         pickerOptions: {
           disabledDate: function disabledDate(time) {
@@ -58,6 +60,12 @@ define('public/components/plan/filedDatepicker.vue', function(require, exports, 
   
         editorVisible: true
       };
+    },
+  
+    watch: {
+      val: function val(selectedDay) {
+        this.$emit('changeDate', selectedDay);
+      }
     },
   
     computed: {

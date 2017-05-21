@@ -15,8 +15,20 @@ let isDescendant = function (parent, child) {
   return false
 }
 
-let formatDate = function (date) {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+/**
+ * @fn 格式化日期
+ * @param date|Date
+ * @param format|String eg: yy-mm-dd mm月dd日
+ * @returns {string}
+ */
+let formatDate = function (date, format) {
+  format = format || 'yy-mm-dd'
+
+  return format.replace(/(yy)|(mm)|(dd)/g, function (match, yy, mm, dd) {
+    if (yy) return date.getFullYear()
+    if (mm) return date.getMonth() + 1
+    if (dd) return date.getDate()
+  })
 }
 
 /**
@@ -43,10 +55,34 @@ let colorGenerator = function () {
   return result
 }
 
-export { isDescendant, formatDate, colorGenerator }
+/**
+ * 查找child的最近的指定的parent，如有则返回，否则返回false
+ * @param parentSelector|String eg: '.header' 'p'
+ * @param child|Node
+ * @returns {boolean}
+ */
+let getParentEl = function (parentSelector, child) {
+  let node = child.parentNode,
+      parents = document.querySelectorAll(parentSelector)
+
+  parents = Array.prototype.slice.call(parents, 0)
+
+  while (node !== null) {
+    if (parents.indexOf(node) > -1) {
+      return node
+    } else {
+      node = node.parentNode
+    }
+  }
+
+  return false
+}
+
+export { isDescendant, formatDate, colorGenerator, getParentEl }
 
 export default {
   isDescendant,
   formatDate,
-  colorGenerator
+  colorGenerator,
+  getParentEl
 }

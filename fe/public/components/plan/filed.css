@@ -46,3 +46,20 @@
 .el-date-editor--keep .el-input__icon+input.el-input__inner {
   padding-right: 10px;
 }
+
+/* modify smooth-picker */
+.smooth-picker {
+  background: rgba(98, 186, 206, 0.5)!important;
+}
+.schedule-group {
+  background: rgba(98, 186, 206, 0.5)!important;
+}
+.smooth-picker .smooth-handle-layer .smooth-top {
+  background: rgba(98, 186, 206, 0.5)!important;
+}
+.smooth-picker .smooth-handle-layer .smooth-middle {
+  background: rgba(98, 186, 206, 0.5)!important;
+}
+.smooth-picker .smooth-handle-layer .smooth-bottom {
+  background: rgba(98, 186, 206, 0.5)!important;
+}

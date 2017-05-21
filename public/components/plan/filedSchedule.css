@@ -1,0 +1,42 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import url(/node_modules/vue-smooth-picker/dist/css/style.css);
+
+.filed {
+  position: relative;
+}
+
+.schedule-group {
+  background: rgba(98, 186, 206, 0.8);
+}
+
+.filed__text {
+  background: rgba(98, 186, 206, 0.5);
+  width: 130px;
+  height: 100%;
+  line-height: 3em;
+}

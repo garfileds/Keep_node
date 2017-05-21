@@ -1,5 +1,6 @@
 <template>
-  <main class="content">
+  <main class="content"
+   @click="handleClickOutside">
     <header class="header">
       <span class="header__side floatL">
         <img class="response-img" src="../../images/svg/return.svg" alt="返回">
@@ -12,8 +13,19 @@
     <section>
       <form id="addPlanForm">
         <filedInputText></filedInputText>
-        <filedDatepicker @changeVisible="handleChangeVisible"></filedDatepicker>
+
+        <filedDatepicker
+         @changeVisible="handleChangeVisible"
+         @changeDate="handleChangeDate"></filedDatepicker>
+
         <filedColor v-show="!datePickerVisible"></filedColor>
+
+        <filedSchedule
+         ref="filedSchedule"
+         v-show="!datePickerVisible"
+         :selectedDay="selectedDay"
+         :scheduleVisible="scheduleVisible"
+         @changeScheduleVisible="handleChangeScheduleVisible"></filedSchedule>
       </form>
     </section>
   </main>
@@ -43,22 +55,46 @@
   import filedInputText from './filedInputText'
   import filedDatepicker from './filedDatepicker'
   import filedColor from './filedColor'
+  import filedSchedule from './filedSchedule'
+
+  import { formatDate, isDescendant } from '../../js/module/utils'
 
   module.exports = {
     name: 'planAdd',
 
     data: function () {
+      let defaultDay = formatDate(new Date())
+
       return {
-        datePickerVisible: false
+        datePickerVisible: false,
+        scheduleVisible: false,
+
+        selectedDay: defaultDay
       }
     },
 
     methods: {
-      handleChangeVisible(statu) {
-        this.datePickerVisible = statu
+      handleChangeVisible(status) {
+        this.datePickerVisible = status
+      },
+
+      handleChangeDate(selectedDay) {
+        this.selectedDay = selectedDay
+      },
+
+      handleClickOutside(event) {
+        let targetEl = event.target;
+
+        if (this.scheduleVisible && !isDescendant(this.$refs.filedSchedule.$el, targetEl)) {
+          this.scheduleVisible = false
+        }
+      },
+
+      handleChangeScheduleVisible(status) {
+        this.scheduleVisible = status
       }
     },
 
-    components: { filedInputText, filedDatepicker, filedColor }
+    components: { filedInputText, filedDatepicker, filedColor, filedSchedule }
   }
 </script>

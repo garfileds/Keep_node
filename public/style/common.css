@@ -24,6 +24,19 @@ body {
   float: right;
 }
 
+.icon {
+  margin-top: .5em;
+  padding-left: 2em;
+  font-size: .875em;
+}
+
+.icon--info {
+  background-image: url(/images/svg/info.svg);
+  background-position: .5em;
+  background-repeat: no-repeat;
+  background-size: 1em;
+}
+
 input:focus, textarea:focus {
   outline: none;
 }

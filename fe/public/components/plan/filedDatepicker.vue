@@ -36,8 +36,10 @@
     name: 'filedDatepicker',
 
     data: function () {
+      let defaultDay = formatDate(new Date())
+
       return {
-        val: '',
+        val: defaultDay,
 
         pickerOptions: {
           disabledDate(time) {
@@ -46,6 +48,12 @@
         },
 
         editorVisible: true
+      }
+    },
+
+    watch: {
+      val(selectedDay) {
+        this.$emit('changeDate', selectedDay)
       }
     },
 
