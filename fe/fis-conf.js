@@ -53,7 +53,11 @@ fis.match('/public/components/**.vue:js', {
   isMod: true,
   rExt: 'js',
   parser: [
-    fis.plugin('babel-6.x', {})
+    fis.plugin('babel-6.x', {
+      "plugins": [["import", {
+          "libraryName": "element-ui"
+        }]]
+    })
   ]
 })
 
@@ -83,19 +87,19 @@ fis.match('/public/js/mod.js', {
 fis.match('/public/(**)', {
   url: '/$1',
   deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/'
+    to: 'D:/freetime/Keep_node/'
   })
 })
 
 fis.match('/views/(**)', {
   deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/'
+    to: 'D:/freetime/Keep_node/'
   })
 })
 
 fis.match('node_modules/**', {
   deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/public'
+    to: 'D:/freetime/Keep_node/public'
   })
 })
 

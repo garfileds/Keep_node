@@ -9,10 +9,17 @@
       </span>
     </header>
 
-    <section>
+    <section
+     @click="checkDatePicker">
       <form id="addPlanForm">
         <filedInputText></filedInputText>
-        <section class="filed"></section>
+        <filedDatepicker></filedDatepicker>
+
+        <div class="filed--other"
+         v-show="!nowDatePicker">
+          <p>haha</p>
+          <p>uiui</p>
+        </div>
         <section class="filed"></section>
         <section class="filed"></section>
       </form>
@@ -42,8 +49,27 @@
 
 <script>
   const filedInputText = require('./filedInputText')
+  const filedDatepicker = require('./filedDatepicker')
+
+  import utils from '../../js/module/utils'
 
   module.exports = {
-    components: { filedInputText }
+    name: 'planAdd',
+
+    data: function () {
+      return {
+        nowDatePicker: false
+      }
+    },
+
+    methods: {
+      checkDatePicker: function () {
+        const pannelEl = document.querySelector('.el-picker-panel.el-date-picker')
+
+        this.nowDatePicker = pannelEl && pannelEl.style.display !== 'none'
+      }
+    },
+
+    components: { filedInputText, filedDatepicker }
   }
 </script>

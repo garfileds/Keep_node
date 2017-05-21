@@ -1,44 +1,22 @@
 <template>
   <section class="filed">
     <div class="filed__name">标题</div>
-    <div class="filed__content"
-     :style="styleObj">
+    <div class="filed__content filed__content--input"
+         :style="styleObj">
       <input type="text" class="filed__input" placeholder="请输入标题"
-       @focus="toggleFlex(true)"
-       @blur="toggleFlex(false)"
-       v-model="val">
+             @focus="toggleFlex(true)"
+             @blur="toggleFlex(false)"
+             v-model="val">
       <span v-show="clearBtnShow" class="filed__clear"
-       @click="clearInput"></span>
+            @click="clearInput"></span>
     </div>
   </section>
 </template>
 
 <style scoped>
-  .filed {
-    width: 100%;
-  }
+  @import url(./filed.css);
 
-  .filed__name {
-    display: inline-block;
-
-    width: 20%;
-    text-align: center;
-    padding: 1em;
-
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-
-  .filed__content {
-    display: inline-block;
-    position: relative;
-
-    min-width: 20%;
-    max-width: 78%;
-    width: 78%;
-    text-align: center;
-    height: 3em;
-    vertical-align: top;
-
+  .filed__content--input {
     transition: width .5s ease-in-out;
   }
 
@@ -69,6 +47,8 @@
 
 <script>
   module.exports = {
+    name: 'filedInput',
+
     data: function() {
       return {
         styleObj: {

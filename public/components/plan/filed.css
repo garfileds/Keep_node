@@ -1,0 +1,48 @@
+.filed {
+  width: 100%;
+  margin-bottom: .5em;
+}
+
+.filed__name {
+  display: inline-block;
+
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.filed__content {
+  display: inline-block;
+  position: relative;
+
+  min-width: 20%;
+  max-width: 78%;
+  width: 78%;
+  text-align: center;
+  height: 3em;
+  vertical-align: top;
+}
+
+/*modify el-date-editor--input*/
+.el-date-editor--keep {
+  font-size: 16px!important;
+  height: 3em;
+}
+
+/*not BEM...*/
+.el-date-editor--keep input.el-input__inner {
+  line-height: 1.2;
+  border: none;
+  border-radius: 0;
+  height: 100%;
+  text-align: center;
+  background-color: rgba(98, 186, 206, 0.8);
+  color: #ffffff;
+  width: 130px;
+}
+
+.el-date-editor--keep .el-input__icon+input.el-input__inner {
+  padding-right: 10px;
+}
