@@ -11,7 +11,7 @@
        :change="dataChange"
        v-show="scheduleVisible"></smooth-picker>
       <input type="hidden" name="days" v-model="days">
-      <input type="hidden" name="selected" v-model="selected">
+      <input type="hidden" name="marked" v-model="marked">
     </div>
     <schedule
      :days="days"
@@ -65,7 +65,7 @@
         }],
 
         days: 7,
-        selected: [1, 2, 4, 7],
+        marked: [1, 2, 4, 7],
         editable: false
       }
     },
@@ -88,17 +88,17 @@
         switch (itemIndex) {
           case 0:
             this.days = 7
-            this.selected = [1, 2, 4, 7]
+            this.marked = [1, 2, 4, 7]
             this.editable = false
             break
           case 1:
             this.days = 14
-            this.selected = [1, 2, 4, 6, 9, 12, 14]
+            this.marked = [1, 2, 4, 6, 9, 12, 14]
             this.editable = false
             break
           case 2:
             this.days = 21
-            this.selected = []
+            this.marked = []
             this.editable = true
             break;
         }
@@ -109,12 +109,12 @@
       },
 
       handleChangeDay(day) {
-        let index = this.selected.indexOf(parseInt(day))
+        let index = this.marked.indexOf(parseInt(day))
 
         if (index === -1) {
-          this.selected.push(day)
+          this.marked.push(day)
         } else {
-          this.selected.splice(index, 1)
+          this.marked.splice(index, 1)
         }
       }
     },

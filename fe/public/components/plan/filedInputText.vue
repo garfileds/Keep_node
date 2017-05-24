@@ -3,7 +3,7 @@
     <div class="filed__name">标题</div>
     <div class="filed__content filed__content--input"
          :style="styleObj">
-      <input type="text" class="filed__input" placeholder="请输入标题"
+      <input type="text" name="title" class="filed__input" placeholder="请输入标题"
              @focus="toggleFlex(true)"
              @blur="toggleFlex(false)"
              v-model="val">

@@ -6,7 +6,8 @@
         <img class="response-img" src="../../images/svg/return.svg" alt="返回">
       </span>
       <span class="header__side floatR">
-        <img class="response-img" src="../../images/svg/right.svg" alt="确认创建">
+        <img class="response-img" src="../../images/svg/right.svg" alt="确认创建"
+         @click="handleConfirm">
       </span>
     </header>
 
@@ -53,11 +54,13 @@
 
 <script>
   import filedInputText from './filedInputText'
-  import filedDatepicker from './filedDatepicker'
+  import filedDatePicker from './filedDatepicker'
   import filedColor from './filedColor'
   import filedSchedule from './filedSchedule'
 
-  import { formatDate, isDescendant } from '../../js/module/utils'
+  import { formatDate, isDescendant, form2 } from '../../js/module/utils'
+
+  const apiCreatePlan = '/api/plan'
 
   module.exports = {
     name: 'planAdd',
@@ -92,9 +95,59 @@
 
       handleChangeScheduleVisible(status) {
         this.scheduleVisible = status
+      },
+
+      handleConfirm() {
+        const self = this
+        const formValue = form2('#addPlanForm', 'object')
+
+        this.$http.post(apiCreatePlan, {
+          responseType: 'json',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: formValue
+        })
+        .then(response => {
+          let plan = self._mixinPlanForm(formValue)
+          plan.id = response.body.id
+
+          self.$emit('postPlan', plan)
+        })
+      },
+      
+      _mixinPlanForm(formValue) {
+        let plan = {
+          id: '',
+          title: '',
+          bg_image: '',
+          color: '',
+          progress_color: '#ffffff',
+          progress: {
+            start_day: '05/17/2017',
+            days: 7,
+            marked: [1, 2, 4, 7],
+            done: []
+          },
+          status: 'ing'
+        }
+
+        let keySearch = function (obj) {
+          for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              obj[key] instanceof Object ? keySearch(obj[key]) : obj[key] = formValue[key]
+            }
+          }
+        }
+
+        formValue.marked = formValue.marked.split(',').map(parseInt)
+
+        keySearch(plan)
+
+        return plan
       }
     },
 
-    components: { filedInputText, filedDatepicker, filedColor, filedSchedule }
+    components: { filedInputText, filedDatePicker, filedColor, filedSchedule }
   }
 </script>

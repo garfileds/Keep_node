@@ -13,6 +13,7 @@
         :picker-options="pickerOptions"
         @changeVisible="handlePickerVisible">
       </el-date-picker>
+      <input type="hidden" name="start_day" v-model="val">
     </div>
   </section>
 </template>
@@ -33,7 +34,7 @@
   import { formatDate } from '../../js/module/utils'
 
   export default {
-    name: 'filedDatepicker',
+    name: 'filedDatePicker',
 
     data: function () {
       let defaultDay = formatDate(new Date())

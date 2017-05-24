@@ -1,7 +1,8 @@
 <template>
   <section class="filed">
     <div class="filed__name">颜色</div>
-    <input type="hidden" v-model="selectedColor.backgroundColor">
+    <input type="hidden" name="color" v-model="selectedColor.backgroundColor">
+    <input type="hidden" name="progress_color" :value="progressColor">
     <div class="filed__content"
      :style="selectedColor"
      @click="togglePanel(true)"></div>
@@ -67,6 +68,10 @@
     computed: {
       colors: function () {
         return colorGenerator()
+      },
+
+      progressColor() {
+        return '#ffffff'
       }
     },
 

@@ -3,7 +3,8 @@
     <router-view
      :plans="plans"
      :plansDone="plansDone"
-     :plansIng="plansIng"></router-view>
+     :plansIng="plansIng"
+     @postPlan="handlePostPlan"></router-view>
   </div>
 </template>
 
@@ -13,9 +14,21 @@
   module.exports = {
     data: function () {
       return {
-        plans: [],
-        plansDone: [],
-        plansIng: []
+        plans: []
+      }
+    },
+
+    computed: {
+      plansDone() {
+        return this.plans.filter(function (plan) {
+          return plan.status === 'done'
+        })
+      },
+
+      plansIng() {
+        return this.plans.filter(function (plan) {
+          return plan.status === 'ing'
+        })
       }
     },
 
@@ -36,6 +49,12 @@
           }
         })
       })
+    },
+
+    methods: {
+      handlePostPlan(plan) {
+        this.plans.push(plan)
+      }
     }
   }
 </script>
