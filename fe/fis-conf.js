@@ -16,7 +16,7 @@ fis.hook('commonjs', {
     '.js', '.vue',
   ],
   paths: {
-    vue: '/node_modules/vue/dist/vue.common.js'
+    // vue: '/node_modules/vue/dist/vue.common.js'
   },
   umd2commonjs: true,
   ignoreDependencies: [

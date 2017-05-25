@@ -2,13 +2,17 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
 
   'use strict';
   
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  
   var _filedInputText = require('public/components/plan/filedInputText.vue');
   
   var _filedInputText2 = _interopRequireDefault(_filedInputText);
   
-  var _filedDatepicker = require('public/components/plan/filedDatepicker.vue');
+  var _filedDatePicker = require('public/components/plan/filedDatePicker.vue');
   
-  var _filedDatepicker2 = _interopRequireDefault(_filedDatepicker);
+  var _filedDatePicker2 = _interopRequireDefault(_filedDatePicker);
   
   var _filedColor = require('public/components/plan/filedColor.vue');
   
@@ -22,7 +26,63 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  module.exports = {
+  var apiCreatePlan = '/api/plan'; //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  
+  exports.default = {
     name: 'planAdd',
   
     data: function data() {
@@ -32,7 +92,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
         datePickerVisible: false,
         scheduleVisible: false,
   
-        selectedDay: defaultDay
+        startDay: defaultDay
       };
     },
   
@@ -40,8 +100,8 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
       handleChangeVisible: function handleChangeVisible(status) {
         this.datePickerVisible = status;
       },
-      handleChangeDate: function handleChangeDate(selectedDay) {
-        this.selectedDay = selectedDay;
+      handleChangeDate: function handleChangeDate(startDay) {
+        this.startDay = startDay;
       },
       handleClickOutside: function handleClickOutside(event) {
         var targetEl = event.target;
@@ -52,71 +112,73 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
       },
       handleChangeScheduleVisible: function handleChangeScheduleVisible(status) {
         this.scheduleVisible = status;
+      },
+      handleConfirm: function handleConfirm() {
+        var self = this;
+        var formValue = (0, _utils.form2)('#addPlanForm', 'object');
+  
+        this.$http.post(apiCreatePlan, {
+          responseType: 'json',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: formValue
+        }).then(function (response) {
+          var plan = self._mixinPlanForm(formValue);
+          plan.id = response.body.id;
+  
+          self.$emit('postPlan', plan);
+          router.push('/plan/:id');
+        });
+      },
+      navBack: function navBack() {
+        router.go(-1);
+      },
+      _mixinPlanForm: function _mixinPlanForm(formValue) {
+        var plan = {
+          id: '',
+          title: '',
+          bg_image: '',
+          color: '',
+          progress_color: '#ffffff',
+          progress: {
+            start_day: '05/17/2017',
+            days: 7,
+            marked: [1, 2, 4, 7],
+            done: []
+          },
+          status: 'ing'
+        };
+  
+        var key = void 0,
+            isOnlyObject = void 0;
+        var keySearch = function keySearch(obj) {
+          for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              isOnlyObject = Object.prototype.toString.call(obj[key]) === '[object Object]';
+              isOnlyObject ? keySearch(obj[key]) : obj[key] = formValue[key] || obj[key];
+            }
+          }
+        };
+  
+        formValue.marked = formValue.marked.split(',').map(parseInt);
+  
+        keySearch(plan);
+  
+        return plan;
       }
     },
   
-    components: { filedInputText: _filedInputText2.default, filedDatepicker: _filedDatepicker2.default, filedColor: _filedColor2.default, filedSchedule: _filedSchedule2.default }
-  }; //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+    components: { filedInputText: _filedInputText2.default, filedDatePicker: _filedDatePicker2.default, filedColor: _filedColor2.default, filedSchedule: _filedSchedule2.default }
+  };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
     __vue__options__ = exports.default;
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"content",on:{"click":_vm.handleClickOutside}},[_vm._m(0),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"addPlanForm"}},[_c('filedInputText'),_vm._v(" "),_c('filedDatepicker',{on:{"changeVisible":_vm.handleChangeVisible,"changeDate":_vm.handleChangeDate}}),_vm._v(" "),_c('filedColor',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}]}),_vm._v(" "),_c('filedSchedule',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}],ref:"filedSchedule",attrs:{"selectedDay":_vm.selectedDay,"scheduleVisible":_vm.scheduleVisible},on:{"changeScheduleVisible":_vm.handleChangeScheduleVisible}})],1)])])}
-  __vue__options__.staticRenderFns =[function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('header',{staticClass:"header"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认创建"}})])])}]
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"content",on:{"click":_vm.handleClickOutside}},[_c('header',{staticClass:"header"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认创建"},on:{"click":_vm.handleConfirm}})])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"addPlanForm"}},[_c('filedInputText'),_vm._v(" "),_c('filedDatePicker',{on:{"changeVisible":_vm.handleChangeVisible,"changeDate":_vm.handleChangeDate}}),_vm._v(" "),_c('filedColor',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}]}),_vm._v(" "),_c('filedSchedule',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}],ref:"filedSchedule",attrs:{"startDay":_vm.startDay,"scheduleVisible":_vm.scheduleVisible},on:{"changeScheduleVisible":_vm.handleChangeScheduleVisible}})],1)])])}
+  __vue__options__.staticRenderFns =[]
   
 
 });

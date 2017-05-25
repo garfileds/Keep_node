@@ -3,7 +3,8 @@
    @click="handleClickOutside">
     <header class="header">
       <span class="header__side floatL">
-        <img class="response-img" src="../../images/svg/return.svg" alt="返回">
+        <img class="response-img" src="../../images/svg/return.svg" alt="返回"
+         @click="navBack">
       </span>
       <span class="header__side floatR">
         <img class="response-img" src="../../images/svg/right.svg" alt="确认创建"
@@ -15,16 +16,16 @@
       <form id="addPlanForm">
         <filedInputText></filedInputText>
 
-        <filedDatepicker
+        <filedDatePicker
          @changeVisible="handleChangeVisible"
-         @changeDate="handleChangeDate"></filedDatepicker>
+         @changeDate="handleChangeDate"></filedDatePicker>
 
         <filedColor v-show="!datePickerVisible"></filedColor>
 
         <filedSchedule
          ref="filedSchedule"
          v-show="!datePickerVisible"
-         :selectedDay="selectedDay"
+         :startDay="startDay"
          :scheduleVisible="scheduleVisible"
          @changeScheduleVisible="handleChangeScheduleVisible"></filedSchedule>
       </form>
@@ -54,7 +55,7 @@
 
 <script>
   import filedInputText from './filedInputText'
-  import filedDatePicker from './filedDatepicker'
+  import filedDatePicker from './filedDatePicker'
   import filedColor from './filedColor'
   import filedSchedule from './filedSchedule'
 
@@ -62,7 +63,7 @@
 
   const apiCreatePlan = '/api/plan'
 
-  module.exports = {
+  export default {
     name: 'planAdd',
 
     data: function () {
@@ -72,7 +73,7 @@
         datePickerVisible: false,
         scheduleVisible: false,
 
-        selectedDay: defaultDay
+        startDay: defaultDay
       }
     },
 
@@ -81,8 +82,8 @@
         this.datePickerVisible = status
       },
 
-      handleChangeDate(selectedDay) {
-        this.selectedDay = selectedDay
+      handleChangeDate(startDay) {
+        this.startDay = startDay
       },
 
       handleClickOutside(event) {
@@ -113,7 +114,12 @@
           plan.id = response.body.id
 
           self.$emit('postPlan', plan)
+          router.push('/plan/:id')
         })
+      },
+
+      navBack() {
+        router.go(-1)
       },
       
       _mixinPlanForm(formValue) {
@@ -132,10 +138,12 @@
           status: 'ing'
         }
 
+        let key, isOnlyObject
         let keySearch = function (obj) {
-          for (let key in obj) {
+          for (key in obj) {
             if (obj.hasOwnProperty(key)) {
-              obj[key] instanceof Object ? keySearch(obj[key]) : obj[key] = formValue[key]
+              isOnlyObject = Object.prototype.toString.call(obj[key]) === '[object Object]'
+              isOnlyObject ? keySearch(obj[key]) : obj[key] = formValue[key] || obj[key]
             }
           }
         }

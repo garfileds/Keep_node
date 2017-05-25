@@ -9,7 +9,7 @@ define('public/components/plan/schedule.vue', function(require, exports, module)
   var _utils = require('public/js/module/utils');
   
   exports.default = {
-    props: ['startDay', 'days', 'selected', 'editable'],
+    props: ['startDay', 'days', 'marked', 'editable'],
   
     computed: {
       daysArr: function daysArr() {
@@ -103,7 +103,7 @@ define('public/components/plan/schedule.vue', function(require, exports, module)
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"schedule",on:{"click":_vm.handleSelectDay}},[_vm._l((_vm.daysArr),function(day,index){return _c('div',{staticClass:"schedule__item",class:{'schedule__item--unselected': _vm.selected.indexOf(day) === -1},attrs:{"data-day":day}},[_c('p',[_vm._v("Day "+_vm._s(day))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.datesArr[index]))])])}),_vm._v(" "),_c('p',{staticClass:"icon icon--info"},[_vm._v("计划创建后，无法修改。奔跑吧，少年。")])],2)}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"schedule",on:{"click":_vm.handleSelectDay}},[_vm._l((_vm.daysArr),function(day,index){return _c('div',{staticClass:"schedule__item",class:{'schedule__item--unselected': _vm.marked.indexOf(day) === -1},attrs:{"data-day":day}},[_c('p',[_vm._v("Day "+_vm._s(day))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.datesArr[index]))])])}),_vm._v(" "),_c('p',{staticClass:"icon icon--info"},[_vm._v("计划创建后，无法修改。奔跑吧，少年。")])],2)}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-efc5b060"
   

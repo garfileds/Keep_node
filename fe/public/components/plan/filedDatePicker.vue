@@ -28,6 +28,7 @@
 </style>
 
 <script>
+  import Vue from 'vue'
   import { DatePicker } from 'element-ui'
   Vue.component(DatePicker.name, DatePicker)
 

@@ -1,22 +1,23 @@
 /**
  * Created by adoug on 2017/5/15.
  */
-
-const Vue = require('vue')
-const VueRouter = require('vue-router')
-const VueResource = require('vue-resource')
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
-const App = require('../components/App')
-const home = require('../components/home/home')
-const planAdd = require('../components/plan/planAdd')
+import App from '../components/App'
+import home from '../components/home/home'
+import planAdd from '../components/plan/planAdd'
+import planDetail from '../components/plan/planDetail'
 
 const routes = [
   { path: '/', component: home },
-  { path: '/plan/add', component: planAdd }/*,
+  { path: '/planAdd', component: planAdd },
+  { path: '/planDetail/:id', component: planDetail }/*,
   { path: '/setting', component: Setting },
   { path: '/cup', component: Cup }*/
 ]

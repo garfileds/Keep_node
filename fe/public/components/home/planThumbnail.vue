@@ -6,7 +6,7 @@
 
     <div class="plan__content">
       <p class="plan__content__name">
-        {{plan.name}}
+        {{plan.title}}
       </p>
       <p class="plan__content__next">
         下一次：05/18/2017

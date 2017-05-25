@@ -5,87 +5,65 @@
 var express = require('express')
 var router = express.Router()
 
-var mock_all = [
-  {
-    id: "p001",
-    name: "背单词：A-Z",
-    bg_image: "",
-    color: "#A7ED84",
-    progress_color: "#ffffff",
-    progress: {
-      start_day: "05/17/2017",
-      days: 14,
-      marked: [1, 3, 5, 7, 9, 14],
-      done: [1]
-    },
-    statu: "ing"
-  }, {
-    id: "p002",
-    name: "线性代数第一章",
-    bg_image: "",
-    color: "#9EEFC5",
-    progress_color: "#ffffff",
-    progress: {
-      start_day: "05/17/2017",
-      days: 14,
-      marked: [1, 2, 5, 7, 10, 14],
-      done: [1, 2]
-    },
-    statu: "ing"
-  }, {
-    id: "p003",
-    name: "概率论第一章",
-    bg_image: "",
-    color: "#66CDAA",
-    progress_color: "#ffffff",
-    progress: {
-      start_day: "05/17/2017",
-      days: 7,
-      marked: [1, 2, 5, 7],
-      done: [1, 2, 5, 7]
-    },
-    statu: "done"
-  }
-]
+var mock_all = [{
+  "id": "p001",
+  "title": "背单词：A-Z",
+  "bg_image": "",
+  "color": "#A7ED84",
+  "progress_color": "#ffffff",
+  "progress": {
+    "start_day": "05/17/2017",
+    "days": 14,
+    "marked": [1, 3, 5, 7, 9, 14],
+    "done": []
+  },
+  "status": "ing",
 
-var mock_ing = [
-  {
-    id: "p001",
-    name: "背单词：A-Z",
-    bg_image: "",
-    detail: {
-      start_day: "05/17/2017",
-      days: 14,
-      marked: [1, 3, 5, 7, 9, 14],
-      done: [1]
-    },
-    statu: "ing"
-  }, {
-    id: "p002",
-    name: "线性代数第一章",
-    bg_image: "",
-    detail: {
-      start_day: "05/17/2017",
-      days: 14,
-      marked: [1, 2, 5, 7, 10, 14],
-      done: [1, 2]
-    },
-    statu: "ing"
+  "badge": {
+    "id": "b001",
+    "image_url": ""
   }
-]
+}, {
+  "id": "p002",
+  "title": "线性代数 第6讲",
+  "bg_image": "",
+  "color": "#9EEFC5",
+  "progress_color": "#ffffff",
+  "progress": {
+    "start_day": "05/26/2017",
+    "days": 7,
+    "marked": [1, 2, 4, 7],
+    "done": [1, 2]
+  },
+  "status": "ing",
 
-var mock_done = [{
-    id: "p003",
-    name: "概率论第一章",
-    bg_image: "",
-    detail: {
-      start_day: "05/17/2017",
-      days: 7,
-      marked: [1, 2, 5, 7],
-      done: [1, 2, 5, 7]
-    },
-    statu: "done"
-  }]
+  "badge": {
+    "id": "b001",
+    "image_url": ""
+  }
+}, {
+  "id": "p003",
+  "title": "概率论",
+  "bg_image": "",
+  "color": "#66DDAA",
+  "progress_color": "#ffffff",
+  "progress": {
+    "start_day": "05/20/2017",
+    "days": 21,
+    "marked": [1, 3, 5, 7, 9, 14],
+    "done": [1, 3, 5, 7, 9, 14]
+  },
+  "status": "done",
+
+  "badge": {
+    "id": "b001",
+    "image_url": ""
+  }
+}]
+
+var mock_ing = []
+
+var mock_done = []
 
 /* GET plans. */
 router.get('/', function(req, res) {

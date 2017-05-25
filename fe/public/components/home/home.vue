@@ -20,7 +20,7 @@
       </section>
 
       <section class="add-plan-btn">
-        <router-link to="/plan/add">
+        <router-link to="/planAdd">
           <img class="response-img" src="../../images/svg/addition_fill.svg" alt="添加计划">
         </router-link>
       </section>
@@ -59,7 +59,9 @@
   const kHeader = require('./kHeader')
   const planThumbnail = require('./planThumbnail')
 
-  module.exports = {
+  export default {
+    name: 'home',
+
     props: ['plans', 'plansDone', 'plansIng'],
 
     data: function() {

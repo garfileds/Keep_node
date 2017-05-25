@@ -4,7 +4,7 @@
     <div class="schedule__item"
      v-for="(day, index) in daysArr"
      :data-day="day"
-     :class="{'schedule__item--unselected': selected.indexOf(day) === -1}">
+     :class="{'schedule__item--unselected': marked.indexOf(day) === -1}">
       <p>Day&nbsp;{{day}}</p>
       <p>{{datesArr[index]}}</p>
     </div>
@@ -45,7 +45,7 @@
   import { formatDate, getParentEl } from '../../js/module/utils'
 
   export default {
-    props: ['startDay', 'days', 'selected', 'editable'],
+    props: ['startDay', 'days', 'marked', 'editable'],
 
     computed: {
       daysArr() {

@@ -4,6 +4,7 @@
      :plans="plans"
      :plansDone="plansDone"
      :plansIng="plansIng"
+     :planId="$route.params.id"
      @postPlan="handlePostPlan"></router-view>
   </div>
 </template>
@@ -11,7 +12,9 @@
 <script>
   const apiGetPlans = '/api/plans'
 
-  module.exports = {
+  export default {
+    name: 'App',
+
     data: function () {
       return {
         plans: []
@@ -40,14 +43,6 @@
       })
       .then(response => {
         self.plans = response.body
-
-        self.plans.forEach(plan => {
-          if (plan.statu === 'done') {
-            self.plansDone.push(plan)
-          } else {
-            self.plansIng.push(plan)
-          }
-        })
       })
     },
 

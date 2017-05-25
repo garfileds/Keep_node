@@ -84,7 +84,7 @@ let getParentEl = function (parentSelector, child) {
  * @param format|[String] eg: 'formData'/'object'
  * @returns {string}
  */
-function form2(form, format) {
+let form2 = function (form, format) {
   if (typeof form === 'string') {
     form = document.querySelector(form);
   }

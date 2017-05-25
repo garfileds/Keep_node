@@ -15,8 +15,8 @@
     </div>
     <schedule
      :days="days"
-     :startDay="selectedDay"
-     :selected="selected"
+     :startDay="startDay"
+     :marked="marked"
      :editable="editable"
      v-show="scheduleVisible"
      @changeDay="handleChangeDay"></schedule>
@@ -43,6 +43,7 @@
 </style>
 
 <script>
+  import Vue from 'vue'
   import SmoothPicker from 'vue-smooth-picker'
   Vue.use(SmoothPicker)
 
@@ -51,7 +52,7 @@
   export default {
     name: 'filedSchedule',
 
-    props: ['selectedDay', 'scheduleVisible'],
+    props: ['startDay', 'scheduleVisible'],
 
     data: function () {
       return {
