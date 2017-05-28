@@ -1,0 +1,57 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.schedule[_v-b55f7b2e] {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  position: absolute;
+  bottom: 8rem;
+}
+
+.schedule__progress[_v-b55f7b2e] {
+  position: absolute;
+  top: 0;
+  height: 2px;
+  background: rgba(69, 243, 14, 0.4);
+}
+
+.schedule__item[_v-b55f7b2e] {
+  width: calc(100% / 7);
+  padding: .5em 0;
+  text-align: center;
+  background: rgba(98, 186, 206, 0.4);
+
+  font-size: .875em;
+  border-right: 1px solid;
+}
+
+.schedule__item[_v-b55f7b2e]:nth-of-type(7n) {
+  border: none;
+}
+
+.schedule__item--unselected[_v-b55f7b2e] {
+  background: rgba(69, 69, 69, 0.4);
+}
+.schedule__item--overdue[_v-b55f7b2e] {
+  background: rgba(127, 134, 127, 0.8);
+}
+.schedule__item--done[_v-b55f7b2e] {
+  background: rgba(69, 243, 14, 0.4);
+}
+

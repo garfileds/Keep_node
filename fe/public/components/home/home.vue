@@ -56,8 +56,8 @@
 </style>
 
 <script>
-  const kHeader = require('./kHeader')
-  const planThumbnail = require('./planThumbnail')
+  import kHeader from './kHeader'
+  import planThumbnail from './planThumbnail'
 
   export default {
     name: 'home',
@@ -71,13 +71,13 @@
     },
 
     computed: {
-      plansSwitchMsg: function () {
+      plansSwitchMsg() {
         return this.plansDoneShow ? '隐藏已完成的计划' : "显示已完成的计划"
       }
     },
 
     methods: {
-      switcher: function () {
+      switcher() {
         this.plansDoneShow = !this.plansDoneShow
       }
     },

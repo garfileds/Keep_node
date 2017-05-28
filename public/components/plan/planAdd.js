@@ -125,10 +125,10 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
           body: formValue
         }).then(function (response) {
           var plan = self._mixinPlanForm(formValue);
-          plan.id = response.body.id;
+          plan.id = response.body.message.planId;
   
           self.$emit('postPlan', plan);
-          router.push('/plan/:id');
+          router.push('/');
         });
       },
       navBack: function navBack() {

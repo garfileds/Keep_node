@@ -1,8 +1,51 @@
 define('public/components/home/kHeader.vue', function(require, exports, module) {
 
-  "use strict";
+  'use strict';
   
-  module.exports = {};
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  
+  exports.default = {
+    name: 'kHeader'
+  };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
     __vue__options__ = exports.default;

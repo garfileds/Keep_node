@@ -4,7 +4,6 @@
      :plans="plans"
      :plansDone="plansDone"
      :plansIng="plansIng"
-     :planId="$route.params.id"
      @postPlan="handlePostPlan"></router-view>
   </div>
 </template>
@@ -49,6 +48,10 @@
     methods: {
       handlePostPlan(plan) {
         this.plans.push(plan)
+      },
+
+      _nextDay(plan) {
+
       }
     }
   }

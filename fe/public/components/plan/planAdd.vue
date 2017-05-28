@@ -111,10 +111,10 @@
         })
         .then(response => {
           let plan = self._mixinPlanForm(formValue)
-          plan.id = response.body.id
+          plan.id = response.body.message.planId
 
           self.$emit('postPlan', plan)
-          router.push('/plan/:id')
+          router.push(`/`)
         })
       },
 

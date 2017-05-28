@@ -5,66 +5,74 @@ define('public/components/home/home.vue', function(require, exports, module) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   
-  var kHeader = require('public/components/home/kHeader.vue');
-  var planThumbnail = require('public/components/home/planThumbnail.vue');
+  var _kHeader = require('public/components/home/kHeader.vue');
+  
+  var _kHeader2 = _interopRequireDefault(_kHeader);
+  
+  var _planThumbnail = require('public/components/home/planThumbnail.vue');
+  
+  var _planThumbnail2 = _interopRequireDefault(_planThumbnail);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   
   exports.default = {
     name: 'home',
@@ -89,7 +97,7 @@ define('public/components/home/home.vue', function(require, exports, module) {
       }
     },
   
-    components: { planThumbnail: planThumbnail, kHeader: kHeader }
+    components: { planThumbnail: _planThumbnail2.default, kHeader: _kHeader2.default }
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){

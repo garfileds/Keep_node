@@ -1,6 +1,7 @@
 <template>
   <div class="plan"
-   :style="colorStyle">
+   :style="colorStyle"
+   @click.stop="catPlan">
     <div class="plan__progress"
      :style="progressStyle"></div>
 
@@ -9,7 +10,7 @@
         {{plan.title}}
       </p>
       <p class="plan__content__next">
-        下一次：05/18/2017
+        下一次：{{nextDay}}
       </p>
     </div>
     <div class="plan__badge">
@@ -52,7 +53,11 @@
 </style>
 
 <script>
-  module.exports = {
+  import { formatDate } from '../../js/module/utils'
+
+  export default {
+    name: 'planThumbnail',
+
     props: ['plan'],
 
     data: function() {
@@ -64,12 +69,38 @@
     },
 
     computed: {
-      progressStyle: function() {
+      progressStyle() {
         const doneRatio = Math.ceil(this.plan.progress.done.length / this.plan.progress.marked.length * 100)
         return {
           'background-color': this.plan.progress_color,
           width: doneRatio + '%'
         }
+      },
+
+      nextDay() {
+        const baseDate = new Date(this.plan.progress.start_day),
+              today = new Date(formatDate(new Date())),
+              timeOfDay = 24 * 60 * 60 * 1000,
+              marked = this.plan.progress.marked
+
+        let i = 0, tempDate
+        while (i < marked.length) {
+          tempDate = new Date(this.plan.progress.start_day)
+          tempDate.setDate(baseDate.getDate() + marked[i] - 1)
+
+          if (today.getTime() - tempDate.getTime() <= timeOfDay && this.plan.progress.done.indexOf(marked[i]) === -1) {
+            break
+          }
+
+          i++
+        }
+       return formatDate(tempDate, 'mm/dd/yy')
+      }
+    },
+
+    methods: {
+      catPlan() {
+        router.push(`/planDetail/${this.plan.id}`)
       }
     }
   }

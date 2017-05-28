@@ -1,11 +1,17 @@
 body {
   font-size: 16px;
   line-height: 1.2;
+
+  color: #ffffff;
 }
 
 * {
   margin: 0;
   box-sizing: border-box;
+}
+
+h1 {
+  font-weight: 400;
 }
 
 .content {
@@ -14,6 +20,14 @@ body {
 
 .response-img {
   max-width: 100%;
+}
+
+.full-screen-img {
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  position: fixed;
+  top: 0;
 }
 
 .floatL {
@@ -28,10 +42,22 @@ body {
   margin-top: .5em;
   padding-left: 2em;
   font-size: .875em;
+  color: #ffffff;
+}
+
+.icon--large {
+  font-size: 1.25em;
 }
 
 .icon--info {
   background-image: url(/images/svg/info.svg);
+  background-position: .5em;
+  background-repeat: no-repeat;
+  background-size: 1em;
+}
+
+.icon--menu {
+  background-image: url(/images/svg/menu.svg);
   background-position: .5em;
   background-repeat: no-repeat;
   background-size: 1em;

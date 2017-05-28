@@ -15,7 +15,6 @@ define('public/components/App.vue', function(require, exports, module) {
   //
   //
   //
-  //
   
   var apiGetPlans = '/api/plans';
   
@@ -54,7 +53,8 @@ define('public/components/App.vue', function(require, exports, module) {
     methods: {
       handlePostPlan: function handlePostPlan(plan) {
         this.plans.push(plan);
-      }
+      },
+      _nextDay: function _nextDay(plan) {}
     }
   };
   var __vue__options__;
@@ -63,7 +63,7 @@ define('public/components/App.vue', function(require, exports, module) {
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('router-view',{attrs:{"plans":_vm.plans,"plansDone":_vm.plansDone,"plansIng":_vm.plansIng,"planId":_vm.$route.params.id},on:{"postPlan":_vm.handlePostPlan}})],1)}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('router-view',{attrs:{"plans":_vm.plans,"plansDone":_vm.plansDone,"plansIng":_vm.plansIng},on:{"postPlan":_vm.handlePostPlan}})],1)}
   __vue__options__.staticRenderFns =[]
   
 

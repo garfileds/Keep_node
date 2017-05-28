@@ -34,3 +34,9 @@
     font-weight: 400;
   }
 </style>
+
+<script>
+  export default {
+    name: 'kHeader'
+  }
+</script>

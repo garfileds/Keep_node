@@ -6,7 +6,10 @@ const express = require('express')
 const router = express.Router()
 
 const mock_new_plan = {
-  id: "p004"
+  code: 'ok',
+  message: {
+    planId: 'p004'
+  }
 }
 const mock_plan = {
   id: "p003",
@@ -35,6 +38,11 @@ router.route('/:pid')
   res.json(mock_plan)
 })
 .post(function(req, res) {
+  res.json(mock_update)
+})
+
+router.route('/:pid/done')
+.post(function (req, res) {
   res.json(mock_update)
 })
 
