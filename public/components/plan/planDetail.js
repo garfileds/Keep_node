@@ -56,6 +56,56 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
   //
   //
   //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   
   var apiUpdateDone = '/api/plan/{/id}/done';
   
@@ -65,7 +115,9 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
     props: ['plans'],
   
     data: function data() {
-      return {};
+      return {
+        editAreaVisible: false
+      };
     },
   
     computed: {
@@ -118,6 +170,15 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
           });
         }
       },
+      toggleEditArea: function toggleEditArea(event) {
+        var target = event.target;
+        //editArea show
+        if (!this.editAreaVisible && !(0, _utils.withinParent)('#scheduleWrap', target)) {
+          this.editAreaVisible = true;
+        } else if (this.editAreaVisible && target.className.indexOf('button') === -1) {
+          this.editAreaVisible = false;
+        }
+      },
       navBack: function navBack() {
         router.go(-1);
       }
@@ -131,8 +192,8 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',[_c('img',{staticClass:"full-screen-img",attrs:{"src":"/images/planAdd_bg.jpg","alt":"背景图片:在海边"}}),_vm._v(" "),_c('nav',{staticClass:"nav"},[_c('p',{staticClass:"icon icon--menu icon--large",on:{"click":_vm.navBack}},[_vm._v("Up!Up!")])]),_vm._v(" "),_c('article',[_c('header',{staticClass:"header"},[_c('h1',{staticClass:"header__title"},[_vm._v(_vm._s(_vm.plan.title))]),_vm._v(" "),_c('p',[_vm._v("Next: "+_vm._s(_vm.nextDay))])]),_vm._v(" "),_c('main',[_c('schedule',{attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":true},on:{"changeDay":_vm.handleChangeDay}})],1)])])}
-  __vue__options__.staticRenderFns =[]
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{on:{"click":_vm.toggleEditArea}},[_c('img',{staticClass:"full-screen-img",attrs:{"src":"/images/planAdd_bg.jpg","alt":"背景图片:在海边"}}),_vm._v(" "),_c('nav',{directives:[{name:"show",rawName:"v-show",value:(!_vm.editAreaVisible),expression:"!editAreaVisible"}],staticClass:"nav"},[_c('p',{staticClass:"icon icon--menu icon--large",on:{"click":_vm.navBack}},[_vm._v("Up!Up!")])]),_vm._v(" "),_c('article',{directives:[{name:"show",rawName:"v-show",value:(!_vm.editAreaVisible),expression:"!editAreaVisible"}]},[_c('header',{staticClass:"header"},[_c('h1',{staticClass:"header__title"},[_vm._v(_vm._s(_vm.plan.title))]),_vm._v(" "),_c('p',[_vm._v("Next: "+_vm._s(_vm.nextDay))])]),_vm._v(" "),_c('main',{attrs:{"id":"scheduleWrap"}},[_c('schedule',{attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":true},on:{"changeDay":_vm.handleChangeDay}})],1)]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.editAreaVisible),expression:"editAreaVisible"}],staticClass:"edit-area"},[_vm._m(0),_vm._v(" "),_vm._m(1)])])}
+  __vue__options__.staticRenderFns =[function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"filed2"},[_c('div',{staticClass:"filed2__name"},[_c('img',{staticClass:"full-width-img",attrs:{"src":"/images/svg/edit.svg","alt":"编辑"}})]),_vm._v(" "),_c('div',{staticClass:"filed2__content"},[_vm._v("\n        编辑\n      ")])])},function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"filed2"},[_c('div',{staticClass:"filed2__name"},[_c('img',{staticClass:"full-width-img",attrs:{"src":"/images/svg/delete.svg","alt":""}})]),_vm._v(" "),_c('div',{staticClass:"filed2__content"},[_vm._v("\n        删除\n      ")])])}]
   __vue__options__._scopeId = "_v-59315907"
   
 

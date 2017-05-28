@@ -21,6 +21,10 @@ h1 {
 .response-img {
   max-width: 100%;
 }
+.full-width-img {
+  width: 100%;
+  max-width: 3em;
+}
 
 .full-screen-img {
   width: 100vw;
@@ -65,4 +69,16 @@ h1 {
 
 input:focus, textarea:focus {
   outline: none;
+}
+
+.button {
+  background: rgba(97, 226, 226, 0.4);
+  border: none;
+  padding: .5em;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.button--warn {
+  background: rgba(205, 92, 92, 0.6);
 }

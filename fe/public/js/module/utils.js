@@ -79,6 +79,17 @@ let getParentEl = function (parentSelector, child) {
 }
 
 /**
+ * 判断child是parent或者在parent之内
+ * @param parentSelector|String eg: '.header' 'p'
+ * @param child|Node
+ * @returns {boolean}
+ */
+let withinParent = function (parentSelector, child) {
+  let parent = document.querySelector(parentSelector)
+  return child === parent || getParentEl(parentSelector, child)
+}
+
+/**
  * @fn 依format返回表单数据
  * @param form|String|El
  * @param format|[String] eg: 'formData'/'object'
@@ -146,12 +157,13 @@ let form2 = function (form, format) {
   return resultObject
 }
 
-export { isDescendant, formatDate, colorGenerator, getParentEl, form2 }
+export { isDescendant, formatDate, colorGenerator, getParentEl, form2, withinParent }
 
 export default {
   isDescendant,
   formatDate,
   colorGenerator,
   getParentEl,
-  form2
+  form2,
+  withinParent
 }

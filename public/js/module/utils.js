@@ -88,6 +88,17 @@ define('public/js/module/utils', function(require, exports, module) {
   };
   
   /**
+   * 判断child是parent或者在parent之内
+   * @param parentSelector|String eg: '.header' 'p'
+   * @param child|Node
+   * @returns {boolean}
+   */
+  var withinParent = function withinParent(parentSelector, child) {
+    var parent = document.querySelector(parentSelector);
+    return child === parent || getParentEl(parentSelector, child);
+  };
+  
+  /**
    * @fn 依format返回表单数据
    * @param form|String|El
    * @param format|[String] eg: 'formData'/'object'
@@ -161,12 +172,14 @@ define('public/js/module/utils', function(require, exports, module) {
   exports.colorGenerator = colorGenerator;
   exports.getParentEl = getParentEl;
   exports.form2 = form2;
+  exports.withinParent = withinParent;
   exports.default = {
     isDescendant: isDescendant,
     formatDate: formatDate,
     colorGenerator: colorGenerator,
     getParentEl: getParentEl,
-    form2: form2
+    form2: form2,
+    withinParent: withinParent
   };
 
 });
