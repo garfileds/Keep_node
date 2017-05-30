@@ -4,7 +4,8 @@
      :plans="plans"
      :plansDone="plansDone"
      :plansIng="plansIng"
-     @postPlan="handlePostPlan"></router-view>
+     @postPlan="handlePostPlan"
+     @updatePlan="handleUpdatePlan"></router-view>
   </div>
 </template>
 
@@ -48,6 +49,21 @@
     methods: {
       handlePostPlan(plan) {
         this.plans.push(plan)
+      },
+
+      handleUpdatePlan(updateInfo, planId) {
+        let i = 0, key, plan
+        while (i < this.plans.length) {
+          if (this.plans[i].id === planId) {
+            plan = this.plans[i]
+            for (key in updateInfo) {
+              if (updateInfo.hasOwnProperty(key)) {
+                plan[key] = updateInfo[key]
+              }
+            }
+          }
+          i++
+        }
       },
 
       _nextDay(plan) {

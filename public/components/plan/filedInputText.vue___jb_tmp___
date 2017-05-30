@@ -1,13 +1,12 @@
 <template>
   <section class="filed">
-    <div class="filed__name">{{title}}</div>
+    <div class="filed__name">标题</div>
     <div class="filed__content filed__content--input"
          :style="styleObj">
-      <input type="text" :name="inputName" class="filed__input" :placeholder="'请输入' + title"
+      <input type="text" name="title" class="filed__input" placeholder="请输入标题"
              @focus="toggleFlex(true)"
              @blur="toggleFlex(false)"
-             v-model="val"
-             :disabled="disabled">
+             v-model="val">
       <span v-show="clearBtnShow" class="filed__clear"
             @click="clearInput"></span>
     </div>
@@ -50,11 +49,11 @@
   export default {
     name: 'filedInput',
 
-    props: ['title', 'defaultValue', 'inputName', 'disabled'],
+    props: ['title', 'defaultValue', 'editable'],
 
     data: function() {
       let defaultWidth
-      defaultWidth = this.defaultValue ? this.defaultValue.length + 2 + 'em' : '30%'
+      if (!this.defaultValue) defaultWidth = '30%'
 
       return {
         styleObj: {
@@ -74,7 +73,7 @@
         if (!!statu) {
           this.styleObj.width = '78%'
         } else {
-          computedWidth = this.val.length ? this.val.length + 2 + 'em' : '30%'
+          computedWidth = this.val.length ? this.val.length + 2 + 'em' : '20%'
           this.styleObj.width = computedWidth
         }
 

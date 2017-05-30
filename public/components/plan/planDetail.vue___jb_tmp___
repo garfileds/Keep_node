@@ -3,7 +3,7 @@
     <img class="full-screen-img" src="../../images/planAdd_bg.jpg" alt="背景图片:在海边">
     <nav class="nav" v-show="!editAreaVisible">
       <p class="icon icon--menu icon--large"
-       @click="navHome">Up!Up!</p>
+       @click="navBack">Up!Up!</p>
     </nav>
     <article v-show="!editAreaVisible">
       <header class="header">
@@ -25,7 +25,7 @@
         <div class="filed2__name">
           <img class="full-width-img" src="../../images/svg/edit.svg" alt="编辑">
         </div>
-        <div class="filed2__content" @click.stop="handleEdit">
+        <div class="filed2__content">
           编辑
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="filed2__name">
           <img class="full-width-img" src="../../images/svg/delete.svg" alt="删除">
         </div>
-        <div class="filed2__content filed2__content--warn" @click.stop="handleDelete">
+        <div class="filed2__content filed2__content--warn">
           删除
         </div>
       </div>
@@ -41,7 +41,7 @@
         <div class="filed2__name">
           <img class="full-width-img" src="../../images/svg/share.svg" alt="分享">
         </div>
-        <div class="filed2__content--flex"  @click.stop="handleShare">
+        <div class="filed2__content--flex">
           <div class="icon--padding">
             <img class="full-width-img" src="../../images/svg/wechat.svg" alt="微信">
           </div>
@@ -63,7 +63,7 @@
         <div class="filed2__name">
           <img class="full-width-img" src="../../images/svg/add.svg" alt="新建">
         </div>
-        <div class="filed2__content filed2__content--success" @click.stop="handleAdd">
+        <div class="filed2__content filed2__content--success">
           新建
         </div>
       </div>
@@ -223,15 +223,13 @@
           this.editAreaVisible = true
         } else if (this.editAreaVisible && target.className.indexOf('filed2__content') === -1) {
           this.editAreaVisible = false
+        } else if (this.editAreaVisible) {
+
         }
       },
 
-      handleEdit() {
-        router.push(`/planEdit/${this.plan.id}`)
-      },
-
-      navHome() {
-        router.push('/')
+      navBack() {
+        router.go(-1)
       }
     },
 

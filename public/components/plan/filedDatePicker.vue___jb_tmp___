@@ -13,7 +13,7 @@
         :picker-options="pickerOptions"
         @changeVisible="handlePickerVisible">
       </el-date-picker>
-      <input type="hidden" name="start_day" :value="formatSelectedDay">
+      <input type="hidden" name="start_day" :value="val">
     </div>
   </section>
 </template>
@@ -65,7 +65,7 @@
       },
 
       formatSelectedDay() {
-        return formatDate(new Date(this.val), 'yy-mm-dd')
+        
       }
     },
 

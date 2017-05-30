@@ -60,7 +60,7 @@
     data: function () {
       return {
         selectedColor: {
-          'backgroundColor': this.defaultColor || '#76FF7B'
+          'backgroundColor': this.defaultColor
         },
 
         panelVisible: false

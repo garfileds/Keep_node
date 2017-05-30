@@ -28,6 +28,10 @@ var _planDetail = require('public/components/plan/planDetail.vue');
 
 var _planDetail2 = _interopRequireDefault(_planDetail);
 
+var _planEdit = require('public/components/plan/planEdit.vue');
+
+var _planEdit2 = _interopRequireDefault(_planEdit);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueResource2.default); /**
@@ -37,9 +41,9 @@ _vue2.default.use(_vueResource2.default); /**
 _vue2.default.use(_vueRouter2.default);
 _vue2.default.config.productionTip = false;
 
-var routes = [{ path: '/', component: _home2.default }, { path: '/planAdd', component: _planAdd2.default }, { path: '/planDetail/:id', component: _planDetail2.default } /*,
-                                                                                                                                                                         { path: '/setting', component: Setting },
-                                                                                                                                                                         { path: '/cup', component: Cup }*/
+var routes = [{ path: '/', component: _home2.default }, { path: '/planAdd', component: _planAdd2.default }, { path: '/planDetail/:id', component: _planDetail2.default }, { path: '/planEdit/:id', component: _planEdit2.default } /*,
+                                                                                                                                                                                                                                   { path: '/setting', component: Setting },
+                                                                                                                                                                                                                                   { path: '/cup', component: Cup }*/
 ];
 
 var router = new _vueRouter2.default({

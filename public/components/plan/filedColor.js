@@ -67,10 +67,12 @@ define('public/components/plan/filedColor.vue', function(require, exports, modul
   exports.default = {
     name: 'filedColor',
   
+    props: ['defaultColor'],
+  
     data: function data() {
       return {
         selectedColor: {
-          'backgroundColor': '#76FF7B'
+          'backgroundColor': this.defaultColor || '#76FF7B'
         },
   
         panelVisible: false

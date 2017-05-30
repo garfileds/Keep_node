@@ -14,7 +14,9 @@
 
     <section>
       <form id="addPlanForm">
-        <filedInputText></filedInputText>
+        <filedInputText
+         title="标题"
+         inputName="title"></filedInputText>
 
         <filedDatePicker
          @changeVisible="handleChangeVisible"

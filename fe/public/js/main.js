@@ -13,11 +13,13 @@ import App from '../components/App'
 import home from '../components/home/home'
 import planAdd from '../components/plan/planAdd'
 import planDetail from '../components/plan/planDetail'
+import planEdit from '../components/plan/planEdit'
 
 const routes = [
   { path: '/', component: home },
   { path: '/planAdd', component: planAdd },
-  { path: '/planDetail/:id', component: planDetail }/*,
+  { path: '/planDetail/:id', component: planDetail },
+  { path: '/planEdit/:id', component: planEdit }/*,
   { path: '/setting', component: Setting },
   { path: '/cup', component: Cup }*/
 ]

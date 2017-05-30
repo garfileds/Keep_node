@@ -42,6 +42,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @import url(/components/plan/filed.css);
 
 .nav[_v-59315907] {
@@ -73,18 +103,48 @@
 .filed2[_v-59315907] {
   display: flex;
   width: 100%;
+
+  margin-bottom: .5em;
 }
 
 .filed2__name[_v-59315907] {
   width: 10%;
-  background: rgba(84, 81, 81, 0.5);
+  background: #545151;
   padding: .5em;
+  align-self: baseline;
 }
 
 .filed2__content[_v-59315907] {
-  background: rgba(97, 226, 226, 0.4);
+  width: 25%;
+  text-align: center;
+  background: #53BDBD;
   border: none;
   padding: .5em;
   color: #ffffff;
   font-size: 1rem;
+}
+
+.filed2__content--warn[_v-59315907] {
+  background: #DB7093;
+}
+
+.filed2__content--success[_v-59315907] {
+  background: #60BD74;
+}
+
+.filed2__content--flex[_v-59315907] {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(30% + .5em);
+}
+
+.icon--padding[_v-59315907] {
+  width: calc((100% - .5em) / 3);
+  margin: 0 .25em .25em 0;
+  padding: .5em;
+  background: #53BDBD;
+}
+
+.filed2__content--flex .icon--padding[_v-59315907]:nth-of-type(3n) {
+  margin-right: 0;
 }
