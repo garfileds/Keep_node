@@ -10,8 +10,8 @@
        :data="config"
        :change="dataChange"
        v-show="scheduleVisible"></smooth-picker>
-      <input type="hidden" name="days" v-model="days">
-      <input type="hidden" name="marked" v-model="marked">
+      <input type="hidden" name="days" :value="days">
+      <input type="hidden" name="marked" :value="marked">
     </div>
     <schedule
      :days="days"

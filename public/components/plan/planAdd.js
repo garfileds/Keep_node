@@ -119,6 +119,10 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
         var self = this;
         var formValue = (0, _utils.form2)('#addPlanForm', 'object');
   
+        formValue['marked'] = formValue.marked.split(',').map(function (el) {
+          return parseInt(el);
+        });
+  
         this.$http.post(apiCreatePlan, {
           responseType: 'json',
           headers: {
@@ -162,8 +166,6 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
             }
           }
         };
-  
-        formValue.marked = formValue.marked.split(',').map(parseInt);
   
         keySearch(plan);
   

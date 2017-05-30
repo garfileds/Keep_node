@@ -102,7 +102,11 @@
 
       handleConfirm() {
         const self = this
-        const formValue = form2('#addPlanForm', 'object')
+        let formValue = form2('#addPlanForm', 'object')
+
+        formValue['marked'] = formValue.marked.split(',').map(el => {
+          return parseInt(el)
+        })
 
         this.$http.post(apiCreatePlan, {
           responseType: 'json',
@@ -149,8 +153,6 @@
             }
           }
         }
-
-        formValue.marked = formValue.marked.split(',').map(parseInt)
 
         keySearch(plan)
 
