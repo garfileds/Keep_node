@@ -62,14 +62,11 @@
   import filedColor from './filedColor'
   import schedule from './schedule2'
 
+  import { mapMutations } from 'vuex'
   import { formatDate, isDescendant, form2 } from '../../js/module/utils'
-
-  const apiUpdatePlan = '/api/plan'
 
   export default {
     name: 'planEdit',
-
-    props: ['plans'],
 
     data: function () {
       return {}
@@ -78,26 +75,23 @@
     computed: {
       plan() {
         const planId = this.$route.params.id
-        return this.plans.filter(plan => plan.id === planId)[0]
+        return this.$store.state.plans.filter(plan => plan.id === planId)[0]
       }
     },
 
     methods: {
+      ...mapMutations([
+        'updatePlan'
+      ]),
+
       handleConfirm() {
         const self = this,
               planId = this.plan.id
         let updateInfo = form2('#editPlanForm', 'object')
         delete updateInfo.start_day
 
-        this.$http.post(`${apiUpdatePlan}/${planId}`, {
-          body: JSON.stringify(updateInfo)
-        })
-        .then(response => {
-          if (response.body.code === 'ok') {
-            self.$emit('updatePlan', updateInfo, planId)
-            router.push(`/planDetail/${planId}`)
-          }
-        })
+        self.updatePlan({ updateInfo, planId })
+        router.push(`/planDetail/${planId}`)
       },
 
       navBack() {

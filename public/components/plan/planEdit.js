@@ -6,6 +6,66 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
     value: true
   });
   
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  
   var _filedInputText = require('public/components/plan/filedInputText.vue');
   
   var _filedInputText2 = _interopRequireDefault(_filedInputText);
@@ -18,76 +78,14 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   
   var _schedule2 = _interopRequireDefault(_schedule);
   
+  var _vuex = require('node_modules/vuex/dist/vuex');
+  
   var _utils = require('public/js/module/utils');
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  
-  var apiUpdatePlan = '/api/plan';
-  
   exports.default = {
     name: 'planEdit',
-  
-    props: ['plans'],
   
     data: function data() {
       return {};
@@ -96,32 +94,26 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
     computed: {
       plan: function plan() {
         var planId = this.$route.params.id;
-        return this.plans.filter(function (plan) {
+        return this.$store.state.plans.filter(function (plan) {
           return plan.id === planId;
         })[0];
       }
     },
   
-    methods: {
+    methods: _extends({}, (0, _vuex.mapMutations)(['updatePlan']), {
       handleConfirm: function handleConfirm() {
         var self = this,
             planId = this.plan.id;
         var updateInfo = (0, _utils.form2)('#editPlanForm', 'object');
         delete updateInfo.start_day;
   
-        this.$http.post(apiUpdatePlan + '/' + planId, {
-          body: JSON.stringify(updateInfo)
-        }).then(function (response) {
-          if (response.body.code === 'ok') {
-            self.$emit('updatePlan', updateInfo, planId);
-            router.push('/planDetail/' + planId);
-          }
-        });
+        self.updatePlan({ updateInfo: updateInfo, planId: planId });
+        router.push('/planDetail/' + planId);
       },
       navBack: function navBack() {
         router.go(-1);
       }
-    },
+    }),
   
     components: { filedInputText: _filedInputText2.default, filedColor: _filedColor2.default, schedule: _schedule2.default }
   };

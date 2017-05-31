@@ -109,9 +109,11 @@
 
 .filed2__name[_v-59315907] {
   width: 10%;
-  background: #545151;
+  background: #1B1A1A;
   padding: .5em;
   align-self: baseline;
+  max-width: 38.4px;
+  min-width: 2em;
 }
 
 .filed2__content[_v-59315907] {
@@ -122,6 +124,7 @@
   padding: .5em;
   color: #ffffff;
   font-size: 1rem;
+  max-width: 7em;
 }
 
 .filed2__content--warn[_v-59315907] {
@@ -139,12 +142,11 @@
 }
 
 .icon--padding[_v-59315907] {
-  width: calc((100% - .5em) / 3);
+  width: calc((100% - .75em) / 3);
   margin: 0 .25em .25em 0;
   padding: .5em;
   background: #53BDBD;
-}
 
-.filed2__content--flex .icon--padding[_v-59315907]:nth-of-type(3n) {
-  margin-right: 0;
+  max-width: 38.4px;
+  min-width: 2em;
 }

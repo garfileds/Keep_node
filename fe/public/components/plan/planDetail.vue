@@ -155,14 +155,11 @@
 <script>
   import schedule from './schedule2'
 
+  import { mapMutations } from 'vuex'
   import { formatDate, withinParent } from '../../js/module/utils'
-
-  const apiUpdateDone = '/api/plan/{/id}/done'
 
   export default {
     name: 'planDetail',
-
-    props: ['plans'],
 
     data: function () {
       return {
@@ -173,7 +170,7 @@
     computed: {
       plan() {
         const planId = this.$route.params.id
-        return this.plans.filter(plan => plan.id === planId)[0]
+        return this.$store.state.plans.filter(plan => plan.id === planId)[0]
       },
 
       nextDay() {
@@ -198,23 +195,16 @@
     },
 
     methods: {
+      ...mapMutations([
+        'donePlan',
+        'deletePlan'
+      ]),
+
       handleChangeDay(day) {
         const planId = this.$route.params.id
 
-        let index = this.plan.progress.done.indexOf(day)
-        const updateInfo = { day },
-              updateResource = this.$resource(apiUpdateDone);
-
         if (this.plan.progress.marked.indexOf(day) > -1) {
-          updateResource.save({ id: planId }, {
-            body: JSON.stringify(updateInfo)
-          })
-          .then(response => {
-            const code = response.body.code
-            if (code === 'ok') {
-              index === -1 ? this.plan.progress.done.push(day) : this.plan.progress.done.splice(index, 1)
-            }
-          })
+          this.donePlan({ planId, day })
         }
       },
 
@@ -233,7 +223,7 @@
       },
 
       handleDelete() {
-        this.$emit('deletePlan', this.plan.id)
+        this.deletePlan({ planId: this.plan.id })
         router.push('/')
       },
 

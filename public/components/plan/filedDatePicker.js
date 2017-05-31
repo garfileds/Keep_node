@@ -47,6 +47,7 @@ define('public/components/plan/filedDatePicker.vue', function(require, exports, 
   //
   //
   //
+  //
   
   exports.default = {
     name: 'filedDatePicker',
@@ -78,7 +79,7 @@ define('public/components/plan/filedDatePicker.vue', function(require, exports, 
         return this.val.length > 0 ? this.val : (0, _utils.formatDate)(new Date());
       },
       formatSelectedDay: function formatSelectedDay() {
-        return (0, _utils.formatDate)(new Date(this.val), 'yy-mm-dd');
+        return (0, _utils.formatDate)(new Date(this.val), 'mm/dd/yy');
       }
     },
   
@@ -95,7 +96,7 @@ define('public/components/plan/filedDatePicker.vue', function(require, exports, 
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"filed"},[_c('div',{staticClass:"filed__name"},[_vm._v("时间")]),_vm._v(" "),_c('div',{staticClass:"filed__content"},[_c('el-date-picker',{directives:[{name:"show",rawName:"v-show",value:(_vm.editorVisible),expression:"editorVisible"}],staticClass:"el-date-editor--keep",attrs:{"type":"date","size":"large","editable":false,"placeholder":"","picker-options":_vm.pickerOptions},on:{"changeVisible":_vm.handlePickerVisible},model:{value:(_vm.val),callback:function ($$v) {_vm.val=$$v},expression:"val"}}),_vm._v(" "),_c('input',{attrs:{"type":"hidden","name":"start_day"},domProps:{"value":_vm.formatSelectedDay}})],1)])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"filed"},[_c('div',{staticClass:"filed__name"},[_vm._v("时间")]),_vm._v(" "),_c('div',{staticClass:"filed__content"},[_c('el-date-picker',{directives:[{name:"show",rawName:"v-show",value:(_vm.editorVisible),expression:"editorVisible"}],staticClass:"el-date-editor--keep",attrs:{"type":"date","size":"large","format":"MM/dd/yyyy","editable":false,"placeholder":"","picker-options":_vm.pickerOptions},on:{"changeVisible":_vm.handlePickerVisible},model:{value:(_vm.val),callback:function ($$v) {_vm.val=$$v},expression:"val"}}),_vm._v(" "),_c('input',{attrs:{"type":"hidden","name":"start_day"},domProps:{"value":_vm.formatSelectedDay}})],1)])}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-66d24cd9"
   

@@ -6,173 +6,173 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
     value: true
   });
   
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  
   var _schedule = require('public/components/plan/schedule2.vue');
   
   var _schedule2 = _interopRequireDefault(_schedule);
+  
+  var _vuex = require('node_modules/vuex/dist/vuex');
   
   var _utils = require('public/js/module/utils');
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  
-  var apiUpdateDone = '/api/plan/{/id}/done';
-  
   exports.default = {
     name: 'planDetail',
-  
-    props: ['plans'],
   
     data: function data() {
       return {
@@ -183,7 +183,7 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
     computed: {
       plan: function plan() {
         var planId = this.$route.params.id;
-        return this.plans.filter(function (plan) {
+        return this.$store.state.plans.filter(function (plan) {
           return plan.id === planId;
         })[0];
       },
@@ -209,25 +209,12 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
       }
     },
   
-    methods: {
+    methods: _extends({}, (0, _vuex.mapMutations)(['donePlan', 'deletePlan']), {
       handleChangeDay: function handleChangeDay(day) {
-        var _this = this;
-  
         var planId = this.$route.params.id;
   
-        var index = this.plan.progress.done.indexOf(day);
-        var updateInfo = { day: day },
-            updateResource = this.$resource(apiUpdateDone);
-  
         if (this.plan.progress.marked.indexOf(day) > -1) {
-          updateResource.save({ id: planId }, {
-            body: JSON.stringify(updateInfo)
-          }).then(function (response) {
-            var code = response.body.code;
-            if (code === 'ok') {
-              index === -1 ? _this.plan.progress.done.push(day) : _this.plan.progress.done.splice(index, 1);
-            }
-          });
+          this.donePlan({ planId: planId, day: day });
         }
       },
       toggleEditArea: function toggleEditArea(event) {
@@ -242,10 +229,17 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
       handleEdit: function handleEdit() {
         router.push('/planEdit/' + this.plan.id);
       },
+      handleDelete: function handleDelete() {
+        this.deletePlan({ planId: this.plan.id });
+        router.push('/');
+      },
+      handleAdd: function handleAdd() {
+        router.push('/planAdd');
+      },
       navHome: function navHome() {
         router.push('/');
       }
-    },
+    }),
   
     components: { schedule: _schedule2.default }
   };

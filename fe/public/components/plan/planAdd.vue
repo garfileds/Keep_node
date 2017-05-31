@@ -61,6 +61,7 @@
   import filedColor from './filedColor'
   import filedSchedule from './filedSchedule'
 
+  import { mapMutations } from 'vuex'
   import { formatDate, isDescendant, form2 } from '../../js/module/utils'
 
   const apiCreatePlan = '/api/plan'
@@ -119,7 +120,7 @@
           let plan = self._mixinPlanForm(formValue)
           plan.id = response.body.message.planId
 
-          self.$emit('addPlan', plan)
+          self.$store.commit('addPlan', { plan })
           router.push(`/`)
         })
       },

@@ -1,0 +1,60 @@
+/**
+ * Created by chenpeng on 2017/5/31.
+ */
+
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+import Vuex from 'vuex'
+
+Vue.use(VueResource)
+
+const apiGetPlans = '/api/plans'
+let store
+
+Vue.http.get(apiGetPlans, {
+  responseType: 'json'
+})
+.then(response => {
+  plans = response.body
+
+  store = new Vuex.Store({
+    state: {
+      plans: plans
+    },
+
+    mutations: {
+      addPlan(state, payload) {
+        state.plans.push(payload.plan)
+      },
+
+      updatePlan(state, payload) {
+        let i = 0, key, plan
+        while (i < state.plans.length) {
+          if (state.plans[i].id === payload.planId) {
+            plan = state.plans[i]
+
+            for (key in payload.updateInfo) {
+              if (payload.updateInfo.hasOwnProperty(key)) {
+                plan[key] = payload.updateInfo[key]
+              }
+            }
+          }
+          i++
+        }
+      },
+
+      deletePlan(state, payload) {
+        let i = 0
+        while (i < state.plans.length) {
+          if (state.plans[i].id === payload.planId) {
+            state.plans.splice(i, 1)
+            break
+          }
+
+          i++
+        }
+      }
+    }
+  })
+})
+

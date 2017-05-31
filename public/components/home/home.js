@@ -6,6 +6,64 @@ define('public/components/home/home.vue', function(require, exports, module) {
     value: true
   });
   
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  
   var _kHeader = require('public/components/home/kHeader.vue');
   
   var _kHeader2 = _interopRequireDefault(_kHeader);
@@ -14,70 +72,12 @@ define('public/components/home/home.vue', function(require, exports, module) {
   
   var _planThumbnail2 = _interopRequireDefault(_planThumbnail);
   
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  var _vuex = require('node_modules/vuex/dist/vuex');
   
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
   exports.default = {
     name: 'home',
-  
-    props: ['plans', 'plansDone', 'plansIng'],
   
     data: function data() {
       return {
@@ -85,11 +85,11 @@ define('public/components/home/home.vue', function(require, exports, module) {
       };
     },
   
-    computed: {
+    computed: _extends({
       plansSwitchMsg: function plansSwitchMsg() {
         return this.plansDoneShow ? '隐藏已完成的计划' : "显示已完成的计划";
       }
-    },
+    }, (0, _vuex.mapState)(['plans']), (0, _vuex.mapGetters)(['plansDone', 'plansIng'])),
   
     methods: {
       switcher: function switcher() {

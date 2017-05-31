@@ -22,11 +22,12 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
   
   var _filedSchedule2 = _interopRequireDefault(_filedSchedule);
   
+  var _vuex = require('node_modules/vuex/dist/vuex');
+  
   var _utils = require('public/js/module/utils');
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  var apiCreatePlan = '/api/plan'; //
   //
   //
   //
@@ -83,6 +84,9 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
   //
   //
   //
+  //
+  
+  var apiCreatePlan = '/api/plan';
   
   exports.default = {
     name: 'planAdd',
@@ -133,7 +137,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
           var plan = self._mixinPlanForm(formValue);
           plan.id = response.body.message.planId;
   
-          self.$emit('postPlan', plan);
+          self.$store.commit('addPlan', { plan: plan });
           router.push('/');
         });
       },

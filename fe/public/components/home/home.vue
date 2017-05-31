@@ -59,21 +59,30 @@
   import kHeader from './kHeader'
   import planThumbnail from './planThumbnail'
 
+  import { mapState, mapGetters } from 'vuex'
+
   export default {
     name: 'home',
 
-    props: ['plans', 'plansDone', 'plansIng'],
-
     data: function() {
       return {
-        plansDoneShow: false
+        plansDoneShow: false,
       }
     },
 
     computed: {
       plansSwitchMsg() {
         return this.plansDoneShow ? '隐藏已完成的计划' : "显示已完成的计划"
-      }
+      },
+
+      ...mapState([
+        'plans'
+      ]),
+
+      ...mapGetters([
+        'plansDone',
+        'plansIng'
+      ])
     },
 
     methods: {

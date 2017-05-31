@@ -62,17 +62,17 @@ fis.match('/public/components/**.vue:js', {
 })
 
 // 模块文件
-fis.match('/public/js/module/**.js', {
+fis.match('{/public/js/module/**.js, /public/store/**.js}', {
   isMod: true,
   parser: [
-    fis.plugin('babel-6.x', {})
+    fis.plugin('babel-6.x')
   ]
 })
 
 // 页面直接引入的主文件，不进行模块require包装
 fis.match('/public/js/*.js', {
   parser: [
-    fis.plugin('babel-6.x', {})
+    fis.plugin('babel-6.x')
   ],
   isMod: false
 })
