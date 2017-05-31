@@ -119,7 +119,7 @@
           let plan = self._mixinPlanForm(formValue)
           plan.id = response.body.message.planId
 
-          self.$emit('postPlan', plan)
+          self.$emit('addPlan', plan)
           router.push(`/`)
         })
       },

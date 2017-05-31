@@ -8,6 +8,7 @@
         v-model="val"
         type="date"
         size="large"
+        format="MM/dd/yyyy"
         :editable="false"
         placeholder=""
         :picker-options="pickerOptions"
@@ -65,7 +66,7 @@
       },
 
       formatSelectedDay() {
-        return formatDate(new Date(this.val), 'yy-mm-dd')
+        return formatDate(new Date(this.val), 'mm/dd/yy')
       }
     },
 

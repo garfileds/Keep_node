@@ -4,14 +4,13 @@
      :plans="plans"
      :plansDone="plansDone"
      :plansIng="plansIng"
-     @postPlan="handlePostPlan"
-     @updatePlan="handleUpdatePlan"></router-view>
+     @addPlan="handleAddPlan"
+     @updatePlan="handleUpdatePlan"
+     @deletePlan="handleDeletePlan"></router-view>
   </div>
 </template>
 
 <script>
-  const apiGetPlans = '/api/plans'
-
   export default {
     name: 'App',
 
@@ -47,7 +46,7 @@
     },
 
     methods: {
-      handlePostPlan(plan) {
+      handleAddPlan(plan) {
         this.plans.push(plan)
       },
 
@@ -66,8 +65,16 @@
         }
       },
 
-      _nextDay(plan) {
+      handleDeletePlan(planId) {
+        let i = 0
+        while (i < this.plans.length) {
+          if (this.plans[i].id === planId) {
+            this.plans.splice(i, 1)
+            break
+          }
 
+          i++
+        }
       }
     }
   }

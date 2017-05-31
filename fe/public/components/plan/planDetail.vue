@@ -109,9 +109,11 @@
 
   .filed2__name {
     width: 10%;
-    background: #545151;
+    background: #1B1A1A;
     padding: .5em;
     align-self: baseline;
+    max-width: 38.4px;
+    min-width: 2em;
   }
 
   .filed2__content {
@@ -122,6 +124,7 @@
     padding: .5em;
     color: #ffffff;
     font-size: 1rem;
+    max-width: 7em;
   }
 
   .filed2__content--warn {
@@ -139,14 +142,13 @@
   }
 
   .icon--padding {
-    width: calc((100% - .5em) / 3);
+    width: calc((100% - .75em) / 3);
     margin: 0 .25em .25em 0;
     padding: .5em;
     background: #53BDBD;
-  }
 
-  .filed2__content--flex .icon--padding:nth-of-type(3n) {
-    margin-right: 0;
+    max-width: 38.4px;
+    min-width: 2em;
   }
 </style>
 
@@ -228,6 +230,15 @@
 
       handleEdit() {
         router.push(`/planEdit/${this.plan.id}`)
+      },
+
+      handleDelete() {
+        this.$emit('deletePlan', this.plan.id)
+        router.push('/')
+      },
+
+      handleAdd() {
+        router.push('/planAdd')
       },
 
       navHome() {
