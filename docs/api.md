@@ -24,3 +24,13 @@
     }
 }
 ```
+
+2. /plans `[GET]`
+
+- response
+```json
+{
+  "commit_id": "",
+  "plans": []
+}
+```

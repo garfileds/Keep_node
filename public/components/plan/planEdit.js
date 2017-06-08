@@ -125,6 +125,7 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   }
   __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"content"},[_c('header',{staticClass:"header"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认修改"},on:{"click":_vm.handleConfirm}})])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"editPlanForm"}},[_c('filedInputText',{attrs:{"title":"标题","inputName":"title","defaultValue":_vm.plan.title}}),_vm._v(" "),_c('filedInputText',{attrs:{"title":"时间","inputName":"start_day","defaultValue":_vm.plan.progress.start_day,"disabled":true}}),_vm._v(" "),_c('filedColor',{attrs:{"defaultColor":_vm.plan.color}}),_vm._v(" "),_c('schedule',{attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":false}})],1)])])}
   __vue__options__.staticRenderFns =[]
+  __vue__options__._scopeId = "_v-93f7987f"
   
 
 });
