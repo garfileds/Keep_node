@@ -5,6 +5,9 @@ define('public/js/module/utils', function(require, exports, module) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+  
   /**
    * Created by adoug on 2017/5/15.
    */
@@ -167,19 +170,63 @@ define('public/js/module/utils', function(require, exports, module) {
     return resultObject;
   };
   
+  var deepCopy = function deepCopy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  };
+  
+  var isEmpty = function isEmpty(val) {
+    // test results
+    //---------------
+    // []        true, empty array
+    // {}        true, empty object
+    // null      true
+    // undefined true
+    // ""        true, empty string
+    // ''        true, empty string
+    // 0         false, number
+    // true      false, boolean
+    // false     false, boolean
+    // Date      false
+    // function  false
+  
+    if (val === undefined || val === null) return true;
+    if (typeof val === 'function' || typeof val === 'number' || (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === boolean || Object.prototype.toString.call(val) === '[object Date]') return false;
+    if (Array.isArray(val) || typeof val === 'string') return val.length === 0;
+    if ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object') {
+      for (var key in val) {
+        if (val.hasOwnProperty(key)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  
+    return false;
+  };
+  
+  var isPureObject = function isPureObject(val) {
+    return Object.prototype.toString.call(val) === '[object Object]';
+  };
+  
   exports.isDescendant = isDescendant;
   exports.formatDate = formatDate;
   exports.colorGenerator = colorGenerator;
   exports.getParentEl = getParentEl;
   exports.form2 = form2;
   exports.withinParent = withinParent;
+  exports.deepCopy = deepCopy;
+  exports.isEmpty = isEmpty;
+  exports.isPureObject = isPureObject;
   exports.default = {
     isDescendant: isDescendant,
     formatDate: formatDate,
     colorGenerator: colorGenerator,
     getParentEl: getParentEl,
     form2: form2,
-    withinParent: withinParent
+    withinParent: withinParent,
+    deepCopy: deepCopy,
+    isEmpty: isEmpty,
+    isPureObject: isPureObject
   };
 
 });

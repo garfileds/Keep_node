@@ -18,13 +18,15 @@ define('public/store/index', function(require, exports, module) {
   
   var _vueResource2 = _interopRequireDefault(_vueResource);
   
+  var _utils = require('public/js/module/utils');
+  
   var _esModule = require('public/js/module/esModule');
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  /**
-   * Created by chenpeng on 2017/5/31.
-   */
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
+                                                                                                                                                                                                       * Created by chenpeng on 2017/5/31.
+                                                                                                                                                                                                       */
   
   _vue2.default.use(_vuex2.default);
   _vue2.default.use(_vueResource2.default);
@@ -142,7 +144,61 @@ define('public/store/index', function(require, exports, module) {
     setTimeout(processUpdateQueue, synTime);
   }
   
-  function mergePlans(mainPlans, plans) {}
+  /**
+   * @fn 合并plans，以serverPlans为主，serverPlans一般是最新的
+   * @fn 当localPlans中有serverPlans没有的key-value时，添加到serverPlans
+   * @param serverPlans（已按plan.id递增排序）
+   * @param clientPlans（已按plan.id递增排序）
+   * @returns plans
+   */
+  function mergePlans(serverPlans, clientPlans) {
+    var result = [],
+        basePlans = (0, _utils.deepCopy)(serverPlans),
+        localPlans = (0, _utils.deepCopy)(clientPlans);
+  
+    var i = 0,
+        j = 0,
+        lenBase = basePlans.length,
+        lenLocal = localPlans.length;
+  
+    var search = function search(basePlans, localPlans) {
+      var key = void 0;
+      for (key in localPlans) {
+        if (localPlans.hasOwnProperty(key)) {
+          if (localPlans.hasOwnProperty(key)) {
+            (0, _utils.isEmpty)(basePlans[key]) ? basePlans = localPlans[key] : (0, _utils.isPureObject)(localPlans[key]) && search(localPlans[key]);
+          }
+        }
+      }
+    };
+  
+    while (i < lenBase && j < lenLocal) {
+      if (basePlans[i].id === localPlans[j].id) {
+        search(basePlans, localPlans);
+        result.push(basePlans[i]);
+        i++;
+        j++;
+      } else if (basePlans[i].id > localPlans[j].id) {
+        result.push(localPlans[j]);
+        j++;
+      } else {
+        result.push(basePlans[i]);
+        i++;
+      }
+    }
+  
+    if (i === lenBase) {
+      var _result;
+  
+      result = (_result = result).concat.apply(_result, _toConsumableArray(localPlans.slice(j, lenLocal)));
+    } else {
+      var _result2;
+  
+      result = (_result2 = result).concat.apply(_result2, _toConsumableArray(basePlans.slice(i, lenBase)));
+    }
+  
+    return result;
+  }
   
   function processUpdateQueue() {
     var i = void 0,
@@ -177,7 +233,7 @@ define('public/store/index', function(require, exports, module) {
               plansStr = JSON.stringify(store.state.plans);
               commitIdTemp = (0, _esModule.md5)(plansStr);
   
-              if (commitIdTemp === response.body.commit_id) {
+              if (commitIdTemp !== response.body.commit_id) {
                 console.error('expected synchronization');
               } else {
                 plansBackup = JSON.parse(plansStr);
@@ -185,7 +241,7 @@ define('public/store/index', function(require, exports, module) {
   
                 updateQueue.shift();
               }
-            } else if (response.code === 'not synchronized') {
+            } else if (response.body.code === 'not synchronized') {
               //如果服务器端和plansBackup不一致
               plansServer = response.body.plans;
               plansMerge = mergePlans(plansServer, store.state.plans);
@@ -198,11 +254,11 @@ define('public/store/index', function(require, exports, module) {
                   update_info: plansMerge
                 }
               }).then(function (response) {
-                if (response.code === 'ok') {
+                if (response.body.code === 'ok') {
                   plansStr = JSON.stringify(plansMerge);
                   commitIdTemp = (0, _esModule.md5)(plansStr);
   
-                  if (commitIdTemp === response.body.commit_id) {
+                  if (commitIdTemp !== response.body.commit_id) {
                     console.error('expected synchronization after merge');
                   } else {
                     plansBackup = JSON.parse(plansStr);

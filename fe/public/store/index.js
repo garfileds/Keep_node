@@ -6,6 +6,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 
+import { isPureObject, isEmpty, deepCopy } from '../js/module/utils'
 import { md5, Promise } from '../js/module/esModule'
 
 Vue.use(Vuex)
@@ -126,8 +127,56 @@ function startProcessUpdateQueue() {
   setTimeout(processUpdateQueue, synTime)
 }
 
-function mergePlans(mainPlans, plans) {
+/**
+ * @fn 合并plans，以serverPlans为主，serverPlans一般是最新的
+ * @fn 当localPlans中有serverPlans没有的key-value时，添加到serverPlans
+ * @param serverPlans（已按plan.id递增排序）
+ * @param clientPlans（已按plan.id递增排序）
+ * @returns plans
+ */
+function mergePlans(serverPlans, clientPlans) {
+  let result = [],
+      basePlans = deepCopy(serverPlans),
+      localPlans = deepCopy(clientPlans)
 
+  let i = 0, j = 0,
+      lenBase = basePlans.length,
+      lenLocal = localPlans.length
+
+  let search = function (basePlans, localPlans) {
+    let key
+    for (key in localPlans) {
+      if (localPlans.hasOwnProperty(key)) {
+        if (localPlans.hasOwnProperty(key)) {
+          isEmpty(basePlans[key]) ? basePlans = localPlans[key]
+            : isPureObject(localPlans[key]) && search(localPlans[key])
+        }
+      }
+    }
+  }
+
+  while (i < lenBase && j < lenLocal) {
+    if (basePlans[i].id === localPlans[j].id) {
+      search(basePlans, localPlans)
+      result.push(basePlans[i])
+      i++
+      j++
+    } else if (basePlans[i].id > localPlans[j].id) {
+      result.push(localPlans[j])
+      j++
+    } else {
+      result.push(basePlans[i])
+      i++
+    }
+  }
+
+  if (i === lenBase) {
+    result = result.concat(...localPlans.slice(j, lenLocal))
+  } else {
+    result = result.concat(...basePlans.slice(i, lenBase))
+  }
+
+  return result
 }
 
 function processUpdateQueue () {
@@ -160,7 +209,7 @@ function processUpdateQueue () {
             plansStr = JSON.stringify(store.state.plans)
             commitIdTemp = md5(plansStr)
 
-            if (commitIdTemp === response.body.commit_id) {
+            if (commitIdTemp !== response.body.commit_id) {
               console.error('expected synchronization')
             } else {
               plansBackup = JSON.parse(plansStr)
@@ -168,7 +217,7 @@ function processUpdateQueue () {
 
               updateQueue.shift()
             }
-          } else if (response.code === 'not synchronized') {
+          } else if (response.body.code === 'not synchronized') {
             //如果服务器端和plansBackup不一致
             plansServer = response.body.plans
             plansMerge = mergePlans(plansServer, store.state.plans)
@@ -181,11 +230,11 @@ function processUpdateQueue () {
                 update_info: plansMerge
               }
             }).then(response => {
-              if (response.code === 'ok') {
+              if (response.body.code === 'ok') {
                 plansStr = JSON.stringify(plansMerge)
                 commitIdTemp = md5(plansStr)
 
-                if (commitIdTemp === response.body.commit_id) {
+                if (commitIdTemp !== response.body.commit_id) {
                   console.error('expected synchronization after merge')
                 } else {
                   plansBackup = JSON.parse(plansStr)

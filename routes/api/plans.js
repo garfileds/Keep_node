@@ -68,7 +68,31 @@ var mock_ing = []
 
 var mock_done = []
 
-/* GET plans. */
+var mock_syn = {
+  code: 'not synchronized',
+  commit_id: 'adfa',
+  plans: [{
+    "id": "p008",
+    "title": "深度学习",
+    "bg_image": "",
+    "color": "#A7ED84",
+    "progress_color": "#ffffff",
+    "progress": {
+      "start_day": "05/17/2017",
+      "days": 14,
+      "marked": [1, 3, 5, 7, 9, 14],
+      "done": []
+    },
+    "status": "ing",
+
+    "badge": {
+      "id": "b001",
+      "image_url": ""
+    }
+  }]
+}
+
+/* GET plans */
 router.get('/', function(req, res) {
   var planStatu = req.query.statu || 'all';
 
@@ -81,8 +105,9 @@ router.get('/', function(req, res) {
   }
 })
 
+/* POST plans */
 router.post('/', function (req, res) {
-  res.json({code: 'ok', commit_id: 'adfa'})
+  res.json(mock_syn)
 })
 
 module.exports = router

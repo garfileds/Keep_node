@@ -157,7 +157,47 @@ let form2 = function (form, format) {
   return resultObject
 }
 
-export { isDescendant, formatDate, colorGenerator, getParentEl, form2, withinParent }
+let deepCopy = function (obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
+let isEmpty = function (val) {
+  // test results
+  //---------------
+  // []        true, empty array
+  // {}        true, empty object
+  // null      true
+  // undefined true
+  // ""        true, empty string
+  // ''        true, empty string
+  // 0         false, number
+  // true      false, boolean
+  // false     false, boolean
+  // Date      false
+  // function  false
+
+  if (val === undefined || val === null) return true
+  if (typeof (val) === 'function' || typeof (val) === 'number' || typeof (val) === boolean || Object.prototype.toString.call(val) === '[object Date]')
+    return false
+  if (Array.isArray(val) || typeof (val) === 'string')
+    return val.length === 0
+  if (typeof (val) === 'object') {
+    for (let key in val) {
+      if (val.hasOwnProperty(key)) {
+        return false
+      }
+    }
+    return true
+  }
+
+  return false
+}
+
+let isPureObject = function (val) {
+  return Object.prototype.toString.call(val) === '[object Object]'
+}
+
+export { isDescendant, formatDate, colorGenerator, getParentEl, form2, withinParent, deepCopy, isEmpty, isPureObject }
 
 export default {
   isDescendant,
@@ -165,5 +205,8 @@ export default {
   colorGenerator,
   getParentEl,
   form2,
-  withinParent
+  withinParent,
+  deepCopy,
+  isEmpty,
+  isPureObject
 }
