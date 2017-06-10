@@ -46,6 +46,7 @@ const store = new Vuex.Store({
 
     addPlan(state, payload) {
       state.plans.push(payload.plan)
+      backupPlans(state.plans)
     },
 
     updatePlan(state, payload) {
@@ -93,7 +94,7 @@ const store = new Vuex.Store({
       index === -1 ? plan.progress.done.push(payload.day) : plan.progress.done.splice(index, 1)
 
       updateQueue[updateQueue.length - 1].status = 'notEmpty'
-      updateQueue[updateQueue.length - 1].done[payload.planId] = state.plans[payload.planId].progress.done
+      updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done
     }
   }
 })
@@ -194,11 +195,9 @@ function processUpdateQueue () {
 
         resourceSequence = resourceSequence.then(() => {
           return Vue.http.post(apiPostPlans, {
-            body: {
-              commit_id: commitId,
-              type: 'local',
-              update_info: updateInfo
-            }
+            commit_id: commitId,
+             type: 'local',
+             update_info: updateInfo
           })
         }).then(response => {
           let plansStr, commitIdTemp,
@@ -224,11 +223,9 @@ function processUpdateQueue () {
             commitIdTemp = response.body.commit_id
 
             return Vue.http.post(apiPostPlans, {
-              body: {
-                type: 'global',
-                commit_id: commitIdTemp,
-                update_info: plansMerge
-              }
+              type: 'global',
+              commit_id: commitIdTemp,
+              update_info: plansMerge
             }).then(response => {
               if (response.body.code === 'ok') {
                 plansStr = JSON.stringify(plansMerge)
@@ -252,6 +249,12 @@ function processUpdateQueue () {
   }
 
   setTimeout(processUpdateQueue, synTime)
+}
+
+function backupPlans(plans) {
+  let plansStr = JSON.stringify(plans)
+  plansBackup = JSON.parse(plansStr)
+  commitId = md5(plansStr)
 }
 
 export default store
