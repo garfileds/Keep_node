@@ -127,15 +127,9 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
           return parseInt(el);
         });
   
-        this.$http.post(apiCreatePlan, {
-          responseType: 'json',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: formValue
-        }).then(function (response) {
+        this.$http.post(apiCreatePlan, formValue).then(function (response) {
           var plan = self._mixinPlanForm(formValue);
-          plan.id = response.body.message.planId;
+          plan.id = response.body.message.plan_id;
   
           self.$store.commit('addPlan', { plan: plan });
           router.push('/');

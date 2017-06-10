@@ -1,7 +1,6 @@
 <template>
   <div class="plan"
-   :style="colorStyle"
-   @click.stop="catPlan">
+   :style="colorStyle">
     <div class="plan__progress"
      :style="progressStyle"></div>
 
@@ -95,12 +94,6 @@
           i++
         }
        return formatDate(tempDate, 'mm/dd/yy')
-      }
-    },
-
-    methods: {
-      catPlan() {
-        router.push(`/planDetail/${this.plan.id}`)
       }
     }
   }

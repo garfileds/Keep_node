@@ -63,6 +63,10 @@ define('public/components/home/home.vue', function(require, exports, module) {
   //
   //
   //
+  //
+  //
+  //
+  //
   
   var _kHeader = require('public/components/home/kHeader.vue');
   
@@ -94,6 +98,9 @@ define('public/components/home/home.vue', function(require, exports, module) {
     methods: {
       switcher: function switcher() {
         this.plansDoneShow = !this.plansDoneShow;
+      },
+      catPlan: function catPlan(planId, status) {
+        router.push('/planDetail/' + planId + '?status=' + status);
       }
     },
   
@@ -105,7 +112,7 @@ define('public/components/home/home.vue', function(require, exports, module) {
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',[_c('kHeader'),_vm._v(" "),_c('section',{staticClass:"content"},[_c('section',{staticClass:"plans-ing"},_vm._l((_vm.plansIng),function(plan){return _c('planThumbnail',{attrs:{"plan":plan}})})),_vm._v(" "),_c('section',{directives:[{name:"show",rawName:"v-show",value:(_vm.plansDone.length > 0),expression:"plansDone.length > 0"}],staticClass:"plans-switch",on:{"click":_vm.switcher}},[_c('span',{staticClass:"plans-switch__content"},[_vm._v(_vm._s(_vm.plansSwitchMsg))])]),_vm._v(" "),_c('section',{directives:[{name:"show",rawName:"v-show",value:(_vm.plansDoneShow),expression:"plansDoneShow"}],staticClass:"plans-done"},_vm._l((_vm.plansDone),function(planDone){return _c('planThumbnail',{attrs:{"plan":planDone}})})),_vm._v(" "),_c('section',{staticClass:"add-plan-btn"},[_c('router-link',{attrs:{"to":"/planAdd"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/addition_fill.svg","alt":"添加计划"}})])],1)])],1)}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',[_c('kHeader'),_vm._v(" "),_c('section',{staticClass:"content"},[_c('section',{staticClass:"plans-ing"},_vm._l((_vm.plansIng),function(plan){return _c('planThumbnail',{attrs:{"plan":plan},nativeOn:{"click":function($event){_vm.catPlan(plan.id, 'ing')}}})})),_vm._v(" "),_c('section',{directives:[{name:"show",rawName:"v-show",value:(_vm.plansDone.length > 0),expression:"plansDone.length > 0"}],staticClass:"plans-switch",on:{"click":_vm.switcher}},[_c('span',{staticClass:"plans-switch__content"},[_vm._v(_vm._s(_vm.plansSwitchMsg))])]),_vm._v(" "),_c('section',{directives:[{name:"show",rawName:"v-show",value:(_vm.plansDoneShow),expression:"plansDoneShow"}],staticClass:"plans-done"},_vm._l((_vm.plansDone),function(planDone){return _c('planThumbnail',{attrs:{"plan":planDone},nativeOn:{"click":function($event){_vm.catPlan(planDone.id, 'done')}}})})),_vm._v(" "),_c('section',{staticClass:"add-plan-btn"},[_c('router-link',{attrs:{"to":"/planAdd"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/addition_fill.svg","alt":"添加计划"}})])],1)])],1)}
   __vue__options__.staticRenderFns =[]
   
 

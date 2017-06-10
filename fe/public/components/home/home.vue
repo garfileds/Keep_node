@@ -3,8 +3,10 @@
     <kHeader></kHeader>
     <section class="content">
       <section class="plans-ing">
-        <planThumbnail v-for="plan in plansIng"
-         :plan="plan"></planThumbnail>
+        <planThumbnail
+         v-for="plan in plansIng"
+         :plan="plan"
+         @click.native="catPlan(plan.id, 'ing')"></planThumbnail>
       </section>
 
       <section class="plans-switch"
@@ -15,8 +17,10 @@
 
       <section class="plans-done"
        v-show="plansDoneShow">
-        <planThumbnail v-for="planDone in plansDone"
-         :plan="planDone"></planThumbnail>
+        <planThumbnail
+         v-for="planDone in plansDone"
+         :plan="planDone"
+         @click.native="catPlan(planDone.id, 'done')"></planThumbnail>
       </section>
 
       <section class="add-plan-btn">
@@ -88,6 +92,10 @@
     methods: {
       switcher() {
         this.plansDoneShow = !this.plansDoneShow
+      },
+
+      catPlan(planId, status) {
+        router.push(`/planDetail/${planId}?status=${status}`)
       }
     },
 

@@ -209,6 +209,8 @@
       },
 
       toggleEditArea(event) {
+        if (this.$route.query.status === 'done') return
+
         const target = event.target
         //editArea show
         if (!this.editAreaVisible && !withinParent('#scheduleWrap', target)) {

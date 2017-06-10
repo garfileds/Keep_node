@@ -49,15 +49,8 @@ define('public/components/home/planThumbnail.vue', function(require, exports, mo
         }
         return (0, _utils.formatDate)(tempDate, 'mm/dd/yy');
       }
-    },
-  
-    methods: {
-      catPlan: function catPlan() {
-        router.push('/planDetail/' + this.plan.id);
-      }
     }
   }; //
-  //
   //
   //
   //
@@ -116,7 +109,7 @@ define('public/components/home/planThumbnail.vue', function(require, exports, mo
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"plan",style:(_vm.colorStyle),on:{"click":function($event){$event.stopPropagation();_vm.catPlan($event)}}},[_c('div',{staticClass:"plan__progress",style:(_vm.progressStyle)}),_vm._v(" "),_c('div',{staticClass:"plan__content"},[_c('p',{staticClass:"plan__content__name"},[_vm._v("\n      "+_vm._s(_vm.plan.title)+"\n    ")]),_vm._v(" "),_c('p',{staticClass:"plan__content__next"},[_vm._v("\n      下一次："+_vm._s(_vm.nextDay)+"\n    ")])]),_vm._v(" "),_vm._m(0)])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"plan",style:(_vm.colorStyle)},[_c('div',{staticClass:"plan__progress",style:(_vm.progressStyle)}),_vm._v(" "),_c('div',{staticClass:"plan__content"},[_c('p',{staticClass:"plan__content__name"},[_vm._v("\n      "+_vm._s(_vm.plan.title)+"\n    ")]),_vm._v(" "),_c('p',{staticClass:"plan__content__next"},[_vm._v("\n      下一次："+_vm._s(_vm.nextDay)+"\n    ")])]),_vm._v(" "),_vm._m(0)])}
   __vue__options__.staticRenderFns =[function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"plan__badge"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/Bulbasaur.png","alt":"Bulbasaur"}})])}]
   
 

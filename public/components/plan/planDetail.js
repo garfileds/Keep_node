@@ -218,6 +218,8 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
         }
       },
       toggleEditArea: function toggleEditArea(event) {
+        if (this.$route.query.status === 'done') return;
+  
         var target = event.target;
         //editArea show
         if (!this.editAreaVisible && !(0, _utils.withinParent)('#scheduleWrap', target)) {

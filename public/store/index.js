@@ -64,6 +64,7 @@ define('public/store/index', function(require, exports, module) {
       },
       addPlan: function addPlan(state, payload) {
         state.plans.push(payload.plan);
+        backupPlans(state.plans);
       },
       updatePlan: function updatePlan(state, payload) {
         var i = 0,
@@ -111,7 +112,7 @@ define('public/store/index', function(require, exports, module) {
         index === -1 ? plan.progress.done.push(payload.day) : plan.progress.done.splice(index, 1);
   
         updateQueue[updateQueue.length - 1].status = 'notEmpty';
-        updateQueue[updateQueue.length - 1].done[payload.planId] = state.plans[payload.planId].progress.done;
+        updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done;
       }
     }
   });
@@ -216,11 +217,9 @@ define('public/store/index', function(require, exports, module) {
   
           resourceSequence = resourceSequence.then(function () {
             return _vue2.default.http.post(apiPostPlans, {
-              body: {
-                commit_id: commitId,
-                type: 'local',
-                update_info: updateInfo
-              }
+              commit_id: commitId,
+              type: 'local',
+              update_info: updateInfo
             });
           }).then(function (response) {
             var plansStr = void 0,
@@ -248,11 +247,9 @@ define('public/store/index', function(require, exports, module) {
               commitIdTemp = response.body.commit_id;
   
               return _vue2.default.http.post(apiPostPlans, {
-                body: {
-                  type: 'global',
-                  commit_id: commitIdTemp,
-                  update_info: plansMerge
-                }
+                type: 'global',
+                commit_id: commitIdTemp,
+                update_info: plansMerge
               }).then(function (response) {
                 if (response.body.code === 'ok') {
                   plansStr = JSON.stringify(plansMerge);
@@ -276,6 +273,12 @@ define('public/store/index', function(require, exports, module) {
     }
   
     setTimeout(processUpdateQueue, synTime);
+  }
+  
+  function backupPlans(plans) {
+    var plansStr = JSON.stringify(plans);
+    plansBackup = JSON.parse(plansStr);
+    commitId = (0, _esModule.md5)(plansStr);
   }
   
   exports.default = store;

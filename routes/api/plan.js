@@ -8,7 +8,7 @@ const router = express.Router()
 const mock_new_plan = {
   code: 'ok',
   message: {
-    planId: 'p004'
+    plan_id: 'p004'
   }
 }
 const mock_plan = {

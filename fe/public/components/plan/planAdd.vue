@@ -109,16 +109,10 @@
           return parseInt(el)
         })
 
-        this.$http.post(apiCreatePlan, {
-          responseType: 'json',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: formValue
-        })
+        this.$http.post(apiCreatePlan, formValue)
         .then(response => {
           let plan = self._mixinPlanForm(formValue)
-          plan.id = response.body.message.planId
+          plan.id = response.body.message.plan_id
 
           self.$store.commit('addPlan', { plan })
           router.push(`/`)
