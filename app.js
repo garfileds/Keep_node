@@ -1,50 +1,100 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const debug = require('debug')('app:' + process.pid),
+      path = require('path'),
+      bodyParser = require('body-parser'),
+      favicon = require('serve-favicon'),
+      logger = require('morgan')
 
-var history = require('connect-history-api-fallback');
-var AutoRoutes = require("q-auto-routes");
+const jwt = require("express-jwt"),
+      unless = require('express-unless'),
+      onFinished = require('on-finished'),
+      NotFoundError = require(path.join(__dirname, "errors", "NotFoundError.js")),
+      tokenUtils = require(path.join(__dirname, "tokenUtils.js"))
 
-var app = express();
+const config = require('./config.json'),
+      mongoose_uri = process.env.MONGOOSE_URI || 'localhost/Keep'
 
-//配置路由规则
-AutoRoutes.init(app, path.join(__dirname, 'routes'));
+debug('Loading Mongoose functionality')
+const mongoose = require('mongoose')
+mongoose.set('debug', true)
+mongoose.connect(mongoose_uri)
+mongoose.connection.on('error', function () {
+  debug('Mongoose connection error')
+})
+mongoose.connection.once('open', function callback() {
+  debug("Mongoose connected to the database")
+})
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+debug('Initializing express')
+const express = require('express'),
+      app = express()
 
-/*app.use(history({
-  index: '/'
-}));*/
+debug('Setup view engine')
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'hbs')
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')))
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+app.use(function (req, res, next) {
+  onFinished(res, function () {
+    debug("[%s] finished request", req.connection.remoteAddress)
+  })
 
-// error handler
-app.use(function(err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  next()
+})
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+let jwtCheck = jwt({
+  secret: config.secret
+})
+jwtCheck.unless = unless
 
-module.exports = app;
+app.use(jwtCheck.unless({
+  path: [
+    { url: '/api/session', methods: ['POST'] },
+    '/api/user'
+  ]
+}))
+app.use(tokenUtils.middleware().unless({
+  path: [
+    { url: '/api/session', methods: ['POST'] },
+    '/api/user'
+  ]
+}))
+
+debug('Initializing router')
+const AutoRoutes = require("q-auto-routes")
+AutoRoutes.init(app, path.join(__dirname, 'routes'))
+
+// all other requests redirect to 404
+app.all("*", function (req, res, next) {
+  next(new NotFoundError("404"))
+})
+
+// error handler for all the applications
+app.use(function (err, req, res) {
+  let code = 500,
+    msg = { message: "Internal Server Error" }
+
+  switch (err.name) {
+    case "UnauthorizedError":
+      code = err.status
+      msg = undefined
+      break
+    case "BadRequestError":
+    case "UnauthorizedAccessError":
+    case "NotFoundError":
+      code = err.status
+      msg = err.inner
+      break
+    default:
+      break
+  }
+
+  return res.status(code).json(msg)
+})
+
+module.exports = app

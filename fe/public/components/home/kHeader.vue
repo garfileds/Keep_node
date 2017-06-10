@@ -32,6 +32,7 @@
 
     font-size: 1em;
     font-weight: 400;
+    color: #000000;
   }
 </style>
 
