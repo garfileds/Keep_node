@@ -4,11 +4,11 @@ const debug = require('debug')('app:' + process.pid),
       favicon = require('serve-favicon'),
       logger = require('morgan')
 
-const jwt = require("express-jwt"),
+const jwt = require('express-jwt'),
       unless = require('express-unless'),
       onFinished = require('on-finished'),
-      NotFoundError = require(path.join(__dirname, "errors", "NotFoundError.js")),
-      tokenUtils = require(path.join(__dirname, "tokenUtils.js"))
+      NotFoundError = require(path.join(__dirname, 'errors', 'NotFoundError.js')),
+      tokenUtils = require(path.join(__dirname, 'app', 'tokenUtils.js'))
 
 const config = require('./config.json'),
       mongoose_uri = process.env.MONGOOSE_URI || 'localhost/Keep'
@@ -21,7 +21,7 @@ mongoose.connection.on('error', function () {
   debug('Mongoose connection error')
 })
 mongoose.connection.once('open', function callback() {
-  debug("Mongoose connected to the database")
+  debug('Mongoose connected to the database')
 })
 
 debug('Initializing express')
@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(function (req, res, next) {
   onFinished(res, function () {
-    debug("[%s] finished request", req.connection.remoteAddress)
+    debug('[%s] finished request', req.connection.remoteAddress)
   })
 
   next()
@@ -66,27 +66,27 @@ app.use(tokenUtils.middleware().unless({
 }))
 
 debug('Initializing router')
-const AutoRoutes = require("q-auto-routes")
+const AutoRoutes = require('q-auto-routes')
 AutoRoutes.init(app, path.join(__dirname, 'routes'))
 
 // all other requests redirect to 404
-app.all("*", function (req, res, next) {
-  next(new NotFoundError("404"))
+app.all('*', function (req, res, next) {
+  next(new NotFoundError('404'))
 })
 
 // error handler for all the applications
 app.use(function (err, req, res) {
   let code = 500,
-    msg = { message: "Internal Server Error" }
+    msg = { message: 'Internal Server Error' }
 
   switch (err.name) {
-    case "UnauthorizedError":
+    case 'UnauthorizedError':
       code = err.status
       msg = undefined
       break
-    case "BadRequestError":
-    case "UnauthorizedAccessError":
-    case "NotFoundError":
+    case 'BadRequestError':
+    case 'UnauthorizedAccessError':
+    case 'NotFoundError':
       code = err.status
       msg = err.inner
       break
