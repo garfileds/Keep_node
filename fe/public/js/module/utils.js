@@ -177,7 +177,7 @@ let isEmpty = function (val) {
   // function  false
 
   if (val === undefined || val === null) return true
-  if (typeof (val) === 'function' || typeof (val) === 'number' || typeof (val) === boolean || Object.prototype.toString.call(val) === '[object Date]')
+  if (typeof (val) === 'function' || typeof (val) === 'number' || typeof (val) === 'boolean' || Object.prototype.toString.call(val) === '[object Date]')
     return false
   if (Array.isArray(val) || typeof (val) === 'string')
     return val.length === 0

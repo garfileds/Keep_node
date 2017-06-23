@@ -190,7 +190,7 @@ define('public/js/module/utils', function(require, exports, module) {
     // function  false
   
     if (val === undefined || val === null) return true;
-    if (typeof val === 'function' || typeof val === 'number' || (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === boolean || Object.prototype.toString.call(val) === '[object Date]') return false;
+    if (typeof val === 'function' || typeof val === 'number' || typeof val === 'boolean' || Object.prototype.toString.call(val) === '[object Date]') return false;
     if (Array.isArray(val) || typeof val === 'string') return val.length === 0;
     if ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object') {
       for (var key in val) {

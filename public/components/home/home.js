@@ -76,7 +76,7 @@ define('public/components/home/home.vue', function(require, exports, module) {
   
   var _planThumbnail2 = _interopRequireDefault(_planThumbnail);
   
-  var _vuex = require('node_modules/vuex/dist/vuex');
+  var _vuex = require('vuex');
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   

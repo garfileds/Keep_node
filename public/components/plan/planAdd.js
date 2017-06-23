@@ -22,7 +22,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
   
   var _filedSchedule2 = _interopRequireDefault(_filedSchedule);
   
-  var _vuex = require('node_modules/vuex/dist/vuex');
+  var _vuex = require('vuex');
   
   var _utils = require('public/js/module/utils');
   

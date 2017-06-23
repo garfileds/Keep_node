@@ -78,7 +78,7 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   
   var _schedule2 = _interopRequireDefault(_schedule);
   
-  var _vuex = require('node_modules/vuex/dist/vuex');
+  var _vuex = require('vuex');
   
   var _utils = require('public/js/module/utils');
   
