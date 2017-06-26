@@ -8,11 +8,11 @@ const debug = require('debug')('app:tokenUtils:' + process.pid),
       redis = require("redis"),
       client = redis.createClient(),
       _ = require('lodash'),
-      config = require("../config.json"),
+      config = require("../../config.json"),
       jsonwebtoken = require("jsonwebtoken"),
       TOKEN_EXPIRATION = 60 * 24 * 7,
       TOKEN_EXPIRATION_SEC = TOKEN_EXPIRATION * 60,
-      UnauthorizedAccessError = require(path.join(__dirname, '../errors', 'UnauthorizedAccessError.js'))
+      UnauthorizedAccessError = require(path.join(__dirname, '../../errors', 'UnauthorizedAccessError.js'))
 
 client.on('error', function (err) {
   debug(err)
@@ -45,15 +45,14 @@ module.exports.create = function (user, req, res, next) {
 
   let data = {
     _id: user._id,
-    username: user.username,
     access: user.access,
-    name: user.name,
+    nickname: user.nickname,
     email: user.email,
     token: jsonwebtoken.sign({
       _id: user._id,
       iat: new Date().getTime()
     }, config.secret, {
-      expiresInMinutes: TOKEN_EXPIRATION
+      expiresIn: TOKEN_EXPIRATION_SEC
     })
   }
 
@@ -62,9 +61,12 @@ module.exports.create = function (user, req, res, next) {
   data.token_exp = decoded.exp
   data.token_iat = decoded.iat
 
-  debug('Token generated for user: %s, token: %s', data.username, data.token)
+  debug('Token generated for user: %s, token: %s', data.email, data.token)
 
-  client.set(data.token, JSON.stringify(data), function (err, reply) {
+  let dataStr = JSON.stringify(data)
+
+  //一点问题：value直接使用JSON.stringify会超时
+  client.set(data.token, dataStr, function (err, reply) {
     if (err) {
       return next(new Error(err))
     }
@@ -113,7 +115,7 @@ module.exports.retrieve = function (id, done) {
       })
     } else {
       let data = JSON.parse(reply)
-      debug("User data fetched from redis store for user: %s", data.username)
+      debug("User data fetched from redis store for user: %s", data.email)
 
       if (_.isEqual(data.token, id)) {
         return done(null, data)

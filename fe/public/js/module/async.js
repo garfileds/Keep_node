@@ -8,8 +8,12 @@ export function runQueue(queue, fn, cb) {
       cb()
     } else {
       if (queue[index]) {
-        fn(queue[index], () => {
-          step(index + 1)
+        fn(queue[index], (error) => {
+          if (error) {
+            return cb(error)
+          } else {
+            step(index + 1)
+          }
         })
       } else {
         step(index + 1)

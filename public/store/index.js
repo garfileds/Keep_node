@@ -10,7 +10,7 @@ define('public/store/index', function(require, exports, module) {
   
   var _vue2 = _interopRequireDefault(_vue);
   
-  var _vuex = require('vuex');
+  var _vuex = require('node_modules/vuex/dist/vuex');
   
   var _vuex2 = _interopRequireDefault(_vuex);
   
@@ -116,18 +116,21 @@ define('public/store/index', function(require, exports, module) {
   });
   
   //在应用启动时拉取plans
-  _vue2.default.http.get(apiGetPlans).then(function (response) {
-    var plans = response.body.plans;
+  /*
+  Vue.http.get(apiGetPlans)
+  .then(response => {
+    let plans = response.body.plans
   
-    store.commit('initPlans', plans);
+    store.commit('initPlans', plans)
   
     //deepCopy plans
-    plansBackup = JSON.parse(JSON.stringify(plans));
-    commitId = response.body.commit_id;
-  });
+    plansBackup = JSON.parse(JSON.stringify(plans))
+    commitId = response.body.commit_id
+  })
+  */
   
   //统一处理同步逻辑（除了addPlan）
-  syncPlans();
+  //syncPlans()
   
   function syncPlans() {
     var copyUpdateQueue = (0, _utils.deepCopy)(updateQueue);

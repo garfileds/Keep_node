@@ -1,13 +1,14 @@
 define('public/js/module/async', function(require, exports, module) {
 
-  'use strict';
+  "use strict";
   
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.runQueue = runQueue;
-  
-  var _utils = require('public/js/module/utils');
+  /**
+   * Created by adoug on 2017/6/23.
+   */
   
   function runQueue(queue, fn, cb) {
     var step = function step(index) {
@@ -15,8 +16,12 @@ define('public/js/module/async', function(require, exports, module) {
         cb();
       } else {
         if (queue[index]) {
-          fn(queue[index], function () {
-            step(index + 1);
+          fn(queue[index], function (error) {
+            if (error) {
+              return cb(error);
+            } else {
+              step(index + 1);
+            }
           });
         } else {
           step(index + 1);
@@ -25,8 +30,6 @@ define('public/js/module/async', function(require, exports, module) {
     };
   
     step(0);
-  } /**
-     * Created by adoug on 2017/6/23.
-     */
+  }
 
 });

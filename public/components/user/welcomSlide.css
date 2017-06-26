@@ -1,0 +1,26 @@
+
+
+
+
+
+
+
+
+
+
+
+.stage[_v-bceea374] {
+  position: relative;
+  width: 100%;
+}
+
+.stage[_v-bceea374]::before {
+  content: '';
+  padding-bottom: 56.25%;
+  width: 1px;
+  vertical-align: middle;
+}
+
+.stage__item[_v-bceea374] {
+  max-height: 100%;
+}

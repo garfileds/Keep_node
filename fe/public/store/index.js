@@ -97,6 +97,7 @@ const store = new Vuex.Store({
 })
 
 //在应用启动时拉取plans
+/*
 Vue.http.get(apiGetPlans)
 .then(response => {
   let plans = response.body.plans
@@ -107,9 +108,10 @@ Vue.http.get(apiGetPlans)
   plansBackup = JSON.parse(JSON.stringify(plans))
   commitId = response.body.commit_id
 })
+*/
 
 //统一处理同步逻辑（除了addPlan）
-syncPlans()
+//syncPlans()
 
 function syncPlans() {
   let copyUpdateQueue = deepCopy(updateQueue)

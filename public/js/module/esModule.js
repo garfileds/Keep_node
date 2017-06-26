@@ -10,9 +10,9 @@ define('public/js/module/esModule', function(require, exports, module) {
    * Created by chenpeng on 2017/6/8.
    */
   
-  var md5 = require('blueimp-md5');
+  var md5 = require('node_modules/blueimp-md5/js/md5');
   
-  var Promise = require('es6-promise').Promise;
+  var Promise = require('node_modules/es6-promise/dist/es6-promise').Promise;
   
   exports.md5 = md5;
   exports.Promise = Promise;

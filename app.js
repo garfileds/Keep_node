@@ -8,7 +8,7 @@ const jwt = require('express-jwt'),
       unless = require('express-unless'),
       onFinished = require('on-finished'),
       NotFoundError = require(path.join(__dirname, 'errors', 'NotFoundError.js')),
-      tokenUtils = require(path.join(__dirname, 'app', 'tokenUtils.js'))
+      tokenUtils = require(path.join(__dirname, 'app/user', 'tokenUtils.js'))
 
 const config = require('./config.json'),
       mongoose_uri = process.env.MONGOOSE_URI || 'localhost/Keep'
@@ -32,8 +32,7 @@ debug('Setup view engine')
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -54,14 +53,20 @@ jwtCheck.unless = unless
 
 app.use(jwtCheck.unless({
   path: [
-    { url: '/api/session', methods: ['POST'] },
-    '/api/user'
+    { url: '/api/user/token', methods: ['POST'] },
+    '/api/user',
+    '/api/user/emailStatus',
+    /\/page\/.+/,
+    '/'
   ]
 }))
 app.use(tokenUtils.middleware().unless({
   path: [
-    { url: '/api/session', methods: ['POST'] },
-    '/api/user'
+    { url: '/api/user/token', methods: ['POST'] },
+    '/api/user',
+    '/api/user/emailStatus',
+    /\/page\/.+/,
+    '/'
   ]
 }))
 

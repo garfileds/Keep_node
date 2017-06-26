@@ -1,0 +1,32 @@
+
+
+
+
+
+
+
+
+
+
+
+.stage[_v-69638001] {
+  position: relative;
+  width: 100%;
+}
+
+.stage[_v-69638001]::before {
+  content: '';
+  padding-bottom: 56.25%;
+  width: 1px;
+  vertical-align: middle;
+}
+
+.stage__item[_v-69638001] {
+  max-height: 100%;
+}
+
+.description[_v-69638001] {
+  color: #000000;
+  text-align: center;
+  margin-top: 2em;
+}

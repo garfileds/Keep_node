@@ -6,17 +6,18 @@ const debug = require('debug')('app:app:user' + process.pid),
   _ = require('lodash'),
   util = require('util'),
   path = require('path'),
-  tokenUtils = require('../tokenUtils.js'),
+  tokenUtils = require('./tokenUtils.js'),
   UnauthorizedAccessError = require(path.join(__dirname, '../..', 'errors', 'UnauthorizedAccessError.js')),
+  NotFoundError = require(path.join(__dirname, '../..', 'errors', 'NotFoundError.js')),
   User = require(path.join(__dirname, '../..', 'models', 'user.js'))
 
 module.exports.authenticate = function (req, res, next) {
   debug('Processing authenticate middleware')
 
-  let username = req.body.username,
+  let email = req.body.email,
     password = req.body.password
 
-  if (_.isEmpty(username) || _.isEmpty(password)) {
+  if (_.isEmpty(email) || _.isEmpty(password)) {
     return next(new UnauthorizedAccessError('401', {
       message: 'Invalid username or password'
     }))
@@ -24,7 +25,7 @@ module.exports.authenticate = function (req, res, next) {
 
   process.nextTick(function () {
     User.findOne({
-      username: username
+      email: email
     }, function (err, user) {
       if (err || !user) {
         return next(new UnauthorizedAccessError('401', {
@@ -59,7 +60,8 @@ module.exports.logout = function (req, res, next) {
 
 module.exports.createUser = function (req, res, next) {
   let user = new User()
-  user.username = req.body.username
+  user.nickname = req.body.nickname
+  user.email = req.body.email
   user.password = req.body.password
 
   user.save(function (err) {
@@ -67,6 +69,24 @@ module.exports.createUser = function (req, res, next) {
       return next(err)
     } else {
       return res.status(200).json(undefined)
+    }
+  })
+}
+
+module.exports.emailIsUsed = function (req, res, next) {
+  let email = req.query.email
+
+  User.findOne({
+    email: email
+  }, function (err, user) {
+    if (err) {
+      return next(new NotFoundError('404', {
+        message: 'something wrong when querying'
+      }))
+    } else {
+      return res.status(200).json({
+        isUsed: !!user
+      })
     }
   })
 }

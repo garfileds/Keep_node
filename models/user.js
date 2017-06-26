@@ -7,10 +7,21 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema
 
 var UserSchema = new Schema({
-  username: {
+  nickname: {
+    type: String,
+    required: true
+  },
+
+  email: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    validate: {
+      validator: function (v) {
+        return /^[a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9])+/.test(v)
+      },
+      message: '注册用户的邮箱格式不正确'
+    }
   },
 
   password: {
