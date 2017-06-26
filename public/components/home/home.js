@@ -95,13 +95,17 @@ define('public/components/home/home.vue', function(require, exports, module) {
       }
     }, (0, _vuex.mapState)(['plans']), (0, _vuex.mapGetters)(['plansDone', 'plansIng'])),
   
-    methods: {
+    methods: _extends({
       switcher: function switcher() {
         this.plansDoneShow = !this.plansDoneShow;
       },
       catPlan: function catPlan(planId, status) {
         router.push('/planDetail/' + planId + '?status=' + status);
       }
+    }, (0, _vuex.mapActions)(['getPlans'])),
+  
+    created: function created() {
+      this.getPlans();
     },
   
     components: { planThumbnail: _planThumbnail2.default, kHeader: _kHeader2.default }

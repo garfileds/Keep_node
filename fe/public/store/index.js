@@ -6,6 +6,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 
+import { isEqual } from 'lodash'
+
 import { isPureObject, isEmpty, deepCopy } from '../js/module/utils'
 import { md5 } from '../js/module/esModule'
 import { runQueue } from '../js/module/async'
@@ -78,7 +80,7 @@ const store = new Vuex.Store({
         i++
       }
 
-      updateQueue[updateQueue.length - 1].delete.push(payload.planId)
+      updateQueue[updateQueue.length - 1].remove.push(payload.planId)
     },
 
     donePlan(state, payload) {
@@ -93,27 +95,31 @@ const store = new Vuex.Store({
 
       updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done
     }
+  },
+
+  actions: {
+    //拉取plans：在/home时使用
+    getPlans({ commit }) {
+      Vue.http.get(apiGetPlans).then(response => {
+        let plans = response.body.plans
+
+        commit('initPlans', plans)
+
+        //deepCopy plans
+        plansBackup = JSON.parse(JSON.stringify(plans))
+        commitId = response.body.commit_id
+        syncPlans()
+      })
+    }
   }
 })
 
-//在应用启动时拉取plans
-/*
-Vue.http.get(apiGetPlans)
-.then(response => {
-  let plans = response.body.plans
-
-  store.commit('initPlans', plans)
-
-  //deepCopy plans
-  plansBackup = JSON.parse(JSON.stringify(plans))
-  commitId = response.body.commit_id
-})
-*/
-
-//统一处理同步逻辑（除了addPlan）
-//syncPlans()
-
+//统一处理同步逻辑（除了addPlans）
 function syncPlans() {
+  if (isEqual([initQueueItem()], updateQueue)) {
+    return setTimeout(syncPlans, synTime)
+  }
+
   let copyUpdateQueue = deepCopy(updateQueue)
   updateQueue = [initQueueItem()]
   runQueue(copyUpdateQueue, processQueueItem, () => {
@@ -184,7 +190,7 @@ function processQueueItem(item, next) {
 function initQueueItem() {
   return {
     update: [],
-    delete: [],
+    remove: [],
     done: {}
   }
 }

@@ -63,7 +63,7 @@
   import kHeader from './kHeader'
   import planThumbnail from './planThumbnail'
 
-  import { mapState, mapGetters } from 'vuex'
+  import { mapState, mapGetters, mapActions } from 'vuex'
 
   export default {
     name: 'home',
@@ -96,7 +96,15 @@
 
       catPlan(planId, status) {
         router.push(`/planDetail/${planId}?status=${status}`)
-      }
+      },
+
+      ...mapActions([
+        'getPlans'
+      ])
+    },
+
+    created: function() {
+      this.getPlans()
     },
 
     components: { planThumbnail, kHeader }

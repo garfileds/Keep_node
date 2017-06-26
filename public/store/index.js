@@ -18,6 +18,8 @@ define('public/store/index', function(require, exports, module) {
   
   var _vueResource2 = _interopRequireDefault(_vueResource);
   
+  var _lodash = require('node_modules/lodash/lodash');
+  
   var _utils = require('public/js/module/utils');
   
   var _esModule = require('public/js/module/esModule');
@@ -97,7 +99,7 @@ define('public/store/index', function(require, exports, module) {
           i++;
         }
   
-        updateQueue[updateQueue.length - 1].delete.push(payload.planId);
+        updateQueue[updateQueue.length - 1].remove.push(payload.planId);
       },
       donePlan: function donePlan(state, payload) {
         var plan = void 0,
@@ -112,27 +114,33 @@ define('public/store/index', function(require, exports, module) {
   
         updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done;
       }
+    },
+  
+    actions: {
+      //拉取plans：在/home时使用
+      getPlans: function getPlans(_ref) {
+        var commit = _ref.commit;
+  
+        _vue2.default.http.get(apiGetPlans).then(function (response) {
+          var plans = response.body.plans;
+  
+          commit('initPlans', plans);
+  
+          //deepCopy plans
+          plansBackup = JSON.parse(JSON.stringify(plans));
+          commitId = response.body.commit_id;
+          syncPlans();
+        });
+      }
     }
   });
   
-  //在应用启动时拉取plans
-  /*
-  Vue.http.get(apiGetPlans)
-  .then(response => {
-    let plans = response.body.plans
-  
-    store.commit('initPlans', plans)
-  
-    //deepCopy plans
-    plansBackup = JSON.parse(JSON.stringify(plans))
-    commitId = response.body.commit_id
-  })
-  */
-  
-  //统一处理同步逻辑（除了addPlan）
-  //syncPlans()
-  
+  //统一处理同步逻辑（除了addPlans）
   function syncPlans() {
+    if ((0, _lodash.isEqual)([initQueueItem()], updateQueue)) {
+      return setTimeout(syncPlans, synTime);
+    }
+  
     var copyUpdateQueue = (0, _utils.deepCopy)(updateQueue);
     updateQueue = [initQueueItem()];
     (0, _async.runQueue)(copyUpdateQueue, processQueueItem, function () {
@@ -203,7 +211,7 @@ define('public/store/index', function(require, exports, module) {
   function initQueueItem() {
     return {
       update: [],
-      delete: [],
+      remove: [],
       done: {}
     };
   }
