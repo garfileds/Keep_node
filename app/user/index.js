@@ -19,7 +19,7 @@ module.exports.authenticate = function (req, res, next) {
 
   if (_.isEmpty(email) || _.isEmpty(password)) {
     return next(new UnauthorizedAccessError('401', {
-      message: 'Invalid username or password'
+      message: '用户名或密码不正确'
     }))
   }
 
@@ -29,7 +29,7 @@ module.exports.authenticate = function (req, res, next) {
     }, function (err, user) {
       if (err || !user) {
         return next(new UnauthorizedAccessError('401', {
-          message: 'Invalid username or password'
+          message: '用户名或密码不正确'
         }))
       }
 
@@ -39,7 +39,7 @@ module.exports.authenticate = function (req, res, next) {
           tokenUtils.create(user, req, res, next)
         } else {
           return next(new UnauthorizedAccessError('401', {
-            message: 'Invalid username or password'
+            message: '用户名或密码不正确'
           }))
         }
       })
@@ -80,9 +80,7 @@ module.exports.emailIsUsed = function (req, res, next) {
     email: email
   }, function (err, user) {
     if (err) {
-      return next(new NotFoundError('404', {
-        message: 'something wrong when querying'
-      }))
+      return next(new Error('something wrong when querying'))
     } else {
       return res.status(200).json({
         isUsed: !!user

@@ -115,7 +115,7 @@
           plan.id = response.body.message.plan_id
 
           self.$store.commit('addPlan', { plan })
-          router.push(`/`)
+          router.push(`/home`)
         })
       },
 

@@ -53,9 +53,12 @@ _vue2.default.use(_vueRouter2.default); /**
 _vue2.default.use(_vueResource2.default);
 _vue2.default.config.productionTip = false;
 
-var routes = [{ path: '/', component: _welcome2.default }, { path: '/userRegister', component: _register2.default }, { path: '/userLogin', component: _login2.default }, { path: '/home', component: _home2.default }, { path: '/planAdd', component: _planAdd2.default }, { path: '/planDetail/:id', component: _planDetail2.default }, { path: '/planEdit/:id', component: _planEdit2.default } /*,
-                                                                                                                                                                                                                                                                                                                                                                                                  { path: '/setting', component: Setting },
-                                                                                                                                                                                                                                                                                                                                                                                                  { path: '/cup', component: Cup }*/
+var routes = [{ path: '/', component: _welcome2.default }, { path: '/userRegister', component: _register2.default }, { path: '/userLogin', component: _login2.default }, {
+  path: '/home',
+  component: _home2.default
+}, { path: '/planAdd', component: _planAdd2.default }, { path: '/planDetail/:id', component: _planDetail2.default }, { path: '/planEdit/:id', component: _planEdit2.default } /*,
+                                                                                                                                                                              { path: '/setting', component: Setting },
+                                                                                                                                                                              { path: '/cup', component: Cup }*/
 ];
 
 var router = new _vueRouter2.default({

@@ -17,6 +17,7 @@ Vue.use(VueResource)
 
 let updateQueue = [initQueueItem()]
 let plansBackup, commitId
+let syncTimer
 
 const apiGetPlans = '/api/plans'
 const apiPostPlans = '/api/plans'
@@ -24,7 +25,8 @@ const synTime = 500
 
 const store = new Vuex.Store({
   state: {
-    isInitialized: false,
+    //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
+    needInit: true,
     plans: []
   },
 
@@ -45,7 +47,11 @@ const store = new Vuex.Store({
   mutations: {
     initPlans(state, plans) {
       state.plans = plans
-      state.isInitialized = true
+      state.needInit = false
+    },
+
+    changeNeedInit(state, change) {
+      state.needInit = change
     },
 
     coverPlans(state, plans) {
@@ -58,17 +64,17 @@ const store = new Vuex.Store({
     },
 
     updatePlan(state, payload) {
-      let i = 0, key, plan
+      let i = 0, plan
       while (i < state.plans.length) {
         if (state.plans[i].id === payload.planId) {
           plan = state.plans[i]
 
-          for (key in payload.updateInfo) {
-            if (payload.updateInfo.hasOwnProperty(key)) {
-              plan[key] = payload.updateInfo[key]
-            }
-          }
+          Object.keys(payload.updateInfo).forEach(key => {
+            plan[key] = payload.updateInfo[key]
+          })
+          break
         }
+
         i++
       }
 
@@ -76,15 +82,9 @@ const store = new Vuex.Store({
     },
 
     deletePlan(state, payload) {
-      let i = 0
-      while (i < state.plans.length) {
-        if (state.plans[i].id === payload.planId) {
-          state.plans.splice(i, 1)
-          break
-        }
-
-        i++
-      }
+      state.plans = state.plans.filter(plan => {
+        return plan.id !== payload.planId
+      })
 
       updateQueue[updateQueue.length - 1].remove.push(payload.planId)
     },
@@ -99,16 +99,22 @@ const store = new Vuex.Store({
       index = plan.progress.done.indexOf(payload.day)
       index === -1 ? plan.progress.done.push(payload.day) : plan.progress.done.splice(index, 1)
 
+      if (plan.progress.done.length === plan.progress.marked.length) {
+        plan.status = 'done'
+      } else {
+        plan.status = 'ing'
+      }
+
       updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done
     }
   },
 
   actions: {
-    //拉取plans：在/home时使用
     getPlans({ commit }) {
       Vue.http.get(apiGetPlans).then(response => {
-        let plans = response.body.plans
+        clearTimeout(syncTimer)
 
+        let plans = response.body.plans
         commit('initPlans', plans)
 
         //deepCopy plans
@@ -125,14 +131,15 @@ const store = new Vuex.Store({
 //统一处理同步逻辑（除了addPlans）
 function syncPlans() {
   if (isEqual([initQueueItem()], updateQueue)) {
-    return setTimeout(syncPlans, synTime)
+    syncTimer = setTimeout(syncPlans, synTime)
+    return
   }
 
   let copyUpdateQueue = deepCopy(updateQueue)
   updateQueue = [initQueueItem()]
   runQueue(copyUpdateQueue, processQueueItem, () => {
     copyUpdateQueue = null
-    setTimeout(syncPlans, synTime)
+    syncTimer = setTimeout(syncPlans, synTime)
   })
 }
 

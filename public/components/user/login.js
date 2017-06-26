@@ -6,7 +6,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
     value: true
   });
   
-  var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); //
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
   //
   //
   //
@@ -54,6 +54,8 @@ define('public/components/user/login.vue', function(require, exports, module) {
   var _vue = require('node_modules/vue/dist/vue.runtime.common');
   
   var _vue2 = _interopRequireDefault(_vue);
+  
+  var _vuex = require('node_modules/vuex/dist/vuex');
   
   var _async = require('public/js/module/async');
   
@@ -113,21 +115,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
       var ruleValidFnGene = function ruleValidFnGene(rule, field) {
         var ruleValidFn = void 0;
         if (rule.pattern === 'required') {
-          ruleValidFn = function ruleValidFn(next) {
-            var field = void 0,
-                rule = void 0,
-                resolveMsgAlert = void 0;
-  
-            var _Array$prototype$slic = Array.prototype.slice.call(arguments);
-  
-            var _Array$prototype$slic2 = _slicedToArray(_Array$prototype$slic, 4);
-  
-            field = _Array$prototype$slic2[0];
-            rule = _Array$prototype$slic2[1];
-            resolveMsgAlert = _Array$prototype$slic2[2];
-            next = _Array$prototype$slic2[3];
-  
-  
+          ruleValidFn = function ruleValidFn(field, rule, resolveMsgAlert, next) {
             if (this[field].length > 0) {
               next();
             } else {
@@ -136,21 +124,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
             }
           };
         } else if (rule.pattern instanceof RegExp) {
-          ruleValidFn = function ruleValidFn(next) {
-            var field = void 0,
-                rule = void 0,
-                resolveMsgAlert = void 0;
-  
-            var _Array$prototype$slic3 = Array.prototype.slice.call(arguments);
-  
-            var _Array$prototype$slic4 = _slicedToArray(_Array$prototype$slic3, 4);
-  
-            field = _Array$prototype$slic4[0];
-            rule = _Array$prototype$slic4[1];
-            resolveMsgAlert = _Array$prototype$slic4[2];
-            next = _Array$prototype$slic4[3];
-  
-  
+          ruleValidFn = function ruleValidFn(field, rule, resolveMsgAlert, next) {
             if (rule.pattern.test(this[field])) {
               next();
             } else {
@@ -182,7 +156,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
       }, false);
     },
   
-    methods: {
+    methods: _extends({
       //以后写表单验证插件的接口，传入validateResult
       submitLoginHandler: function submitLoginHandler(validateResult) {
         var self = this;
@@ -195,16 +169,17 @@ define('public/components/user/login.vue', function(require, exports, module) {
         }).then(function (response) {
           if (response.status === 200) {
             _vue2.default.http.headers.common['Authorization'] = 'Bearer ' + response.body.token;
+            self.changeNeedInit(true);
             router.push('/home');
-          } else {
-            window.alert(response.body);
           }
+        }, function () {
+          window.alert('用户名或密码不正确');
         });
       },
       navBack: function navBack() {
         router.go(-1);
       }
-    }
+    }, (0, _vuex.mapMutations)(['changeNeedInit']))
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){

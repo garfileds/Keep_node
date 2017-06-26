@@ -38,6 +38,7 @@ define('public/store/index', function(require, exports, module) {
   var updateQueue = [initQueueItem()];
   var plansBackup = void 0,
       commitId = void 0;
+  var syncTimer = void 0;
   
   var apiGetPlans = '/api/plans';
   var apiPostPlans = '/api/plans';
@@ -45,7 +46,8 @@ define('public/store/index', function(require, exports, module) {
   
   var store = new _vuex2.default.Store({
     state: {
-      isInitialized: false,
+      //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
+      needInit: true,
       plans: []
     },
   
@@ -65,7 +67,10 @@ define('public/store/index', function(require, exports, module) {
     mutations: {
       initPlans: function initPlans(state, plans) {
         state.plans = plans;
-        state.isInitialized = true;
+        state.needInit = false;
+      },
+      changeNeedInit: function changeNeedInit(state, change) {
+        state.needInit = change;
       },
       coverPlans: function coverPlans(state, plans) {
         state.plans = plans;
@@ -76,33 +81,26 @@ define('public/store/index', function(require, exports, module) {
       },
       updatePlan: function updatePlan(state, payload) {
         var i = 0,
-            key = void 0,
             plan = void 0;
         while (i < state.plans.length) {
           if (state.plans[i].id === payload.planId) {
             plan = state.plans[i];
   
-            for (key in payload.updateInfo) {
-              if (payload.updateInfo.hasOwnProperty(key)) {
-                plan[key] = payload.updateInfo[key];
-              }
-            }
+            Object.keys(payload.updateInfo).forEach(function (key) {
+              plan[key] = payload.updateInfo[key];
+            });
+            break;
           }
+  
           i++;
         }
   
         updateQueue[updateQueue.length - 1].update.push(payload);
       },
       deletePlan: function deletePlan(state, payload) {
-        var i = 0;
-        while (i < state.plans.length) {
-          if (state.plans[i].id === payload.planId) {
-            state.plans.splice(i, 1);
-            break;
-          }
-  
-          i++;
-        }
+        state.plans = state.plans.filter(function (plan) {
+          return plan.id !== payload.planId;
+        });
   
         updateQueue[updateQueue.length - 1].remove.push(payload.planId);
       },
@@ -117,18 +115,24 @@ define('public/store/index', function(require, exports, module) {
         index = plan.progress.done.indexOf(payload.day);
         index === -1 ? plan.progress.done.push(payload.day) : plan.progress.done.splice(index, 1);
   
+        if (plan.progress.done.length === plan.progress.marked.length) {
+          plan.status = 'done';
+        } else {
+          plan.status = 'ing';
+        }
+  
         updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done;
       }
     },
   
     actions: {
-      //拉取plans：在/home时使用
       getPlans: function getPlans(_ref) {
         var commit = _ref.commit;
   
         _vue2.default.http.get(apiGetPlans).then(function (response) {
-          var plans = response.body.plans;
+          clearTimeout(syncTimer);
   
+          var plans = response.body.plans;
           commit('initPlans', plans);
   
           //deepCopy plans
@@ -145,14 +149,15 @@ define('public/store/index', function(require, exports, module) {
   //统一处理同步逻辑（除了addPlans）
   function syncPlans() {
     if ((0, _lodash.isEqual)([initQueueItem()], updateQueue)) {
-      return setTimeout(syncPlans, synTime);
+      syncTimer = setTimeout(syncPlans, synTime);
+      return;
     }
   
     var copyUpdateQueue = (0, _utils.deepCopy)(updateQueue);
     updateQueue = [initQueueItem()];
     (0, _async.runQueue)(copyUpdateQueue, processQueueItem, function () {
       copyUpdateQueue = null;
-      setTimeout(syncPlans, synTime);
+      syncTimer = setTimeout(syncPlans, synTime);
     });
   }
   

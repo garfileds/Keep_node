@@ -80,7 +80,7 @@
       },
 
       ...mapState([
-        'isInitialized',
+        'needInit',
         'plans'
       ]),
 
@@ -105,11 +105,9 @@
     },
 
     created: function() {
-      if (this.isInitialized) {
-        return
+      if (this.needInit) {
+        this.getPlans()
       }
-
-      this.getPlans()
     },
 
     components: { planThumbnail, kHeader }

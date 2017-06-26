@@ -44,6 +44,7 @@
 
 <script>
   import Vue from 'vue'
+  import { mapMutations } from 'vuex'
   import { runQueue } from '../../js/module/async'
 
   const apiPostToken = `/api/user/token`
@@ -100,10 +101,7 @@
       const ruleValidFnGene = (rule, field) => {
         let ruleValidFn
         if (rule.pattern === 'required') {
-          ruleValidFn = function(next) {
-            let field, rule, resolveMsgAlert
-            [field, rule, resolveMsgAlert, next] = Array.prototype.slice.call(arguments)
-
+          ruleValidFn = function(field, rule, resolveMsgAlert, next) {
             if (this[field].length > 0) {
               next()
             } else {
@@ -112,10 +110,7 @@
             }
           }
         } else if (rule.pattern instanceof RegExp) {
-          ruleValidFn = function(next) {
-            let field, rule, resolveMsgAlert
-            [field, rule, resolveMsgAlert, next] = Array.prototype.slice.call(arguments)
-
+          ruleValidFn = function(field, rule, resolveMsgAlert, next) {
             if (rule.pattern.test(this[field])) {
               next()
             } else {
@@ -158,16 +153,21 @@
         }).then(response => {
           if (response.status === 200) {
             Vue.http.headers.common['Authorization'] = `Bearer ${response.body.token}`
+            self.changeNeedInit(true)
             router.push('/home')
-          } else {
-            window.alert(response.body)
           }
+        }, () => {
+          window.alert('用户名或密码不正确')
         })
       },
 
       navBack() {
         router.go(-1)
-      }
+      },
+
+      ...mapMutations([
+        'changeNeedInit'
+      ])
     }
   }
 </script>

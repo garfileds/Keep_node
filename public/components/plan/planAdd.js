@@ -132,7 +132,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
           plan.id = response.body.message.plan_id;
   
           self.$store.commit('addPlan', { plan: plan });
-          router.push('/');
+          router.push('/home');
         });
       },
       navBack: function navBack() {

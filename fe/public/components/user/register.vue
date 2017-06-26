@@ -46,16 +46,14 @@
 
 <script>
   import Vue from 'vue'
+  import { mapMutations } from 'vuex'
   import { runQueue } from '../../js/module/async'
 
   const apiCreateUser = `/api/user`,
     apiPostToken = `/api/user/token`,
     apiGetEmailStatus = `/api/user/emailStatus`
 
-  const isUsed = function (next) {
-    let field, rule, resolveMsgAlert
-    [field, rule, resolveMsgAlert, next] = Array.prototype.slice.call(arguments)
-
+  const isUsed = function (field, rule, resolveMsgAlert, next) {
     let self = this
 
     Vue.http.get(apiGetEmailStatus, {
@@ -132,10 +130,7 @@
       const ruleValidFnGene = (rule, field) => {
         let ruleValidFn
         if (rule.pattern === 'required') {
-          ruleValidFn = function(next) {
-            let field, rule, resolveMsgAlert
-            [field, rule, resolveMsgAlert, next] = Array.prototype.slice.call(arguments)
-
+          ruleValidFn = function(field, rule, resolveMsgAlert, next) {
             if (this[field].length > 0) {
               next()
             } else {
@@ -144,10 +139,7 @@
             }
           }
         } else if (rule.pattern instanceof RegExp) {
-          ruleValidFn = function(next) {
-            let field, rule, resolveMsgAlert
-            [field, rule, resolveMsgAlert, next] = Array.prototype.slice.call(arguments)
-
+          ruleValidFn = function(field, rule, resolveMsgAlert, next) {
             if (rule.pattern.test(this[field])) {
               next()
             } else {
@@ -195,6 +187,7 @@
               password: self.password
             }).then(response => {
               Vue.http.headers.common['Authorization'] = `Bearer ${response.body.token}`
+              self.changeNeedInit(true)
               router.push('/home')
             })
           }
@@ -203,7 +196,11 @@
 
       navBack() {
         router.go(-1)
-      }
+      },
+
+      ...mapMutations([
+        'changeNeedInit'
+      ])
     }
   }
 </script>

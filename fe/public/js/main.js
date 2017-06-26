@@ -22,7 +22,10 @@ const routes = [
   { path: '/', component: welcome },
   { path: '/userRegister', component: userRegister },
   { path: '/userLogin', component: userLogin },
-  { path: '/home', component: home },
+  {
+    path: '/home',
+    component: home
+  },
   { path: '/planAdd', component: planAdd },
   { path: '/planDetail/:id', component: planDetail },
   { path: '/planEdit/:id', component: planEdit }/*,
