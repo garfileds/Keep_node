@@ -233,13 +233,13 @@ define('public/components/plan/planDetail.vue', function(require, exports, modul
       },
       handleDelete: function handleDelete() {
         this.deletePlan({ planId: this.plan.id });
-        router.push('/');
+        router.push('/home');
       },
       handleAdd: function handleAdd() {
         router.push('/planAdd');
       },
       navHome: function navHome() {
-        router.push('/');
+        router.push('/home');
       }
     }),
   

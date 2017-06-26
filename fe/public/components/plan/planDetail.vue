@@ -226,7 +226,7 @@
 
       handleDelete() {
         this.deletePlan({ planId: this.plan.id })
-        router.push('/')
+        router.push('/home')
       },
 
       handleAdd() {
@@ -234,7 +234,7 @@
       },
 
       navHome() {
-        router.push('/')
+        router.push('/home')
       }
     },
 

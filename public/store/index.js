@@ -45,6 +45,7 @@ define('public/store/index', function(require, exports, module) {
   
   var store = new _vuex2.default.Store({
     state: {
+      isInitialized: false,
       plans: []
     },
   
@@ -63,6 +64,10 @@ define('public/store/index', function(require, exports, module) {
   
     mutations: {
       initPlans: function initPlans(state, plans) {
+        state.plans = plans;
+        state.isInitialized = true;
+      },
+      coverPlans: function coverPlans(state, plans) {
         state.plans = plans;
       },
       addPlan: function addPlan(state, payload) {
@@ -130,6 +135,8 @@ define('public/store/index', function(require, exports, module) {
           plansBackup = JSON.parse(JSON.stringify(plans));
           commitId = response.body.commit_id;
           syncPlans();
+        }, function () {
+          router.push('/');
         });
       }
     }
@@ -198,7 +205,7 @@ define('public/store/index', function(require, exports, module) {
             } else {
               plansBackup = JSON.parse(plansStr);
               commitId = commitIdTemp;
-              store.commit('initPlans', plansMerge);
+              store.commit('coverPlans', plansMerge);
   
               next();
             }

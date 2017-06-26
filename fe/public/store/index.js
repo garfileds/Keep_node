@@ -24,6 +24,7 @@ const synTime = 500
 
 const store = new Vuex.Store({
   state: {
+    isInitialized: false,
     plans: []
   },
 
@@ -43,6 +44,11 @@ const store = new Vuex.Store({
 
   mutations: {
     initPlans(state, plans) {
+      state.plans = plans
+      state.isInitialized = true
+    },
+
+    coverPlans(state, plans) {
       state.plans = plans
     },
 
@@ -109,6 +115,8 @@ const store = new Vuex.Store({
         plansBackup = JSON.parse(JSON.stringify(plans))
         commitId = response.body.commit_id
         syncPlans()
+      }, () => {
+        router.push('/')
       })
     }
   }
@@ -166,23 +174,22 @@ function processQueueItem(item, next) {
         type: 'global',
         commit_id: commitIdTemp,
         update_info: plansMerge
+      }).then(response => {
+        if (response.body.code === 'ok') {
+          plansStr = JSON.stringify(plansMerge)
+          commitIdTemp = md5(plansStr)
+
+          if (commitIdTemp !== response.body.commit_id) {
+            console.error('expected synchronization after merge')
+          } else {
+            plansBackup = JSON.parse(plansStr)
+            commitId = commitIdTemp
+            store.commit('coverPlans', plansMerge)
+
+            next()
+          }
+        }
       })
-          .then(response => {
-            if (response.body.code === 'ok') {
-              plansStr = JSON.stringify(plansMerge)
-              commitIdTemp = md5(plansStr)
-
-              if (commitIdTemp !== response.body.commit_id) {
-                console.error('expected synchronization after merge')
-              } else {
-                plansBackup = JSON.parse(plansStr)
-                commitId = commitIdTemp
-                store.commit('initPlans', plansMerge)
-
-                next()
-              }
-            }
-          })
     }
   })
 }

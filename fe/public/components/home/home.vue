@@ -80,6 +80,7 @@
       },
 
       ...mapState([
+        'isInitialized',
         'plans'
       ]),
 
@@ -104,6 +105,10 @@
     },
 
     created: function() {
+      if (this.isInitialized) {
+        return
+      }
+
       this.getPlans()
     },
 

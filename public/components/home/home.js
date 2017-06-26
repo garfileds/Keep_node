@@ -93,7 +93,7 @@ define('public/components/home/home.vue', function(require, exports, module) {
       plansSwitchMsg: function plansSwitchMsg() {
         return this.plansDoneShow ? '隐藏已完成的计划' : "显示已完成的计划";
       }
-    }, (0, _vuex.mapState)(['plans']), (0, _vuex.mapGetters)(['plansDone', 'plansIng'])),
+    }, (0, _vuex.mapState)(['isInitialized', 'plans']), (0, _vuex.mapGetters)(['plansDone', 'plansIng'])),
   
     methods: _extends({
       switcher: function switcher() {
@@ -105,6 +105,10 @@ define('public/components/home/home.vue', function(require, exports, module) {
     }, (0, _vuex.mapActions)(['getPlans'])),
   
     created: function created() {
+      if (this.isInitialized) {
+        return;
+      }
+  
       this.getPlans();
     },
   
