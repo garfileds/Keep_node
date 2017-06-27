@@ -145,12 +145,14 @@ define('public/store/index', function(require, exports, module) {
           var plans = response.body.plans;
           commit('initPlans', plans);
   
-          //deepCopy plans
+          //cloneDeep plans
           plansBackup = JSON.parse(JSON.stringify(plans));
           commitId = response.body.commit_id;
           syncPlans();
-        }, function () {
-          router.push('/');
+        }, function (response) {
+          if (response.status === 401) {
+            router.push('/');
+          }
         });
       }
     }
@@ -163,9 +165,15 @@ define('public/store/index', function(require, exports, module) {
       return;
     }
   
-    var copyUpdateQueue = (0, _utils.deepCopy)(updateQueue);
+    var copyUpdateQueue = (0, _lodash.cloneDeep)(updateQueue);
     updateQueue = [initQueueItem()];
-    (0, _async.runQueue)(copyUpdateQueue, processQueueItem, function () {
+    (0, _async.runQueue)(copyUpdateQueue, processQueueItem, function (error) {
+      if (error) {
+        var _updateQueue;
+  
+        (_updateQueue = updateQueue).unshift.apply(_updateQueue, _toConsumableArray(copyUpdateQueue.slice(error.index)));
+      }
+  
       copyUpdateQueue = null;
       syncTimer = setTimeout(syncPlans, synTime);
     });
@@ -177,6 +185,10 @@ define('public/store/index', function(require, exports, module) {
    * @param next
    */
   function processQueueItem(item, next) {
+    if ((0, _lodash.isEqual)(initQueueItem(), item)) {
+      return next();
+    }
+  
     _vue2.default.http.post(apiPostPlans, {
       commit_id: commitId,
       type: 'local',
@@ -211,7 +223,7 @@ define('public/store/index', function(require, exports, module) {
           commit_id: commitIdTemp,
           update_info: plansMerge
         }).then(function (response) {
-          if (response.body.code === 'ok') {
+          if (response.status === 200) {
             plansStr = JSON.stringify(plansMerge);
             commitIdTemp = (0, _esModule.md5)(plansStr);
   
@@ -225,8 +237,19 @@ define('public/store/index', function(require, exports, module) {
               next();
             }
           }
+        }, function () {
+          next({
+            index: index,
+            message: 'synchronize fail'
+          });
         });
       }
+    }, function () {
+      //同步过程中出错，交给cb处理
+      next({
+        index: index,
+        message: 'synchronize fail'
+      });
     });
   }
   
@@ -247,8 +270,8 @@ define('public/store/index', function(require, exports, module) {
    */
   function mergePlans(serverPlans, clientPlans) {
     var result = [],
-        basePlans = (0, _utils.deepCopy)(serverPlans),
-        localPlans = (0, _utils.deepCopy)(clientPlans);
+        basePlans = (0, _lodash.cloneDeep)(serverPlans),
+        localPlans = (0, _lodash.cloneDeep)(clientPlans);
   
     var i = 0,
         j = 0,

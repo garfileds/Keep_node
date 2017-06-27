@@ -6,9 +6,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 
-import { isEqual } from 'lodash'
+import { isEqual, cloneDeep } from 'lodash'
 
-import { isPureObject, isEmpty, deepCopy } from '../js/module/utils'
+import { isPureObject, isEmpty } from '../js/module/utils'
 import { md5 } from '../js/module/esModule'
 import { runQueue } from '../js/module/async'
 
@@ -129,12 +129,14 @@ const store = new Vuex.Store({
         let plans = response.body.plans
         commit('initPlans', plans)
 
-        //deepCopy plans
+        //cloneDeep plans
         plansBackup = JSON.parse(JSON.stringify(plans))
         commitId = response.body.commit_id
         syncPlans()
-      }, () => {
-        router.push('/')
+      }, response => {
+        if (response.status === 401) {
+          router.push('/')
+        }
       })
     }
   }
@@ -147,9 +149,13 @@ function syncPlans() {
     return
   }
 
-  let copyUpdateQueue = deepCopy(updateQueue)
+  let copyUpdateQueue = cloneDeep(updateQueue)
   updateQueue = [initQueueItem()]
-  runQueue(copyUpdateQueue, processQueueItem, () => {
+  runQueue(copyUpdateQueue, processQueueItem, (error) => {
+    if (error) {
+      updateQueue.unshift(...copyUpdateQueue.slice(error.index))
+    }
+
     copyUpdateQueue = null
     syncTimer = setTimeout(syncPlans, synTime)
   })
@@ -161,6 +167,10 @@ function syncPlans() {
  * @param next
  */
 function processQueueItem(item, next) {
+  if (isEqual(initQueueItem(), item)) {
+    return next()
+  }
+
   Vue.http.post(apiPostPlans, {
     commit_id: commitId,
     type: 'local',
@@ -194,7 +204,7 @@ function processQueueItem(item, next) {
         commit_id: commitIdTemp,
         update_info: plansMerge
       }).then(response => {
-        if (response.body.code === 'ok') {
+        if (response.status === 200) {
           plansStr = JSON.stringify(plansMerge)
           commitIdTemp = md5(plansStr)
 
@@ -208,8 +218,19 @@ function processQueueItem(item, next) {
             next()
           }
         }
+      }, () => {
+        next({
+          index: index,
+          message: 'synchronize fail'
+        })
       })
     }
+  }, () => {
+    //同步过程中出错，交给cb处理
+    next({
+      index: index,
+      message: 'synchronize fail'
+    })
   })
 }
 
@@ -230,8 +251,8 @@ function initQueueItem() {
  */
 function mergePlans(serverPlans, clientPlans) {
   let result = [],
-      basePlans = deepCopy(serverPlans),
-      localPlans = deepCopy(clientPlans)
+      basePlans = cloneDeep(serverPlans),
+      localPlans = cloneDeep(clientPlans)
 
   let i = 0, j = 0,
       lenBase = basePlans.length,
