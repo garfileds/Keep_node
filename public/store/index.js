@@ -38,7 +38,7 @@ define('public/store/index', function(require, exports, module) {
   var updateQueue = [initQueueItem()];
   var plansBackup = void 0,
       commitId = void 0;
-  var syncTimer = void 0;
+  var syncTimer = 0;
   
   var apiGetPlans = '/api/plans';
   var apiPostPlans = '/api/plans';
@@ -48,6 +48,9 @@ define('public/store/index', function(require, exports, module) {
     state: {
       //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
       needInit: true,
+  
+      queueIsRunning: false,
+  
       plans: [],
       user: {}
     },
@@ -72,6 +75,9 @@ define('public/store/index', function(require, exports, module) {
       },
       changeNeedInit: function changeNeedInit(state, change) {
         state.needInit = change;
+      },
+      changeQueueIsRunning: function changeQueueIsRunning(state, change) {
+        state.queueIsRunning = change;
       },
       coverPlans: function coverPlans(state, plans) {
         state.plans = plans;
@@ -154,6 +160,19 @@ define('public/store/index', function(require, exports, module) {
             router.push('/');
           }
         });
+      },
+      syncPlansOnce: function syncPlansOnce(_ref2, cb) {
+        var commit = _ref2.commit;
+  
+        var copyUpdateQueue = (0, _lodash.cloneDeep)(updateQueue);
+        updateQueue = [initQueueItem()];
+        (0, _async.runQueue)(copyUpdateQueue, processQueueItem, cb);
+      },
+      stopSyncTimer: function stopSyncTimer() {
+        clearTimeout(syncTimer);
+      },
+      startSyncTimer: function startSyncTimer() {
+        syncPlans();
       }
     }
   });
@@ -161,9 +180,12 @@ define('public/store/index', function(require, exports, module) {
   //统一处理同步逻辑（除了addPlans）
   function syncPlans() {
     if ((0, _lodash.isEqual)([initQueueItem()], updateQueue)) {
+      store.commit('changeQueueIsRunning', false);
       syncTimer = setTimeout(syncPlans, synTime);
       return;
     }
+  
+    store.commit('changeQueueIsRunning', true);
   
     var copyUpdateQueue = (0, _lodash.cloneDeep)(updateQueue);
     updateQueue = [initQueueItem()];
@@ -174,6 +196,8 @@ define('public/store/index', function(require, exports, module) {
         (_updateQueue = updateQueue).unshift.apply(_updateQueue, _toConsumableArray(copyUpdateQueue.slice(error.index)));
       }
   
+      store.commit('changeQueueIsRunning', false);
+  
       copyUpdateQueue = null;
       syncTimer = setTimeout(syncPlans, synTime);
     });
@@ -182,9 +206,10 @@ define('public/store/index', function(require, exports, module) {
   /**
    * @fn 增量更新队列中的更新信息
    * @param item updateQueue中的元素
+   * @param index
    * @param next
    */
-  function processQueueItem(item, next) {
+  function processQueueItem(item, index, next) {
     if ((0, _lodash.isEqual)(initQueueItem(), item)) {
       return next();
     }
@@ -206,6 +231,10 @@ define('public/store/index', function(require, exports, module) {
   
         if (commitIdTemp !== response.body.commit_id) {
           console.error('expected synchronization');
+          next({
+            index: index,
+            message: 'synchronize fail'
+          });
         } else {
           plansBackup = JSON.parse(plansStr);
           commitId = commitIdTemp;
@@ -229,6 +258,10 @@ define('public/store/index', function(require, exports, module) {
   
             if (commitIdTemp !== response.body.commit_id) {
               console.error('expected synchronization after merge');
+              next({
+                index: index,
+                message: 'synchronize fail'
+              });
             } else {
               plansBackup = JSON.parse(plansStr);
               commitId = commitIdTemp;

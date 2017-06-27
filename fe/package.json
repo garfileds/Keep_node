@@ -20,7 +20,8 @@
     "fis3-hook-node_modules": "^2.2.3",
     "fis3-packager-deps-pack": "^0.1.2",
     "fis3-parser-vue-component": "^5.2.0",
-    "fis3-postpackager-loader": "^1.5.2"
+    "fis3-postpackager-loader": "^1.5.2",
+    "loaders.css": "^0.1.2"
   },
   "dependencies": {
     "blueimp-md5": "^2.7.0",

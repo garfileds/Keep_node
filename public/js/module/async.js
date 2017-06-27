@@ -16,7 +16,7 @@ define('public/js/module/async', function(require, exports, module) {
         cb();
       } else {
         if (queue[index]) {
-          fn(queue[index], function (error) {
+          fn(queue[index], index, function (error) {
             if (error) {
               return cb(error);
             } else {

@@ -23,11 +23,24 @@
           </span>
         </div>
       </section>
+      <div class="c-loader" v-show="loaderVisible">
+        <div class="c-loader__content pacman">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <p>正在登出，我们会同步你最后的更改...</p>
+      </div>
+      <div class="dimer" v-show="loaderVisible"></div>
     </div>
   </main>
 </template>
 
 <style scoped>
+  @import url(../../style/loaders.min.css);
+
   .header {
     display: flex;
     flex-wrap: nowrap;
@@ -67,7 +80,7 @@
 
 <script>
   import Vue from 'vue'
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapActions } from 'vuex'
 
   const apiDeleteToken = `/api/user/token`
 
@@ -76,13 +89,14 @@
 
     data: function () {
       return {
-
+        loaderVisible: false
       }
     },
 
     computed: {
       ...mapState([
-        'user'
+        'user',
+        'queueIsRunning'
       ])
     },
 
@@ -90,18 +104,52 @@
       logout() {
         const self = this
 
-        this.$http.delete(apiDeleteToken).then(response => {
-          if (response.body.code === 'ok') {
-            self.clear()
-            Vue.http.headers.common['Authorization'] = ''
-            router.push('/')
-          }
-        })
+        this.loaderVisible = true
+
+        //如果有更新未同步，先同步再登出
+        this.stopSyncTimer()
+        if (this.queueIsRunning) {
+          let queryTimer = setInterval(() => {
+            if (!self.queueIsRunning) {
+              clearInterval(queryTimer)
+              logoutHandler(self)
+            }
+          })
+        } else {
+          logoutHandler(self)
+        }
       },
 
       ...mapMutations([
         'clear'
+      ]),
+
+      ...mapActions([
+        'syncPlansOnce',
+        'stopSyncTimer',
+        'startSyncTimer'
       ])
     }
+  }
+
+  function logoutHandler(self) {
+    self.syncPlansOnce(error => {
+      if (error) {
+        self.loaderVisible = false
+        alert('有些记录未同步成功，登出会丢失记录。')
+        self.startSyncTimer()
+        return
+      }
+
+      self.$http.delete(apiDeleteToken).then(response => {
+        if (response.status === 200) {
+          self.loaderVisible = false
+
+          self.clear()
+          Vue.http.headers.common['Authorization'] = ''
+          router.push('/')
+        }
+      })
+    })
   }
 </script>

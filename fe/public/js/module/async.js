@@ -8,7 +8,7 @@ export function runQueue(queue, fn, cb) {
       cb()
     } else {
       if (queue[index]) {
-        fn(queue[index], (error) => {
+        fn(queue[index], index, (error) => {
           if (error) {
             return cb(error)
           } else {

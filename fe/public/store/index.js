@@ -17,7 +17,7 @@ Vue.use(VueResource)
 
 let updateQueue = [initQueueItem()]
 let plansBackup, commitId
-let syncTimer
+let syncTimer = 0
 
 const apiGetPlans = '/api/plans'
 const apiPostPlans = '/api/plans'
@@ -27,6 +27,9 @@ const store = new Vuex.Store({
   state: {
     //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
     needInit: true,
+
+    queueIsRunning: false,
+
     plans: [],
     user: {}
   },
@@ -53,6 +56,10 @@ const store = new Vuex.Store({
 
     changeNeedInit(state, change) {
       state.needInit = change
+    },
+
+    changeQueueIsRunning(state, change) {
+      state.queueIsRunning = change
     },
 
     coverPlans(state, plans) {
@@ -138,6 +145,20 @@ const store = new Vuex.Store({
           router.push('/')
         }
       })
+    },
+
+    syncPlansOnce({ commit }, cb) {
+      let copyUpdateQueue = cloneDeep(updateQueue)
+      updateQueue = [initQueueItem()]
+      runQueue(copyUpdateQueue, processQueueItem, cb)
+    },
+
+    stopSyncTimer() {
+      clearTimeout(syncTimer)
+    },
+
+    startSyncTimer() {
+      syncPlans()
     }
   }
 })
@@ -145,16 +166,21 @@ const store = new Vuex.Store({
 //统一处理同步逻辑（除了addPlans）
 function syncPlans() {
   if (isEqual([initQueueItem()], updateQueue)) {
+    store.commit('changeQueueIsRunning', false)
     syncTimer = setTimeout(syncPlans, synTime)
     return
   }
 
+  store.commit('changeQueueIsRunning', true)
+
   let copyUpdateQueue = cloneDeep(updateQueue)
   updateQueue = [initQueueItem()]
-  runQueue(copyUpdateQueue, processQueueItem, (error) => {
+  runQueue(copyUpdateQueue, processQueueItem, error => {
     if (error) {
       updateQueue.unshift(...copyUpdateQueue.slice(error.index))
     }
+
+    store.commit('changeQueueIsRunning', false)
 
     copyUpdateQueue = null
     syncTimer = setTimeout(syncPlans, synTime)
@@ -164,9 +190,10 @@ function syncPlans() {
 /**
  * @fn 增量更新队列中的更新信息
  * @param item updateQueue中的元素
+ * @param index
  * @param next
  */
-function processQueueItem(item, next) {
+function processQueueItem(item, index, next) {
   if (isEqual(initQueueItem(), item)) {
     return next()
   }
@@ -187,6 +214,10 @@ function processQueueItem(item, next) {
 
       if (commitIdTemp !== response.body.commit_id) {
         console.error('expected synchronization')
+        next({
+          index: index,
+          message: 'synchronize fail'
+        })
       } else {
         plansBackup = JSON.parse(plansStr)
         commitId = commitIdTemp
@@ -210,6 +241,10 @@ function processQueueItem(item, next) {
 
           if (commitIdTemp !== response.body.commit_id) {
             console.error('expected synchronization after merge')
+            next({
+              index: index,
+              message: 'synchronize fail'
+            })
           } else {
             plansBackup = JSON.parse(plansStr)
             commitId = commitIdTemp

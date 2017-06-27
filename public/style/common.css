@@ -48,6 +48,30 @@ a {
   float: right;
 }
 
+/*c-loader*/
+.c-loader {
+  position: fixed;
+  width: 100%;
+  top: 10em;
+  z-index: 101;
+  text-align: center;
+  color: #fff
+}
+
+.c-loader__content {
+  display: inline-block;
+  padding: .5em 0;
+}
+
+.dimer {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, .5);
+  z-index: 100;
+}
+
 /*layout module*/
 .l-grid {
   display: flex;

@@ -149,7 +149,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
       });
   
       this.$el.querySelector(this.validRule.submitEl).addEventListener('click', function () {
-        (0, _async.runQueue)(validQueue, function (fn, next) {
+        (0, _async.runQueue)(validQueue, function (fn, index, next) {
           return fn(next);
         }, function (error) {
           self[self.validRule.submitHandler](!error);

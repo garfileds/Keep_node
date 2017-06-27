@@ -135,7 +135,7 @@
       })
 
       this.$el.querySelector(this.validRule.submitEl).addEventListener('click', () => {
-        runQueue(validQueue, (fn, next) => fn(next), (error) => {
+        runQueue(validQueue, (fn, index, next) => fn(next), (error) => {
           self[self.validRule.submitHandler](!error)
         })
       }, false)
