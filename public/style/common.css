@@ -25,6 +25,7 @@ a {
 
 .response-img {
   max-width: 100%;
+  vertical-align: middle;
 }
 .full-width-img {
   width: 100%;
@@ -47,6 +48,26 @@ a {
   float: right;
 }
 
+/*layout module*/
+.l-grid {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.l-grid__item {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.l-grid__item--1 {
+  width: 10%;
+}
+.l-grid__item--8 {
+  width: 80%;
+}
+.l-grid__item--9 {
+  width: 90%;
+}
+
+/*icon*/
 .icon {
   margin-top: .5em;
   padding-left: 2em;
@@ -164,4 +185,25 @@ input:focus, textarea:focus {
 
 .font--secondary {
   color: #D3D3D3;
+}
+
+/*c-list*/
+.c-list {
+  border-top: 1px solid #dcd7d7;
+  border-bottom: 1px solid #dcd7d7;
+  margin: 1.5em 0;
+  padding: 0 .5em;
+}
+
+.c-list__content {
+  border-bottom: 1px solid #dcd7d7;
+  padding: .5em 0;
+}
+.c-list__item:last-child .c-list__content {
+  border: none;
+}
+
+.c-list__icon {
+  width: 2em;
+  padding: .5em;
 }

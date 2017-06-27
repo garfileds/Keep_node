@@ -27,7 +27,8 @@ const store = new Vuex.Store({
   state: {
     //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
     needInit: true,
-    plans: []
+    plans: [],
+    user: {}
   },
 
   getters: {
@@ -106,6 +107,17 @@ const store = new Vuex.Store({
       }
 
       updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done
+    },
+
+    initUser(state, user) {
+      state.user.nickname = user.nickname
+      state.user.email = user.email
+    },
+
+    clear(state) {
+      state.needInit = true
+      state.user = {}
+      state.plans = []
     }
   },
 

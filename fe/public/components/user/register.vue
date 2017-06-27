@@ -28,6 +28,7 @@
 <style scoped>
   .main {
     background: url(../../images/planAdd_bg.jpg);
+    height: 100vh;
   }
 
   .header {
@@ -188,6 +189,7 @@
             }).then(response => {
               Vue.http.headers.common['Authorization'] = `Bearer ${response.body.token}`
               self.changeNeedInit(true)
+              self.initUser(response.body)
               router.push('/home')
             })
           }
@@ -199,7 +201,8 @@
       },
 
       ...mapMutations([
-        'changeNeedInit'
+        'changeNeedInit',
+        'initUser'
       ])
     }
   }

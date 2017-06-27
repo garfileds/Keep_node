@@ -50,6 +50,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
   //
   //
   //
+  //
   
   var _vue = require('node_modules/vue/dist/vue.runtime.common');
   
@@ -170,6 +171,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
           if (response.status === 200) {
             _vue2.default.http.headers.common['Authorization'] = 'Bearer ' + response.body.token;
             self.changeNeedInit(true);
+            self.initUser(response.body);
             router.push('/home');
           }
         }, function () {
@@ -179,7 +181,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
       navBack: function navBack() {
         router.go(-1);
       }
-    }, (0, _vuex.mapMutations)(['changeNeedInit']))
+    }, (0, _vuex.mapMutations)(['changeNeedInit', 'initUser']))
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){

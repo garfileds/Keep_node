@@ -51,6 +51,7 @@ module.exports.logout = function (req, res, next) {
   if (tokenUtils.expire(req.headers)) {
     delete req.user
     return res.status(200).json({
+      'code': 'ok',
       'message': 'User has been successfully logged out'
     })
   } else {

@@ -13,6 +13,7 @@ import App from '../components/App'
 import welcome from '../components/user/welcome'
 import userRegister from '../components/user/register'
 import userLogin from '../components/user/login'
+import setting from '../components/user/setting'
 import home from '../components/home/home'
 import planAdd from '../components/plan/planAdd'
 import planDetail from '../components/plan/planDetail'
@@ -28,8 +29,8 @@ const routes = [
   },
   { path: '/planAdd', component: planAdd },
   { path: '/planDetail/:id', component: planDetail },
-  { path: '/planEdit/:id', component: planEdit }/*,
-  { path: '/setting', component: Setting },
+  { path: '/planEdit/:id', component: planEdit },
+  { path: '/setting', component: setting }/*,
   { path: '/cup', component: Cup }*/
 ]
 

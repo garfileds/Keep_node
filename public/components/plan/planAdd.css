@@ -36,16 +36,16 @@
 
 
 
-.header {
+.header[_v-7ab53f60] {
   overflow: hidden;
 }
 
-.header__side {
+.header__side[_v-7ab53f60] {
   width: 15%;
   padding: 1em;
 }
 
-.content {
+.content[_v-7ab53f60] {
   width: 100vw;
   height: 100vh;
 

@@ -35,7 +35,7 @@
   </main>
 </template>
 
-<style>
+<style scoped>
   .header {
     overflow: hidden;
   }
