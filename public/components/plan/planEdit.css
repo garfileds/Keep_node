@@ -38,20 +38,15 @@
 
 
 
-.header[_v-93f7987f] {
-  overflow: hidden;
-}
+
+
 
 .header__side[_v-93f7987f] {
   width: 15%;
   padding: 1em;
 }
 
-.content[_v-93f7987f] {
-  width: 100vw;
-  height: 100vh;
-
-  color: #ffffff;
-
-  background: url(/images/planAdd_bg.jpg)
+.l-schedule[_v-93f7987f] {
+  position: absolute;
+  bottom: 8rem
 }

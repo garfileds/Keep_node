@@ -9,7 +9,31 @@ define('public/components/plan/schedule.vue', function(require, exports, module)
   var _utils = require('public/js/module/utils');
   
   exports.default = {
-    props: ['startDay', 'days', 'marked', 'editable'],
+    props: {
+      'startDay': [Number, String],
+      'days': [Number, String],
+      'marked': {
+        type: Array,
+        default: function _default() {
+          return [];
+        }
+      },
+      'done': {
+        type: Array,
+        default: function _default() {
+          return [];
+        }
+      },
+      editable: Boolean,
+      progressVisible: {
+        type: Boolean,
+        default: true
+      },
+      tipVisible: {
+        type: Boolean,
+        default: true
+      }
+    },
   
     computed: {
       daysArr: function daysArr() {
@@ -35,6 +59,24 @@ define('public/components/plan/schedule.vue', function(require, exports, module)
         }
   
         return result;
+      },
+      overdue: function overdue() {
+        var _this = this;
+  
+        var timeOfDay = 24 * 60 * 60 * 1000;
+        var today = new Date((0, _utils.formatDate)(new Date()));
+        return this.marked.filter(function (day) {
+          var markedDate = new Date(_this.startDay);
+          markedDate.setDate(markedDate.getDate() + day - 1);
+  
+          return today.getTime() - markedDate.getTime() >= timeOfDay;
+        });
+      },
+      progressWidth: function progressWidth() {
+        var doneRatio = Math.ceil(this.done.length / this.marked.length * 100);
+        return {
+          width: doneRatio + '%'
+        };
       }
     },
   
@@ -75,35 +117,15 @@ define('public/components/plan/schedule.vue', function(require, exports, module)
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
     __vue__options__ = exports.default;
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"schedule",on:{"click":_vm.handleSelectDay}},[_vm._l((_vm.daysArr),function(day,index){return _c('div',{staticClass:"schedule__item",class:{'schedule__item--unselected': _vm.marked.indexOf(day) === -1},attrs:{"data-day":day}},[_c('p',[_vm._v("Day "+_vm._s(day))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.datesArr[index]))])])}),_vm._v(" "),_c('p',{staticClass:"icon icon--info"},[_vm._v("计划创建后，无法修改。奔跑吧，少年。")])],2)}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"schedule",on:{"click":_vm.handleSelectDay}},[(_vm.progressVisible)?_c('div',{staticClass:"schedule__progress",style:(_vm.progressWidth)}):_vm._e(),_vm._v(" "),_vm._l((_vm.daysArr),function(day,index){return _c('div',{staticClass:"schedule__item",class:{'schedule__item--unselected': _vm.marked.indexOf(day) === -1,
+           'schedule__item--overdue': _vm.overdue.indexOf(day) > -1,
+           'schedule__item--done': _vm.done.indexOf(day) > -1},attrs:{"data-day":day}},[_c('p',[_vm._v("Day "+_vm._s(day))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.datesArr[index]))])])}),_vm._v(" "),(_vm.tipVisible)?_c('p',{staticClass:"icon icon--info"},[_vm._v("计划创建后，无法修改。奔跑吧，少年。")]):_vm._e()],2)}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-efc5b060"
   

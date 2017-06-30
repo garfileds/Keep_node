@@ -42,15 +42,6 @@ define('public/components/user/login.vue', function(require, exports, module) {
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   
   var _vue = require('node_modules/vue/dist/vue.runtime.common');
   
@@ -189,8 +180,8 @@ define('public/components/user/login.vue', function(require, exports, module) {
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"main"},[_c('header',{staticClass:"header"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})])]),_vm._v(" "),_c('div',{staticClass:"content"},[_c('section',{staticClass:"c-form"},[_vm._m(0),_vm._v(" "),_c('form',{staticClass:"c-form__content"},[_c('fieldset',{staticClass:"c-form__group"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.email),expression:"email"}],staticClass:"c-form__input c-form__input--group c-form__input--full",attrs:{"type":"email","placeholder":"邮箱地址"},domProps:{"value":(_vm.email)},on:{"input":function($event){if($event.target.composing){ return; }_vm.email=$event.target.value}}}),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.password),expression:"password"}],staticClass:"c-form__input c-form__input--group c-form__input--full",attrs:{"type":"password","placeholder":"密码"},domProps:{"value":(_vm.password)},on:{"input":function($event){if($event.target.composing){ return; }_vm.password=$event.target.value}}})])]),_vm._v(" "),_c('button',{staticClass:"button button--full",attrs:{"id":"btnLogin"}},[_vm._v("登录")])])])])}
-  __vue__options__.staticRenderFns =[function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"c-form__title"},[_c('p',{staticClass:"font--large"},[_vm._v("登录到Up!Up!")])])}]
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"main--bg"},[_c('header',{staticClass:"header l-grid"},[_c('div',{staticClass:"l-header__side l-grid__item--15"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})])]),_vm._v(" "),_c('div',{staticClass:"l-wrap content"},[_c('section',{staticClass:"c-form"},[_vm._m(0),_vm._v(" "),_c('form',{staticClass:"c-form__content"},[_c('fieldset',{staticClass:"c-form__group"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.email),expression:"email"}],staticClass:"c-form__input c-form__input--group c-form__input--full",attrs:{"type":"email","placeholder":"邮箱地址"},domProps:{"value":(_vm.email)},on:{"input":function($event){if($event.target.composing){ return; }_vm.email=$event.target.value}}}),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.password),expression:"password"}],staticClass:"c-form__input c-form__input--group c-form__input--full",attrs:{"type":"password","placeholder":"密码"},domProps:{"value":(_vm.password)},on:{"input":function($event){if($event.target.composing){ return; }_vm.password=$event.target.value}}})]),_vm._v(" "),_vm._m(1)])])])])}
+  __vue__options__.staticRenderFns =[function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"c-form__title"},[_c('p',{staticClass:"font--large"},[_vm._v("登录到Up!Up!")])])},function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"l-fieldset"},[_c('button',{staticClass:"c-button l-button--full",attrs:{"id":"btnLogin"}},[_vm._v("登录")])])}]
   __vue__options__._scopeId = "_v-441dc2a4"
   
 

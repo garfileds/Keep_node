@@ -1,5 +1,5 @@
 <template>
-  <section class="schedule"
+  <section class="schedule l-schedule"
            @click="handleSelectDay">
     <div class="schedule__progress" :style="progressWidth"></div>
     <div class="schedule__item"
@@ -14,47 +14,13 @@
   </section>
 </template>
 
-<style scoped>
-  .schedule {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+<style lang="scss" scoped>
+  @import '../../style/blocks/schedule';
 
+  .l-schedule {
     position: absolute;
-    bottom: 8rem;
+    bottom: 8rem
   }
-
-  .schedule__progress {
-    position: absolute;
-    top: 0;
-    height: 2px;
-    background: rgba(69, 243, 14, 0.4);
-  }
-
-  .schedule__item {
-    width: calc(100% / 7);
-    padding: .5em 0;
-    text-align: center;
-    background: rgba(98, 186, 206, 0.4);
-
-    font-size: .875em;
-    border-right: 1px solid;
-  }
-
-  .schedule__item:nth-of-type(7n) {
-    border: none;
-  }
-
-  .schedule__item--unselected {
-    background: rgba(69, 69, 69, 0.4);
-  }
-  .schedule__item--overdue {
-    background: rgba(127, 134, 127, 0.8);
-  }
-  .schedule__item--done {
-    background: rgba(69, 243, 14, 0.4);
-  }
-
 </style>
 
 <script>

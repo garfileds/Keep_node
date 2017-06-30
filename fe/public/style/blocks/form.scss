@@ -1,0 +1,61 @@
+.c-form {
+  display: block;
+  width: 100%;
+}
+
+.c-form__group {
+  border: none;
+}
+
+.c-form__title {
+  text-align: center;
+  padding: 1em 0;
+}
+
+.c-form__content {
+  padding: .5em 0 1em;
+}
+
+.c-form__input {
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px #ddd;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.c-form__input--group {
+  display: block;
+  padding: 10px;
+  margin: 0 0 -1px;
+  border-radius: 0;
+  position: relative;
+  top: -1px;
+}
+
+.c-form__input--full {
+  width: 100%;
+}
+
+.c-form__input--group:first-child {
+  top: 1px;
+  border-radius: 4px 4px 0 0;
+  margin: 0;
+}
+
+.c-form__input--group:last-child {
+  top: -2px;
+  border-radius: 0 0 4px 4px;
+  margin: 0;
+}
+
+.c-form__input:focus {
+  outline: 0;
+  border-color: var(--color-dark-primary);
+  z-index: 3;
+}
+
+.l-fieldset {
+  padding: .35em .75em .625em;
+}

@@ -1,10 +1,12 @@
 <template>
   <main>
     <header class="header">
-      <router-link to="/home" class="header__side">
-        <img class="response-img" src="../../images/svg/return_black.svg" alt="返回">
-      </router-link>
-      <h1 class="header__center">设置</h1>
+      <div class="l-box-shadow l-grid">
+        <router-link to="/home" class="l-header__side l-grid__item--1">
+          <img class="response-img" src="../../images/svg/return_black.svg" alt="返回">
+        </router-link>
+        <h1 class="header__center l-grid__item--8">设置</h1>
+      </div>
     </header>
     <div class="content">
       <section class="c-info">
@@ -23,7 +25,7 @@
           </span>
         </div>
       </section>
-      <div class="c-loader" v-show="loaderVisible">
+      <div class="c-loader l-loader" v-show="loaderVisible">
         <div class="c-loader__content pacman">
           <div></div>
           <div></div>
@@ -33,45 +35,27 @@
         </div>
         <p>正在登出，我们会同步你最后的更改...</p>
       </div>
-      <div class="dimer" v-show="loaderVisible"></div>
+      <div class="dimmer l-dimmer" v-show="loaderVisible"></div>
     </div>
   </main>
 </template>
 
-<style scoped>
-  @import url(../../style/loaders.min.css);
+<style lang="scss" scoped>
+  @import '../../style/blocks/loader';
+  @import '../../style/blocks/list';
 
-  .header {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-
-    width: 100%;
-    border-bottom: 1px solid #dcd7d7;
-    box-shadow: 0 2px 10px #dcd7d7;
-    margin-bottom: 1em;
-  }
-
-  .header__side {
-    width: 10%;
+  .l-header__side {
     padding: .5em;
-  }
-  .header__center {
-    width: 80%;
-    text-align: center;
-
-    font-size: 1em;
-    font-weight: 400;
-    color: #000000;
   }
 
   .content {
-    color: #000000;
+    color: var(--color-black);
   }
 
   .c-info {
     text-align: center;
   }
+
   .c-info__avatar {
     width: 30%;
     border-radius: 50%;

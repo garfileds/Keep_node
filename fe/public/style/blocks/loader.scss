@@ -1,0 +1,31 @@
+.c-loader {
+  position: fixed;
+  width: 100%;
+  top: 10em;
+  z-index: 101;
+  text-align: center;
+  color: var(--color-white);
+}
+
+.c-loader__content {
+  display: inline-block;
+  padding: .5em 0;
+}
+
+.dimmer {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-opcity-black);
+}
+
+.l-loader {
+  position: fixed;
+  top: 10em;
+  z-index: 101;
+}
+
+.l-dimmer {
+  z-index: 100;
+}

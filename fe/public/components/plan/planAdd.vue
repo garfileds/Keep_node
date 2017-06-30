@@ -1,65 +1,54 @@
 <template>
-  <main class="content"
+  <main class="main--bg"
    @click="handleClickOutside">
     <header class="header">
-      <span class="header__side floatL">
-        <img class="response-img" src="../../images/svg/return.svg" alt="返回"
-         @click="navBack">
-      </span>
-      <span class="header__side floatR">
-        <img class="response-img" src="../../images/svg/right.svg" alt="确认创建"
-         @click="handleConfirm">
-      </span>
+      <div class="l-grid l-grid--between">
+        <span class="header__side">
+          <img class="response-img" src="../../images/svg/return.svg" alt="返回"
+             @click="navBack">
+        </span>
+        <span class="header__side">
+          <img class="response-img" src="../../images/svg/right.svg" alt="确认创建"
+             @click="handleConfirm">
+        </span>
+      </div>
     </header>
 
     <section>
       <form id="addPlanForm">
-        <filedInputText
+        <fieldInputText
          title="标题"
-         inputName="title"></filedInputText>
+         inputName="title"></fieldInputText>
 
-        <filedDatePicker
+        <fieldDatePicker
          @changeVisible="handleChangeVisible"
-         @changeDate="handleChangeDate"></filedDatePicker>
+         @changeDate="handleChangeDate"></fieldDatePicker>
 
-        <filedColor v-show="!datePickerVisible"></filedColor>
+        <fieldColor v-show="!datePickerVisible"></fieldColor>
 
-        <filedSchedule
-         ref="filedSchedule"
+        <fieldSchedule
+         ref="fieldSchedule"
          v-show="!datePickerVisible"
          :startDay="startDay"
          :scheduleVisible="scheduleVisible"
-         @changeScheduleVisible="handleChangeScheduleVisible"></filedSchedule>
+         @changeScheduleVisible="handleChangeScheduleVisible"></fieldSchedule>
       </form>
     </section>
   </main>
 </template>
 
 <style scoped>
-  .header {
-    overflow: hidden;
-  }
-
   .header__side {
     width: 15%;
     padding: 1em;
   }
-
-  .content {
-    width: 100vw;
-    height: 100vh;
-
-    color: #ffffff;
-
-    background: url(../../images/planAdd_bg.jpg)
-  }
 </style>
 
 <script>
-  import filedInputText from './filedInputText'
-  import filedDatePicker from './filedDatePicker'
-  import filedColor from './filedColor'
-  import filedSchedule from './filedSchedule'
+  import fieldInputText from './fieldInputText'
+  import fieldDatePicker from './fieldDatePicker'
+  import fieldColor from './fieldColor'
+  import fieldSchedule from './fieldSchedule'
 
   import { mapMutations } from 'vuex'
   import { formatDate, isDescendant, form2 } from '../../js/module/utils'
@@ -92,7 +81,7 @@
       handleClickOutside(event) {
         let targetEl = event.target;
 
-        if (this.scheduleVisible && !isDescendant(this.$refs.filedSchedule.$el, targetEl)) {
+        if (this.scheduleVisible && !isDescendant(this.$refs.fieldSchedule.$el, targetEl)) {
           this.scheduleVisible = false
         }
       },
@@ -155,6 +144,6 @@
       }
     },
 
-    components: { filedInputText, filedDatePicker, filedColor, filedSchedule }
+    components: { fieldInputText, fieldDatePicker, fieldColor, fieldSchedule }
   }
 </script>

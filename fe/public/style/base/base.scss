@@ -1,0 +1,130 @@
+/* reset & global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--font-color-base);
+}
+
+h1 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
+}
+
+a {
+  text-decoration: none;
+}
+
+:focus {
+  outline: none;
+}
+
+.content {
+  width: 100%;
+}
+
+/* icon */
+.icon {
+  margin-top: .5em;
+  padding-left: 2em;
+  font-size: .875em;
+  color: var(--color-white);
+}
+
+.icon--large {
+  font-size: 1.25em;
+}
+
+.icon--info {
+  background-image: url(/images/svg/info.svg);
+  background-position: .5em;
+  background-repeat: no-repeat;
+  background-size: 1em;
+}
+
+.icon--menu {
+  background-image: url(/images/svg/menu.svg);
+  background-position: .5em;
+  background-repeat: no-repeat;
+  background-size: 1em;
+}
+
+/* global
+---------- */
+.main--bg {
+  background: url(../../images/planAdd_bg.jpg);
+  height: 100vh;
+  width: 100vw;
+}
+
+.header {
+  overflow: hidden;
+
+  text-align: center;
+  color: var(--color-black);
+}
+
+.response-img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.full-width-img {
+  width: 100%;
+  max-width: 3em;
+}
+
+.full-screen-img {
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  position: fixed;
+  top: 0;
+}
+
+.floatL {
+  float: left;
+}
+
+.floatR {
+  float: right;
+}
+
+/* font */
+.font--small {
+  font-size: .75em;
+}
+
+.font--large {
+  font-size: 2em;
+}
+
+.font--secondary {
+  color: var(--color-secondary);
+}
+
+/* modify el-date-editor--input */
+.el-date-editor--keep {
+  font-size: 16px !important;
+  height: 3em;
+}
+
+.el-date-editor--keep input.el-input__inner {
+  line-height: 1.2;
+  border: none;
+  border-radius: 0;
+  height: 100%;
+  text-align: center;
+  background-color: var(--color-opcity-primary);
+  color: var(--color-white);
+  width: 130px;
+}
+
+.el-date-editor--keep .el-input__icon + input.el-input__inner {
+  padding-right: 10px;
+}

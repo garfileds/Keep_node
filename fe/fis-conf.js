@@ -32,6 +32,17 @@ fis.match('node_modules/**.js', {
   isMod: true
 })
 
+// 所有scss文件
+fis.match('**.scss', {
+  rExt: 'css',
+  parser: [
+    fis.plugin('node-sass', {
+      sourceMap: true
+    })
+  ],
+  postprocessor: fis.plugin('autoprefixer')
+})
+
 // 所有js文件
 fis.match('{**.js}', {
   isMod: true,
@@ -59,6 +70,16 @@ fis.match('/public/components/**.vue:js', {
         }]]
     })
   ]
+})
+
+fis.match('/public/components/**.vue:scss', {
+  rExt: 'css',
+  parser: [
+    fis.plugin('node-sass', {
+      sourceMap: true
+    })
+  ],
+  postprocessor: fis.plugin('autoprefixer')
 })
 
 // 模块文件

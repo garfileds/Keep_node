@@ -25,24 +25,6 @@ define('public/components/home/kHeader.vue', function(require, exports, module) 
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   
   exports.default = {
     name: 'kHeader'
@@ -53,7 +35,7 @@ define('public/components/home/kHeader.vue', function(require, exports, module) 
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('header',{staticClass:"header"},[_c('router-link',{staticClass:"header__side",attrs:{"to":"/setting"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/setting.svg","alt":"设置"}})]),_vm._v(" "),_c('h1',{staticClass:"header__center"},[_vm._v("Up! Up!")]),_vm._v(" "),_c('router-link',{staticClass:"header__side",attrs:{"to":"/myCup"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/cup.svg","alt":"图鉴"}})])],1)}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('header',{staticClass:"header"},[_c('div',{staticClass:"l-box-shadow l-grid"},[_c('router-link',{staticClass:"l-header__side l-grid__item--1",attrs:{"to":"/setting"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/setting.svg","alt":"设置"}})]),_vm._v(" "),_c('h1',{staticClass:"header__center l-grid__item--8"},[_vm._v("Up! Up!")]),_vm._v(" "),_c('router-link',{staticClass:"l-header__side l-grid__item--1",attrs:{"to":"/myCup"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/cup.svg","alt":"图鉴"}})])],1)])}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-658cee7a"
   

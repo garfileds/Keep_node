@@ -1,42 +1,25 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .schedule[_v-b55f7b2e] {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100%;
-
-  position: absolute;
-  bottom: 8rem;
+  position: relative;
 }
 
 .schedule__progress[_v-b55f7b2e] {
   position: absolute;
   top: 0;
   height: 2px;
-  background: rgba(69, 243, 14, 0.4);
+  background: var(--schedule-progress-color);
 }
 
 .schedule__item[_v-b55f7b2e] {
   width: calc(100% / 7);
   padding: .5em 0;
   text-align: center;
-  background: rgba(98, 186, 206, 0.4);
-
+  background: var(--color-more-opacity-primary);
   font-size: .875em;
   border-right: 1px solid;
 }
@@ -46,12 +29,18 @@
 }
 
 .schedule__item--unselected[_v-b55f7b2e] {
-  background: rgba(69, 69, 69, 0.4);
-}
-.schedule__item--overdue[_v-b55f7b2e] {
-  background: rgba(127, 134, 127, 0.8);
-}
-.schedule__item--done[_v-b55f7b2e] {
-  background: rgba(69, 243, 14, 0.4);
+  background: var(--schedule-unselected-color);
 }
 
+.schedule__item--overdue[_v-b55f7b2e] {
+  background: var(--schedule-overdue-color);
+}
+
+.schedule__item--done[_v-b55f7b2e] {
+  background: var(--schedule-done-color);
+}
+
+.l-schedule[_v-b55f7b2e] {
+  position: absolute;
+  bottom: 8rem;
+}

@@ -1,12 +1,12 @@
 <template>
-  <main class="main">
-    <header class="header">
-      <span class="header__side floatL">
+  <main class="main--bg">
+    <header class="header l-grid">
+      <span class="l-header__side l-grid__item--15">
         <img class="response-img" src="../../images/svg/return.svg" alt="返回"
              @click="navBack">
       </span>
     </header>
-    <div class="content">
+    <div class="l-wrap content">
       <section class="c-form">
         <div class="c-form__title">
           <p class="font--large">创建账户</p>
@@ -19,29 +19,20 @@
             <input class="c-form__input c-form__input--group c-form__input--full" type="password" placeholder="密码" v-model="password">
           </fieldset>
         </form>
-        <button id="btnRegister" class="button button--full">创建账户</button>
+        <div class="l-fieldset">
+          <button id="btnRegister" class="c-button l-button--full">创建账户</button>
+        </div>
       </section>
     </div>
   </main>
 </template>
 
-<style scoped>
-  .main {
-    background: url(../../images/planAdd_bg.jpg);
-    height: 100vh;
-  }
+<style lang="scss" scoped>
+  @import '../../style/blocks/form';
+  @import '../../style/blocks/button';
 
-  .header {
-    overflow: hidden;
-  }
-
-  .header__side {
-    width: 15%;
+  .l-header__side {
     padding: 1em;
-  }
-
-  .content {
-    padding: 0 1em;
   }
 </style>
 

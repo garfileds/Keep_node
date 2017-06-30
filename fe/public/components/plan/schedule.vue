@@ -1,56 +1,54 @@
 <template>
   <section class="schedule"
-   @click="handleSelectDay">
+           @click="handleSelectDay">
+    <div class="schedule__progress" :style="progressWidth" v-if="progressVisible"></div>
     <div class="schedule__item"
-     v-for="(day, index) in daysArr"
-     :data-day="day"
-     :class="{'schedule__item--unselected': marked.indexOf(day) === -1}">
+         v-for="(day, index) in daysArr"
+         :data-day="day"
+         :class="{'schedule__item--unselected': marked.indexOf(day) === -1,
+           'schedule__item--overdue': overdue.indexOf(day) > -1,
+           'schedule__item--done': done.indexOf(day) > -1}">
       <p>Day&nbsp;{{day}}</p>
       <p>{{datesArr[index]}}</p>
     </div>
-    <p class="icon icon--info">计划创建后，无法修改。奔跑吧，少年。</p>
+    <p class="icon icon--info" v-if="tipVisible">计划创建后，无法修改。奔跑吧，少年。</p>
   </section>
 </template>
 
-<style scoped>
-  .schedule {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-
-    position: absolute;
-    top: 10.5rem;
-  }
-
-  .schedule__item {
-    width: calc(100% / 7);
-    padding: .5em 0;
-    text-align: center;
-    background: rgba(98, 186, 206, 0.4);
-
-    font-size: .875em;
-    border-right: 1px solid;
-  }
-
-  .schedule__item:nth-of-type(7n) {
-    border: none;
-  }
-
-  .schedule__item--unselected {
-    background: rgba(69, 69, 69, 0.4);
-  }
+<style lang="scss" scoped>
+  @import '../../style/blocks/schedule';
 </style>
 
 <script>
   import { formatDate, getParentEl } from '../../js/module/utils'
 
   export default {
-    props: ['startDay', 'days', 'marked', 'editable'],
+    props: {
+      'startDay': [Number, String],
+      'days': [Number, String],
+      'marked': {
+        type: Array,
+        default: () => []
+      },
+      'done': {
+        type: Array,
+        default: () => []
+      },
+      editable: Boolean,
+      progressVisible: {
+        type: Boolean,
+        default: true
+      },
+      tipVisible: {
+        type: Boolean,
+        default: true
+      }
+    },
 
     computed: {
       daysArr() {
         let i = 1,
-            result = []
+          result = []
 
         while (i <= this.days) {
           result.push(i++)
@@ -61,8 +59,8 @@
 
       datesArr() {
         let baseDate = new Date(this.startDay),
-            result = [],
-            i = 0
+          result = [],
+          i = 0
 
         result.push(formatDate(baseDate, 'mm/dd'))
 
@@ -72,13 +70,31 @@
         }
 
         return result
+      },
+
+      overdue() {
+        const timeOfDay = 24 * 60 * 60 * 1000
+        const today = new Date(formatDate(new Date()))
+        return this.marked.filter(day => {
+          let markedDate = new Date(this.startDay)
+          markedDate.setDate(markedDate.getDate() + day - 1)
+
+          return today.getTime() - markedDate.getTime() >= timeOfDay
+        })
+      },
+
+      progressWidth() {
+        const doneRatio = Math.ceil(this.done.length / this.marked.length * 100)
+        return {
+          width: doneRatio + '%'
+        }
       }
     },
 
     methods: {
       handleSelectDay(event) {
         let targetEl = event.target,
-            parent
+          parent
 
         if (!this.editable) return
 

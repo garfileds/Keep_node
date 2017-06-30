@@ -1,33 +1,25 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .schedule[_v-efc5b060] {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100%;
+  position: relative;
+}
 
+.schedule__progress[_v-efc5b060] {
   position: absolute;
-  top: 10.5rem;
+  top: 0;
+  height: 2px;
+  background: var(--schedule-progress-color);
 }
 
 .schedule__item[_v-efc5b060] {
   width: calc(100% / 7);
   padding: .5em 0;
   text-align: center;
-  background: rgba(98, 186, 206, 0.4);
-
+  background: var(--color-more-opacity-primary);
   font-size: .875em;
   border-right: 1px solid;
 }
@@ -37,5 +29,13 @@
 }
 
 .schedule__item--unselected[_v-efc5b060] {
-  background: rgba(69, 69, 69, 0.4);
+  background: var(--schedule-unselected-color);
+}
+
+.schedule__item--overdue[_v-efc5b060] {
+  background: var(--schedule-overdue-color);
+}
+
+.schedule__item--done[_v-efc5b060] {
+  background: var(--schedule-done-color);
 }

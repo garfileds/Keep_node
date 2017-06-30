@@ -1,54 +1,26 @@
 <template>
-  <section class="filed">
-    <div class="filed__name">{{title}}</div>
-    <div class="filed__content filed__content--input"
+  <section class="field">
+    <div class="field__name">{{title}}</div>
+    <div class="field__content field__content--input"
          :style="styleObj">
-      <input type="text" :name="inputName" class="filed__input" :placeholder="'请输入' + title"
+      <input type="text" :name="inputName" class="field__input" :placeholder="'请输入' + title"
              @focus="toggleFlex(true)"
              @blur="toggleFlex(false)"
              v-model="val"
              :disabled="disabled">
-      <span v-show="clearBtnShow" class="filed__clear"
+      <span v-show="clearBtnShow" class="field__clear"
             @click="clearInput"></span>
     </div>
   </section>
 </template>
 
-<style scoped>
-  @import url(./filed.css);
-
-  .filed__content--input {
-    transition: width .5s ease-in-out;
-  }
-
-  .filed__input {
-    height: 100%;
-    border: none;
-    background-color: rgba(98, 186, 206, 0.8);
-    color: #ffffff;
-    text-align: center;
-    width: 100%;
-    font-size: 1em;
-  }
-
-  .filed__clear {
-    position: absolute;
-    width: 1em;
-    height: 1em;
-
-    right: .5em;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-
-    background-image: url(../../images/svg/error.svg);
-    background-size: 100%;
-  }
+<style lang="scss" scoped>
+  @import '../../style/blocks/field';
 </style>
 
 <script>
   export default {
-    name: 'filedInput',
+    name: 'fieldInput',
 
     props: ['title', 'defaultValue', 'inputName', 'disabled'],
 

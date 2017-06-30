@@ -9,10 +9,10 @@
          @click.native="catPlan(plan.id, 'ing')"></planThumbnail>
       </section>
 
-      <section class="plans-switch"
+      <section class="l-plans-switch"
        v-show="plansDone.length > 0"
        @click="switcher">
-        <span class="plans-switch__content">{{plansSwitchMsg}}</span>
+        <button class="c-button c-button--small c-button--success">{{plansSwitchMsg}}</button>
       </section>
 
       <section class="plans-done"
@@ -23,28 +23,17 @@
          @click.native="catPlan(planDone.id, 'done')"></planThumbnail>
       </section>
 
-      <section class="add-plan-btn">
-        <router-link to="/planAdd">
-          <img class="response-img" src="../../images/svg/addition_fill.svg" alt="添加计划">
-        </router-link>
-      </section>
+      <section class="add-plan-btn" @click="routerPlanAdd"></section>
     </section>
   </main>
 </template>
 
-<style>
-  .plans-switch {
+<style lang="scss">
+  @import '../../style/blocks/button';
+
+  .l-plans-switch {
     text-align: center;
     margin: .5em 0;
-  }
-
-  .plans-switch__content {
-    display: inline-block;
-    font-size: .625em;
-
-    padding: .5em;
-    background: #76FF7B;
-    color: #ffffff;
   }
 
   .add-plan-btn {
@@ -54,8 +43,12 @@
     right: 0;
 
     width: 72px;
+    height: 72px;
     margin-left: auto;
     margin-right: auto;
+
+    background-image: url(../../images/svg/addition_fill.svg);
+    background-size: 100%;
   }
 </style>
 
@@ -97,6 +90,10 @@
 
       catPlan(planId, status) {
         router.push(`/planDetail/${planId}?status=${status}`)
+      },
+
+      routerPlanAdd() {
+        router.push('/planAdd')
       },
 
       ...mapActions([

@@ -1,9 +1,9 @@
 <template>
-  <section class="filed">
-    <div class="filed__name">颜色</div>
+  <section class="field">
+    <div class="field__name">颜色</div>
     <input type="hidden" name="color" v-model="selectedColor.backgroundColor">
     <input type="hidden" name="progress_color" :value="progressColor">
-    <div class="filed__content"
+    <div class="field__content"
      :style="selectedColor"
      @click="togglePanel(true)"></div>
 
@@ -20,8 +20,10 @@
   </section>
 </template>
 
-<style scoped>
-  .filed__content {
+<style lang="scss" scoped>
+  @import '../../style/blocks/field';
+
+  .field__content {
     width: 3em;
     height: 3em;
     min-width: 3em;
@@ -53,14 +55,14 @@
   import colorPanelItem from './colorPanelItem'
 
   export default {
-    name: 'filedColor',
+    name: 'fieldColor',
 
     props: ['defaultColor'],
 
     data: function () {
       return {
         selectedColor: {
-          'backgroundColor': this.defaultColor
+          'backgroundColor': this.defaultColor || '#76FF7B'
         },
 
         panelVisible: false

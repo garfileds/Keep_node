@@ -1,28 +1,29 @@
 <template>
-  <section class="filed">
-    <div class="filed__name">时间</div>
-    <div class="filed__content">
+  <section class="field">
+    <div class="field__name">时间</div>
+    <div class="field__content">
       <el-date-picker class="el-date-editor--keep"
         v-show="editorVisible"
 
         v-model="val"
         type="date"
         size="large"
+        format="MM/dd/yyyy"
         :editable="false"
         placeholder=""
         :picker-options="pickerOptions"
         @changeVisible="handlePickerVisible">
       </el-date-picker>
-      <input type="hidden" name="start_day" :value="val">
+      <input type="hidden" name="start_day" :value="formatSelectedDay">
     </div>
   </section>
 </template>
 
-<style scoped>
-  @import url(./filed.css);
+<style lang="scss" scoped>
+  @import '../../style/blocks/field';
   @import url(/node_modules/element-ui/lib/theme-default/date-picker.css);
 
-  .filed__content {
+  .field__content {
     text-align: left;
   }
 </style>
@@ -35,7 +36,7 @@
   import { formatDate } from '../../js/module/utils'
 
   export default {
-    name: 'filedDatePicker',
+    name: 'fieldDatePicker',
 
     data: function () {
       let defaultDay = formatDate(new Date(), 'yy-mm-dd')
@@ -65,7 +66,7 @@
       },
 
       formatSelectedDay() {
-        
+        return formatDate(new Date(this.val), 'mm/dd/yy')
       }
     },
 

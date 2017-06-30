@@ -1,27 +1,24 @@
 <template>
   <main>
-    <welcomeSlide class="slide"></welcomeSlide>
-    <section class="btn-group">
-      <router-link to="/userRegister" class="button button--full">创建账户</router-link>
-      <router-link to="/userLogin" class="button button--full button--login">登录</router-link>
+    <welcomeSlide class="l-slide"></welcomeSlide>
+    <section class="c-button-group">
+      <router-link to="/userRegister" class="c-button l-button--full">创建账户</router-link>
+      <router-link to="/userLogin" class="c-button l-button--full button--login">登录</router-link>
     </section>
   </main>
 </template>
 
-<style scoped>
-  .slide {
-    margin-top: 2em;
-  }
+<style lang="scss" scoped>
+  @import '../../style/blocks/button';
 
-  .btn-group {
-    padding: 0 1em;
-    margin-top: 4em;
+  .l-slide {
+    margin: 2em 0;
   }
 
   .button--login {
     margin-top: 1em;
-    background: #EAECEB;
-    color: #000000;
+    background: #eaeceb;
+    color: var(--color-black);
   }
 </style>
 

@@ -36,20 +36,9 @@
 
 
 
-.header[_v-7ab53f60] {
-  overflow: hidden;
-}
+
 
 .header__side[_v-7ab53f60] {
   width: 15%;
   padding: 1em;
-}
-
-.content[_v-7ab53f60] {
-  width: 100vw;
-  height: 100vh;
-
-  color: #ffffff;
-
-  background: url(/images/planAdd_bg.jpg)
 }

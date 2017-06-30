@@ -1,8 +1,8 @@
 <template>
-  <section class="filed">
-    <div class="filed__name">套餐</div>
-    <div class="filed__content">
-      <p class="filed__text"
+  <section class="field">
+    <div class="field__name">套餐</div>
+    <div class="field__content">
+      <p class="field__text"
          v-show="!scheduleVisible"
          @click.stop="togglePicker(true)">{{selectedSchedule}}</p>
 
@@ -13,20 +13,27 @@
       <input type="hidden" name="days" :value="days">
       <input type="hidden" name="marked" :value="marked">
     </div>
-    <schedule
+    <schedule class="l-schedule"
      :days="days"
      :startDay="startDay"
      :marked="marked"
      :editable="editable"
+     :progressVisible="false"
      v-show="scheduleVisible"
      @changeDay="handleChangeDay"></schedule>
   </section>
 </template>
 
-<style>
+<style lang="scss" scoped>
   @import url(/node_modules/vue-smooth-picker/dist/css/style.css);
+  @import '../../style/blocks/field';
 
-  .filed {
+  .l-schedule {
+    position: absolute;
+    top: 10.5rem;
+  }
+
+  .field {
     position: relative;
   }
 
@@ -34,7 +41,7 @@
     background: rgba(98, 186, 206, 0.8);
   }
 
-  .filed__text {
+  .field__text {
     background: rgba(98, 186, 206, 0.5);
     width: 130px;
     height: 100%;
@@ -45,12 +52,13 @@
 <script>
   import Vue from 'vue'
   import SmoothPicker from 'vue-smooth-picker'
-  Vue.use(SmoothPicker)
-
   import schedule from './schedule'
 
+  Vue.use(SmoothPicker)
+
+
   export default {
-    name: 'filedSchedule',
+    name: 'fieldSchedule',
 
     props: ['startDay', 'scheduleVisible'],
 

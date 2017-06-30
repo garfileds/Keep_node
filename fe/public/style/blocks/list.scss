@@ -1,0 +1,21 @@
+/* c-list */
+.c-list {
+  border-top: 1px solid #dcd7d7;
+  border-bottom: 1px solid #dcd7d7;
+  margin: 1.5em 0;
+  padding: 0 .5em;
+}
+
+.c-list__content {
+  border-bottom: 1px solid #dcd7d7;
+  padding: .5em 0;
+}
+
+.c-list__item:last-child .c-list__content {
+  border: none;
+}
+
+.c-list__icon {
+  width: 2em;
+  padding: .5em;
+}

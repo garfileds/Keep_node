@@ -60,21 +60,16 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
   
-  var _filedInputText = require('public/components/plan/filedInputText.vue');
+  var _fieldInputText = require('public/components/plan/fieldInputText.vue');
   
-  var _filedInputText2 = _interopRequireDefault(_filedInputText);
+  var _fieldInputText2 = _interopRequireDefault(_fieldInputText);
   
-  var _filedColor = require('public/components/plan/filedColor.vue');
+  var _fieldColor = require('public/components/plan/fieldColor.vue');
   
-  var _filedColor2 = _interopRequireDefault(_filedColor);
+  var _fieldColor2 = _interopRequireDefault(_fieldColor);
   
-  var _schedule = require('public/components/plan/schedule2.vue');
+  var _schedule = require('public/components/plan/schedule.vue');
   
   var _schedule2 = _interopRequireDefault(_schedule);
   
@@ -115,7 +110,7 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
       }
     }),
   
-    components: { filedInputText: _filedInputText2.default, filedColor: _filedColor2.default, schedule: _schedule2.default }
+    components: { fieldInputText: _fieldInputText2.default, fieldColor: _fieldColor2.default, schedule: _schedule2.default }
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
@@ -123,7 +118,7 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"content"},[_c('header',{staticClass:"header"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认修改"},on:{"click":_vm.handleConfirm}})])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"editPlanForm"}},[_c('filedInputText',{attrs:{"title":"标题","inputName":"title","defaultValue":_vm.plan.title}}),_vm._v(" "),_c('filedInputText',{attrs:{"title":"时间","inputName":"start_day","defaultValue":_vm.plan.progress.start_day,"disabled":true}}),_vm._v(" "),_c('filedColor',{attrs:{"defaultColor":_vm.plan.color}}),_vm._v(" "),_c('schedule',{attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":false}})],1)])])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"main--bg"},[_c('header',{staticClass:"header"},[_c('div',{staticClass:"l-grid l-grid--between"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认修改"},on:{"click":_vm.handleConfirm}})])])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"editPlanForm"}},[_c('fieldInputText',{attrs:{"title":"标题","inputName":"title","defaultValue":_vm.plan.title}}),_vm._v(" "),_c('fieldInputText',{attrs:{"title":"时间","inputName":"start_day","defaultValue":_vm.plan.progress.start_day,"disabled":true}}),_vm._v(" "),_c('fieldColor',{attrs:{"defaultColor":_vm.plan.color}}),_vm._v(" "),_c('schedule',{staticClass:"l-schedule",attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":false,"tipVisible":false}})],1)])])}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-93f7987f"
   

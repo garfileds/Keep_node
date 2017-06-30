@@ -1,50 +1,36 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.plans-switch {
-  text-align: center;
-  margin: .5em 0;
+.c-button-group {
+  padding: 0 1em;
 }
 
-.plans-switch__content {
-  display: inline-block;
-  font-size: .625em;
-
+.c-button {
+  background: var(--button-primary-fill);
+  border: none;
   padding: .5em;
-  background: #76FF7B;
-  color: #ffffff;
+  color: var(--color-white);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.c-button--success {
+  background: var(--button-success-fill);
+}
+
+.c-button--small {
+  font-size: .625em;
+}
+
+.l-button--full {
+  display: inline-block;
+  width: 100%;
+}
+
+.l-button--full-align {
+  padding: 0 .75em;
+}
+
+.l-plans-switch {
+  text-align: center;
+  margin: .5em 0;
 }
 
 .add-plan-btn {
@@ -52,8 +38,10 @@
   bottom: 2em;
   left: 0;
   right: 0;
-
   width: 72px;
+  height: 72px;
   margin-left: auto;
   margin-right: auto;
+  background-image: url(/images/svg/addition_fill.svg);
+  background-size: 100%;
 }

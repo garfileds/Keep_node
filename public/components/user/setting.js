@@ -70,22 +70,6 @@ define('public/components/user/setting.vue', function(require, exports, module) 
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   
   var _vue = require('node_modules/vue/dist/vue.runtime.common');
   
@@ -157,7 +141,7 @@ define('public/components/user/setting.vue', function(require, exports, module) 
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',[_c('header',{staticClass:"header"},[_c('router-link',{staticClass:"header__side",attrs:{"to":"/home"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return_black.svg","alt":"返回"}})]),_vm._v(" "),_c('h1',{staticClass:"header__center"},[_vm._v("设置")])],1),_vm._v(" "),_c('div',{staticClass:"content"},[_c('section',{staticClass:"c-info"},[_c('img',{staticClass:"c-info__avatar",attrs:{"src":"/images/avatar_default.jpg","alt":"默认头像：富贵儿与少奶奶"}}),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.user.nickname))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.user.email))])]),_vm._v(" "),_c('section',{staticClass:"c-list"},[_c('div',{staticClass:"c-list__item l-grid",on:{"click":_vm.logout}},[_vm._m(0),_vm._v(" "),_c('span',{staticClass:"c-list__content l-grid__item l-grid__item--8"},[_vm._v("登出")]),_vm._v(" "),_vm._m(1)])]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loaderVisible),expression:"loaderVisible"}],staticClass:"c-loader"},[_vm._m(2),_vm._v(" "),_c('p',[_vm._v("正在登出，我们会同步你最后的更改...")])]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loaderVisible),expression:"loaderVisible"}],staticClass:"dimer"})])])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',[_c('header',{staticClass:"header"},[_c('div',{staticClass:"l-box-shadow l-grid"},[_c('router-link',{staticClass:"l-header__side l-grid__item--1",attrs:{"to":"/home"}},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return_black.svg","alt":"返回"}})]),_vm._v(" "),_c('h1',{staticClass:"header__center l-grid__item--8"},[_vm._v("设置")])],1)]),_vm._v(" "),_c('div',{staticClass:"content"},[_c('section',{staticClass:"c-info"},[_c('img',{staticClass:"c-info__avatar",attrs:{"src":"/images/avatar_default.jpg","alt":"默认头像：富贵儿与少奶奶"}}),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.user.nickname))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.user.email))])]),_vm._v(" "),_c('section',{staticClass:"c-list"},[_c('div',{staticClass:"c-list__item l-grid",on:{"click":_vm.logout}},[_vm._m(0),_vm._v(" "),_c('span',{staticClass:"c-list__content l-grid__item l-grid__item--8"},[_vm._v("登出")]),_vm._v(" "),_vm._m(1)])]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loaderVisible),expression:"loaderVisible"}],staticClass:"c-loader l-loader"},[_vm._m(2),_vm._v(" "),_c('p',[_vm._v("正在登出，我们会同步你最后的更改...")])]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loaderVisible),expression:"loaderVisible"}],staticClass:"dimmer l-dimmer"})])])}
   __vue__options__.staticRenderFns =[function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"c-list__icon"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/logout.svg","alt":"登出"}})])},function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"c-list__content c-list__icon l-grid__item l-grid__item--1"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"}})])},function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"c-loader__content pacman"},[_c('div'),_vm._v(" "),_c('div'),_vm._v(" "),_c('div'),_vm._v(" "),_c('div'),_vm._v(" "),_c('div')])}]
   __vue__options__._scopeId = "_v-a1b48074"
   

@@ -1,47 +1,48 @@
 <template>
   <main @click="toggleEditArea">
     <img class="full-screen-img" src="../../images/planAdd_bg.jpg" alt="背景图片:在海边">
-    <nav class="nav" v-show="!editAreaVisible">
-      <p class="icon icon--menu icon--large"
+    <nav class="l-icon" v-show="!editAreaVisible">
+      <p class="c-icon c-icon--menu c-icon--large"
        @click="navHome">Up!Up!</p>
     </nav>
     <article v-show="!editAreaVisible">
-      <header class="header">
-        <h1 class="header__title">{{plan.title}}</h1>
+      <section class="title l-title">
+        <h1 class="title__main">{{plan.title}}</h1>
         <p>Next: {{nextDay}}</p>
-      </header>
-      <main id="scheduleWrap">
-        <schedule
+      </section>
+      <section id="scheduleWrap">
+        <schedule class="l-schedule"
          :startDay="plan.progress.start_day"
          :days="plan.progress.days"
          :marked="plan.progress.marked"
          :done="plan.progress.done"
          :editable="true"
+         :tipVisible="false"
          @changeDay="handleChangeDay"></schedule>
-      </main>
+      </section>
     </article>
     <div class="edit-area" v-show="editAreaVisible">
-      <div class="filed2">
-        <div class="filed2__name">
+      <div class="field2">
+        <div class="field2__name">
           <img class="full-width-img" src="../../images/svg/edit.svg" alt="编辑">
         </div>
-        <div class="filed2__content" @click.stop="handleEdit">
+        <div class="field2__content" @click.stop="handleEdit">
           编辑
         </div>
       </div>
-      <div class="filed2">
-        <div class="filed2__name">
+      <div class="field2">
+        <div class="field2__name">
           <img class="full-width-img" src="../../images/svg/delete.svg" alt="删除">
         </div>
-        <div class="filed2__content filed2__content--warn" @click.stop="handleDelete">
+        <div class="field2__content field2__content--warn" @click.stop="handleDelete">
           删除
         </div>
       </div>
-      <div class="filed2">
-        <div class="filed2__name">
+      <div class="field2">
+        <div class="field2__name">
           <img class="full-width-img" src="../../images/svg/share.svg" alt="分享">
         </div>
-        <div class="filed2__content--flex"  @click.stop="handleShare">
+        <div class="field2__content--flex"  @click.stop="handleShare">
           <div class="icon--padding">
             <img class="full-width-img" src="../../images/svg/wechat.svg" alt="微信">
           </div>
@@ -59,11 +60,11 @@
           </div>
         </div>
       </div>
-      <div class="filed2">
-        <div class="filed2__name">
+      <div class="field2">
+        <div class="field2__name">
           <img class="full-width-img" src="../../images/svg/add.svg" alt="新建">
         </div>
-        <div class="filed2__content filed2__content--success" @click.stop="handleAdd">
+        <div class="field2__content field2__content--success" @click.stop="handleAdd">
           新建
         </div>
       </div>
@@ -71,18 +72,24 @@
   </main>
 </template>
 
-<style scoped>
-  @import url(./filed.css);
+<style lang="scss" scoped>
+  @import '../../style/blocks/field';
+  @import '../../style/blocks/icon';
 
-  .nav {
-    margin: 1em;
+  .l-schedule {
+    position: absolute;
+    bottom: 8rem
   }
 
-  .header {
+  .l-icon {
+    padding: 1.5em 1em;
+  }
+
+  .l-title {
     padding: 2em 0 0 1em;
   }
 
-  .header__title {
+  .title__main {
     font-weight: 400;
     margin-bottom: .5em;
 
@@ -100,14 +107,14 @@
     background: rgba(95, 91, 91, 0.4);
   }
 
-  .filed2 {
+  .field2 {
     display: flex;
     width: 100%;
 
     margin-bottom: .5em;
   }
 
-  .filed2__name {
+  .field2__name {
     width: 10%;
     background: #1B1A1A;
     padding: .5em;
@@ -116,7 +123,7 @@
     min-width: 2em;
   }
 
-  .filed2__content {
+  .field2__content {
     width: 25%;
     text-align: center;
     background: #53BDBD;
@@ -127,15 +134,15 @@
     max-width: 7em;
   }
 
-  .filed2__content--warn {
+  .field2__content--warn {
     background: #DB7093;
   }
 
-  .filed2__content--success {
+  .field2__content--success {
     background: #60BD74;
   }
 
-  .filed2__content--flex {
+  .field2__content--flex {
     display: flex;
     flex-wrap: wrap;
     width: calc(30% + .5em);
@@ -153,7 +160,7 @@
 </style>
 
 <script>
-  import schedule from './schedule2'
+  import schedule from './schedule'
 
   import { mapMutations } from 'vuex'
   import { formatDate, withinParent } from '../../js/module/utils'
@@ -215,7 +222,7 @@
         //editArea show
         if (!this.editAreaVisible && !withinParent('#scheduleWrap', target)) {
           this.editAreaVisible = true
-        } else if (this.editAreaVisible && target.className.indexOf('filed2__content') === -1) {
+        } else if (this.editAreaVisible && target.className.indexOf('field2__content') === -1) {
           this.editAreaVisible = false
         }
       },

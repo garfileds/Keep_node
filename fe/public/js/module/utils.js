@@ -117,7 +117,7 @@ let form2 = function (form, format) {
       case "select-one":
       case "select-multiple":
         if (field.name.length) {
-          for (j = 0, opLen = filed.options.length; j < opLen; j++) {
+          for (j = 0, opLen = field.options.length; j < opLen; j++) {
             option = field.options[j]
             if (option.selected) {
               opValue = ''

@@ -1,0 +1,40 @@
+.schedule {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  position: relative;
+}
+
+.schedule__progress {
+  position: absolute;
+  top: 0;
+  height: 2px;
+  background: var(--schedule-progress-color);
+}
+
+.schedule__item {
+  width: calc(100% / 7);
+  padding: .5em 0;
+  text-align: center;
+  background: var(--color-more-opacity-primary);
+
+  font-size: .875em;
+  border-right: 1px solid;
+}
+
+.schedule__item:nth-of-type(7n) {
+  border: none;
+}
+
+.schedule__item--unselected {
+  background: var(--schedule-unselected-color);
+}
+
+.schedule__item--overdue {
+  background: var(--schedule-overdue-color);
+}
+
+.schedule__item--done {
+  background: var(--schedule-done-color);
+}

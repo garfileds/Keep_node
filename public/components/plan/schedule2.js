@@ -97,47 +97,13 @@ define('public/components/plan/schedule2.vue', function(require, exports, module
   //
   //
   //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
     __vue__options__ = exports.default;
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"schedule",on:{"click":_vm.handleSelectDay}},[_c('div',{staticClass:"schedule__progress",style:(_vm.progressWidth)}),_vm._v(" "),_vm._l((_vm.daysArr),function(day,index){return _c('div',{staticClass:"schedule__item",class:{'schedule__item--unselected': _vm.marked.indexOf(day) === -1,
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"schedule l-schedule",on:{"click":_vm.handleSelectDay}},[_c('div',{staticClass:"schedule__progress",style:(_vm.progressWidth)}),_vm._v(" "),_vm._l((_vm.daysArr),function(day,index){return _c('div',{staticClass:"schedule__item",class:{'schedule__item--unselected': _vm.marked.indexOf(day) === -1,
            'schedule__item--overdue': _vm.overdue.indexOf(day) > -1,
            'schedule__item--done': _vm.done.indexOf(day) > -1},attrs:{"data-day":day}},[_c('p',[_vm._v("Day "+_vm._s(day))]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.datesArr[index]))])])})],2)}
   __vue__options__.staticRenderFns =[]

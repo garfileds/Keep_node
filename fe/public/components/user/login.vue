@@ -1,12 +1,12 @@
 <template>
-  <main class="main">
-    <header class="header">
-      <span class="header__side floatL">
+  <main class="main--bg">
+    <header class="header l-grid">
+      <div class="l-header__side l-grid__item--15">
         <img class="response-img" src="../../images/svg/return.svg" alt="返回"
              @click="navBack">
-      </span>
+      </div>
     </header>
-    <div class="content">
+    <div class="l-wrap content">
       <section class="c-form">
         <div class="c-form__title">
           <p class="font--large">登录到Up!Up!</p>
@@ -16,30 +16,21 @@
             <input class="c-form__input c-form__input--group c-form__input--full" type="email" placeholder="邮箱地址" v-model="email">
             <input class="c-form__input c-form__input--group c-form__input--full" type="password" placeholder="密码" v-model="password">
           </fieldset>
+          <div class="l-fieldset">
+            <button id="btnLogin" class="c-button l-button--full">登录</button>
+          </div>
         </form>
-        <button id="btnLogin" class="button button--full">登录</button>
       </section>
     </div>
   </main>
 </template>
 
-<style scoped>
-  .main {
-    background: url(../../images/planAdd_bg.jpg);
-    height: 100vh;
-  }
+<style lang="scss" scoped>
+  @import '../../style/blocks/form';
+  @import '../../style/blocks/button';
 
-  .header {
-    overflow: hidden;
-  }
-
-  .header__side {
-    width: 15%;
+  .l-header__side {
     padding: 1em;
-  }
-
-  .content {
-    padding: 0 1em;
   }
 </style>
 

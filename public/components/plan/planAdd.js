@@ -6,21 +6,21 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
     value: true
   });
   
-  var _filedInputText = require('public/components/plan/filedInputText.vue');
+  var _fieldInputText = require('public/components/plan/fieldInputText.vue');
   
-  var _filedInputText2 = _interopRequireDefault(_filedInputText);
+  var _fieldInputText2 = _interopRequireDefault(_fieldInputText);
   
-  var _filedDatePicker = require('public/components/plan/filedDatePicker.vue');
+  var _fieldDatePicker = require('public/components/plan/fieldDatePicker.vue');
   
-  var _filedDatePicker2 = _interopRequireDefault(_filedDatePicker);
+  var _fieldDatePicker2 = _interopRequireDefault(_fieldDatePicker);
   
-  var _filedColor = require('public/components/plan/filedColor.vue');
+  var _fieldColor = require('public/components/plan/fieldColor.vue');
   
-  var _filedColor2 = _interopRequireDefault(_filedColor);
+  var _fieldColor2 = _interopRequireDefault(_fieldColor);
   
-  var _filedSchedule = require('public/components/plan/filedSchedule.vue');
+  var _fieldSchedule = require('public/components/plan/fieldSchedule.vue');
   
-  var _filedSchedule2 = _interopRequireDefault(_filedSchedule);
+  var _fieldSchedule2 = _interopRequireDefault(_fieldSchedule);
   
   var _vuex = require('node_modules/vuex/dist/vuex');
   
@@ -28,17 +28,6 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   //
   //
   //
@@ -112,7 +101,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
       handleClickOutside: function handleClickOutside(event) {
         var targetEl = event.target;
   
-        if (this.scheduleVisible && !(0, _utils.isDescendant)(this.$refs.filedSchedule.$el, targetEl)) {
+        if (this.scheduleVisible && !(0, _utils.isDescendant)(this.$refs.fieldSchedule.$el, targetEl)) {
           this.scheduleVisible = false;
         }
       },
@@ -171,7 +160,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
       }
     },
   
-    components: { filedInputText: _filedInputText2.default, filedDatePicker: _filedDatePicker2.default, filedColor: _filedColor2.default, filedSchedule: _filedSchedule2.default }
+    components: { fieldInputText: _fieldInputText2.default, fieldDatePicker: _fieldDatePicker2.default, fieldColor: _fieldColor2.default, fieldSchedule: _fieldSchedule2.default }
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
@@ -179,7 +168,7 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"content",on:{"click":_vm.handleClickOutside}},[_c('header',{staticClass:"header"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认创建"},on:{"click":_vm.handleConfirm}})])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"addPlanForm"}},[_c('filedInputText',{attrs:{"title":"标题","inputName":"title"}}),_vm._v(" "),_c('filedDatePicker',{on:{"changeVisible":_vm.handleChangeVisible,"changeDate":_vm.handleChangeDate}}),_vm._v(" "),_c('filedColor',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}]}),_vm._v(" "),_c('filedSchedule',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}],ref:"filedSchedule",attrs:{"startDay":_vm.startDay,"scheduleVisible":_vm.scheduleVisible},on:{"changeScheduleVisible":_vm.handleChangeScheduleVisible}})],1)])])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"main--bg",on:{"click":_vm.handleClickOutside}},[_c('header',{staticClass:"header"},[_c('div',{staticClass:"l-grid l-grid--between"},[_c('span',{staticClass:"header__side"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认创建"},on:{"click":_vm.handleConfirm}})])])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"addPlanForm"}},[_c('fieldInputText',{attrs:{"title":"标题","inputName":"title"}}),_vm._v(" "),_c('fieldDatePicker',{on:{"changeVisible":_vm.handleChangeVisible,"changeDate":_vm.handleChangeDate}}),_vm._v(" "),_c('fieldColor',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}]}),_vm._v(" "),_c('fieldSchedule',{directives:[{name:"show",rawName:"v-show",value:(!_vm.datePickerVisible),expression:"!datePickerVisible"}],ref:"fieldSchedule",attrs:{"startDay":_vm.startDay,"scheduleVisible":_vm.scheduleVisible},on:{"changeScheduleVisible":_vm.handleChangeScheduleVisible}})],1)])])}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-7ab53f60"
   

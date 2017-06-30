@@ -1,0 +1,15 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "string-quotes": "single",
+    "property-no-unknown": [
+      true
+    ],
+    "custom-property-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "number-leading-zero": "never"
+  },
+  "ignoreFiles": [
+    "./public/style/lib/*"
+  ]
+}

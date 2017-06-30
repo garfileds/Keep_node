@@ -1,0 +1,51 @@
+:root {
+  /* Colors
+  ------ */
+  --color-warning: #db7093;
+  --color-success: #60bd74;
+
+  --color-primary: #61e2e2;
+  --color-dark-primary: #129fea;
+  --color-light-primary: #53bdbd;
+  --color-opcity-primary: rgba(98, 186, 206, .8);
+  --color-more-opacity-primary: rgba(98, 186, 206, .4);
+
+  --color-white: #fff;
+
+  --color-green: #76ff7b;
+  --color-black: #000;
+  --color-light-black: #1b1a1a;
+  --color-opcity-black: rgba(0, 0, 0, .5);
+
+  --color-base-gray: #dcd7d7;
+  --color-dark-gray: #ddd;
+
+  --color-secondary: #d3d3d3;
+
+  /* Border
+  --------- */
+  --border-color-base: var(--color-base-gray);
+
+  --box-shadow-base: 0 2px 10px var(--color-dark-gray);
+
+  /* Font
+  -------- */
+  --font-size-base: 16px;
+  --font-color-base: var(--color-white);
+  --line-height: 1.2;
+  --font-weight-base: 400;
+
+  /* Button
+  -------- */
+  --button-primary-fill: var(--color-primary);
+
+  --button-success-fill: var(--color-success);
+  --button-warning-fill: var(--color-warning);
+
+  /* Schedule
+  ------------ */
+  --schedule-unselected-color: rgba(69, 69, 69, .4);
+  --schedule-done-color: rgba(69, 243, 14, .4);
+  --schedule-overdue-color: rgba(127, 134, 127, .8);
+  --schedule-progress-color: rgba(69, 243, 14, .4);
+}

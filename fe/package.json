@@ -15,13 +15,20 @@
   "devDependencies": {
     "babel-plugin-import": "^1.1.1",
     "fis-parser-babel-6.x": "^6.24.1",
+    "fis-parser-node-sass": "^1.0.1",
     "fis3-deploy-local-deliver": "^1.0.0",
     "fis3-hook-commonjs": "^0.1.22",
     "fis3-hook-node_modules": "^2.2.3",
     "fis3-packager-deps-pack": "^0.1.2",
     "fis3-parser-vue-component": "^5.2.0",
     "fis3-postpackager-loader": "^1.5.2",
-    "loaders.css": "^0.1.2"
+    "fis3-postprocessor-autoprefixer": "^1.0.0",
+    "loaders.css": "^0.1.2",
+    "node-sass": "^4.5.3",
+    "normalize.css": "^7.0.0",
+    "stylelint": "^7.12.0",
+    "stylelint-config-sass-guidelines": "^2.1.0",
+    "stylelint-config-standard": "^16.0.0"
   },
   "dependencies": {
     "blueimp-md5": "^2.7.0",
