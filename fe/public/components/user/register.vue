@@ -40,6 +40,7 @@
   import Vue from 'vue'
   import { mapMutations } from 'vuex'
   import { runQueue } from '../../js/module/async'
+  import { setJWT } from '../../js/global/setHttp'
 
   const apiCreateUser = `/api/user`,
     apiPostToken = `/api/user/token`,
@@ -48,7 +49,7 @@
   const isUsed = function (field, rule, resolveMsgAlert, next) {
     let self = this
 
-    Vue.http.get(apiGetEmailStatus, {
+    self.$http.get(apiGetEmailStatus, {
       params: {
         email: self[field]
       }
@@ -178,7 +179,7 @@
               email: self.email,
               password: self.password
             }).then(response => {
-              Vue.http.headers.common['Authorization'] = `Bearer ${response.body.token}`
+              setJWT(response.body.token)
               self.changeNeedInit(true)
               self.initUser(response.body)
               router.push('/home')

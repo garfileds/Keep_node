@@ -1,4 +1,33 @@
+.c-loader[_v-9c5af8b7] {
+  position: fixed;
+  width: 100%;
+  top: 10em;
+  z-index: 101;
+  text-align: center;
+  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.5);
+  padding: .5em 0;
+}
 
-body {
-  color: white;
+.c-loader__content[_v-9c5af8b7] {
+  display: inline-block;
+  padding: .5em 0;
+}
+
+.dimmer[_v-9c5af8b7] {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-opcity-black);
+}
+
+.l-loader[_v-9c5af8b7] {
+  position: fixed;
+  top: 10em;
+  z-index: 101;
+}
+
+.l-dimmer[_v-9c5af8b7] {
+  z-index: 100;
 }

@@ -39,6 +39,8 @@
   import { mapMutations } from 'vuex'
   import { runQueue } from '../../js/module/async'
 
+  import { setJWT } from '../../js/global/setHttp'
+
   const apiPostToken = `/api/user/token`
 
   export default {
@@ -144,7 +146,7 @@
           password: self.password
         }).then(response => {
           if (response.status === 200) {
-            Vue.http.headers.common['Authorization'] = `Bearer ${response.body.token}`
+            setJWT(response.body.token)
             self.changeNeedInit(true)
             self.initUser(response.body)
             router.push('/home')

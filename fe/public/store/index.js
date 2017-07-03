@@ -30,6 +30,12 @@ const store = new Vuex.Store({
 
     queueIsRunning: false,
 
+    //加载动画统一全局管理
+    loading: {
+      isLoading: false,
+      tip: ''
+    },
+
     plans: [],
     user: {}
   },
@@ -60,6 +66,11 @@ const store = new Vuex.Store({
 
     changeQueueIsRunning(state, change) {
       state.queueIsRunning = change
+    },
+
+    changeLoading(state, payload) {
+      state.loading.isLoading = payload.isLoading
+      state.loading.tip = payload.tip || ''
     },
 
     coverPlans(state, plans) {
@@ -140,14 +151,10 @@ const store = new Vuex.Store({
         plansBackup = JSON.parse(JSON.stringify(plans))
         commitId = response.body.commit_id
         syncPlans()
-      }, response => {
-        if (response.status === 401) {
-          router.push('/')
-        }
       })
     },
 
-    syncPlansOnce({ commit }, cb) {
+    syncPlansOnce({}, cb) {
       let copyUpdateQueue = cloneDeep(updateQueue)
       updateQueue = [initQueueItem()]
       runQueue(copyUpdateQueue, processQueueItem, cb)

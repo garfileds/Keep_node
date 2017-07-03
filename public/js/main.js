@@ -12,6 +12,12 @@ var _vueResource = require('node_modules/vue-resource/dist/vue-resource.common')
 
 var _vueResource2 = _interopRequireDefault(_vueResource);
 
+var _setHttp = require('public/js/global/setHttp');
+
+var _store = require('public/store/index');
+
+var _store2 = _interopRequireDefault(_store);
+
 var _App = require('public/components/App.vue');
 
 var _App2 = _interopRequireDefault(_App);
@@ -73,5 +79,9 @@ new _vue2.default({
   render: function render(h) {
     return h(_App2.default);
   },
-  router: router
+  router: router,
+  store: _store2.default,
+  created: function created() {
+    (0, _setHttp.setLoadingAndError)(router);
+  }
 });

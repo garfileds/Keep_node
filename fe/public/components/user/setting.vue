@@ -35,7 +35,6 @@
         </div>
         <p>正在登出，我们会同步你最后的更改...</p>
       </div>
-      <div class="dimmer l-dimmer" v-show="loaderVisible"></div>
     </div>
   </main>
 </template>
@@ -65,6 +64,8 @@
 <script>
   import Vue from 'vue'
   import { mapState, mapMutations, mapActions } from 'vuex'
+
+  import { setJWT } from '../../js/global/setHttp'
 
   const apiDeleteToken = `/api/user/token`
 
@@ -130,7 +131,7 @@
           self.loaderVisible = false
 
           self.clear()
-          Vue.http.headers.common['Authorization'] = ''
+          setJWT('')
           router.push('/')
         }
       })

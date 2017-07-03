@@ -83,7 +83,7 @@ fis.match('/public/components/**.vue:scss', {
 })
 
 // 模块文件
-fis.match('{/public/js/module/**.js, /public/store/**.js}', {
+fis.match('{/public/js/module/**.js, /public/store/**.js, /public/js/global/**.js}', {
   isMod: true,
   parser: [
     fis.plugin('babel-6.x')

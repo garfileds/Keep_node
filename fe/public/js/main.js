@@ -9,6 +9,10 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.config.productionTip = false
 
+import { setLoadingAndError } from './global/setHttp'
+
+import store from '../store'
+
 import App from '../components/App'
 import welcome from '../components/user/welcome'
 import userRegister from '../components/user/register'
@@ -41,5 +45,9 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
+  router,
+  store,
+  created: function() {
+    setLoadingAndError(router)
+  }
 })

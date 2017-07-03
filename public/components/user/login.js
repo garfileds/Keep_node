@@ -51,6 +51,8 @@ define('public/components/user/login.vue', function(require, exports, module) {
   
   var _async = require('public/js/module/async');
   
+  var _setHttp = require('public/js/global/setHttp');
+  
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
   var apiPostToken = '/api/user/token';
@@ -160,7 +162,7 @@ define('public/components/user/login.vue', function(require, exports, module) {
           password: self.password
         }).then(function (response) {
           if (response.status === 200) {
-            _vue2.default.http.headers.common['Authorization'] = 'Bearer ' + response.body.token;
+            (0, _setHttp.setJWT)(response.body.token);
             self.changeNeedInit(true);
             self.initUser(response.body);
             router.push('/home');

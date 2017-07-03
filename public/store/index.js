@@ -28,9 +28,11 @@ define('public/store/index', function(require, exports, module) {
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
-                                                                                                                                                                                                       * Created by chenpeng on 2017/5/31.
-                                                                                                                                                                                                       */
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+  
+  function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); } /**
+                                                                                                                     * Created by chenpeng on 2017/5/31.
+                                                                                                                     */
   
   _vue2.default.use(_vuex2.default);
   _vue2.default.use(_vueResource2.default);
@@ -50,6 +52,12 @@ define('public/store/index', function(require, exports, module) {
       needInit: true,
   
       queueIsRunning: false,
+  
+      //加载动画统一全局管理
+      loading: {
+        isLoading: false,
+        tip: ''
+      },
   
       plans: [],
       user: {}
@@ -78,6 +86,10 @@ define('public/store/index', function(require, exports, module) {
       },
       changeQueueIsRunning: function changeQueueIsRunning(state, change) {
         state.queueIsRunning = change;
+      },
+      changeLoading: function changeLoading(state, payload) {
+        state.loading.isLoading = payload.isLoading;
+        state.loading.tip = payload.tip || '';
       },
       coverPlans: function coverPlans(state, plans) {
         state.plans = plans;
@@ -155,14 +167,10 @@ define('public/store/index', function(require, exports, module) {
           plansBackup = JSON.parse(JSON.stringify(plans));
           commitId = response.body.commit_id;
           syncPlans();
-        }, function (response) {
-          if (response.status === 401) {
-            router.push('/');
-          }
         });
       },
       syncPlansOnce: function syncPlansOnce(_ref2, cb) {
-        var commit = _ref2.commit;
+        _objectDestructuringEmpty(_ref2);
   
         var copyUpdateQueue = (0, _lodash.cloneDeep)(updateQueue);
         updateQueue = [initQueueItem()];

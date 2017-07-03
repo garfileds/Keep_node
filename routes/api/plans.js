@@ -93,11 +93,13 @@ var mock_syn = {
 }
 
 /* GET plans */
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
   var planStatu = req.query.statu || 'all';
 
   if (planStatu === 'all') {
-    res.json(mock_all)
+    setTimeout(() => {
+      next(res.json(mock_all))
+    }, 2000)
   } else if (planStatu === 'ing') {
     res.json(mock_ing)
   } else if (planStatu === 'done') {
