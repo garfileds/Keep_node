@@ -14,6 +14,7 @@ import { runQueue } from '../js/module/async'
 
 Vue.use(Vuex)
 Vue.use(VueResource)
+/** @namespace Vue.http */
 
 let updateQueue = [initQueueItem()]
 let plansBackup, commitId
@@ -56,7 +57,7 @@ const store = new Vuex.Store({
 
   mutations: {
     initPlans(state, plans) {
-      state.plans = plans
+      state.plans = plans || []
       state.needInit = false
     },
 
@@ -74,12 +75,14 @@ const store = new Vuex.Store({
     },
 
     coverPlans(state, plans) {
-      state.plans = plans
+      state.plans = plans || []
     },
 
     addPlan(state, payload) {
       state.plans.push(payload.plan)
-      backupPlans(state.plans)
+      let result = backupPlans(state.plans)
+      plansBackup = result[0]
+      commitId = result[1]
     },
 
     updatePlan(state, payload) {
@@ -97,7 +100,7 @@ const store = new Vuex.Store({
         i++
       }
 
-      updateQueue[updateQueue.length - 1].update.push(payload)
+      inQueue('update', payload)
     },
 
     deletePlan(state, payload) {
@@ -105,7 +108,7 @@ const store = new Vuex.Store({
         return plan.id !== payload.planId
       })
 
-      updateQueue[updateQueue.length - 1].remove.push(payload.planId)
+      inQueue('delete', payload.planId)
     },
 
     donePlan(state, payload) {
@@ -124,7 +127,11 @@ const store = new Vuex.Store({
         plan.status = 'ing'
       }
 
-      updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done
+      inQueue('done', {
+        planId: payload.planId,
+        status: plan.status,
+        done: plan.progress.done
+      })
     },
 
     initUser(state, user) {
@@ -141,16 +148,15 @@ const store = new Vuex.Store({
 
   actions: {
     getPlans({ commit }) {
-      Vue.http.get(apiGetPlans).then(response => {
+      return Vue.http.get(apiGetPlans).then(response => {
         clearTimeout(syncTimer)
 
-        let plans = response.body.plans
+        let plans = response.body
         commit('initPlans', plans)
 
-        //cloneDeep plans
-        plansBackup = JSON.parse(JSON.stringify(plans))
-        commitId = response.body.commit_id
-        syncPlans()
+        let result = backupPlans(plans)
+        plansBackup = result[0]
+        commitId = result[1]
       })
     },
 
@@ -216,8 +222,9 @@ function processQueueItem(item, index, next) {
 
     if (response.body.code === 'ok') {
       //如果服务器端和plansBackup一致
-      plansStr = JSON.stringify(store.state.plans)
-      commitIdTemp = md5(plansStr)
+      let result = backupPlans(store.state.plans)
+      plansStr = result[0]
+      commitIdTemp = result[1]
 
       if (commitIdTemp !== response.body.commit_id) {
         console.error('expected synchronization')
@@ -226,7 +233,7 @@ function processQueueItem(item, index, next) {
           message: 'synchronize fail'
         })
       } else {
-        plansBackup = JSON.parse(plansStr)
+        plansBackup = plansStr
         commitId = commitIdTemp
 
         next()
@@ -243,8 +250,9 @@ function processQueueItem(item, index, next) {
         update_info: plansMerge
       }).then(response => {
         if (response.status === 200) {
-          plansStr = JSON.stringify(plansMerge)
-          commitIdTemp = md5(plansStr)
+          let result = backupPlans(plansMerge)
+          plansStr = result[0]
+          commitIdTemp = result[1]
 
           if (commitIdTemp !== response.body.commit_id) {
             console.error('expected synchronization after merge')
@@ -253,7 +261,7 @@ function processQueueItem(item, index, next) {
               message: 'synchronize fail'
             })
           } else {
-            plansBackup = JSON.parse(plansStr)
+            plansBackup = plansStr
             commitId = commitIdTemp
             store.commit('coverPlans', plansMerge)
 
@@ -278,9 +286,8 @@ function processQueueItem(item, index, next) {
 
 function initQueueItem() {
   return {
-    update: [],
-    remove: [],
-    done: {}
+    'update': {},
+    'remove': []
   }
 }
 
@@ -289,7 +296,6 @@ function initQueueItem() {
  * @fn 当localPlans中有serverPlans没有的key-value时，添加到serverPlans
  * @param serverPlans（已按plan.id递增排序）
  * @param clientPlans（已按plan.id递增排序）
- * @returns plans
  */
 function mergePlans(serverPlans, clientPlans) {
   let result = [],
@@ -300,21 +306,9 @@ function mergePlans(serverPlans, clientPlans) {
       lenBase = basePlans.length,
       lenLocal = localPlans.length
 
-  let search = function (basePlans, localPlans) {
-    let key
-    for (key in localPlans) {
-      if (localPlans.hasOwnProperty(key)) {
-        if (localPlans.hasOwnProperty(key)) {
-          isEmpty(basePlans[key]) ? basePlans = localPlans[key]
-            : isPureObject(localPlans[key]) && search(localPlans[key])
-        }
-      }
-    }
-  }
-
   while (i < lenBase && j < lenLocal) {
     if (basePlans[i].id === localPlans[j].id) {
-      search(basePlans, localPlans)
+      mergePlan(basePlans[i], localPlans[j])
       result.push(basePlans[i])
       i++
       j++
@@ -336,10 +330,68 @@ function mergePlans(serverPlans, clientPlans) {
   return result
 }
 
+function mergePlan(basePlan, localPlan) {
+  Object.keys(localPlan).forEach(key => {
+    isEmpty(basePlan[key]) ? basePlan[key] = localPlan[key]
+      : isPureObject(localPlan[key]) && mergePlan(basePlan[key], localPlan[key])
+  })
+}
+
 function backupPlans(plans) {
-  let plansStr = JSON.stringify(plans)
-  plansBackup = JSON.parse(plansStr)
-  commitId = md5(plansStr)
+  const planTemplate = {
+    _id: '',
+    id: '',
+    title: '',
+    bg_image: '',
+    color: 'rgb(255, 204, 51)',
+    progress_color: "#fff",
+    progress: {
+      days: 21,
+      start_day: '',
+      done: [],
+      marked: []
+    },
+    status: ''
+  }
+
+  let plansStr = ''
+  plans.forEach(plan => {
+    let planTemp = Object.assign({}, planTemplate, plan)
+    plansStr += JSON.stringify(planTemp)
+  })
+
+  let commitId = md5(plansStr)
+
+  return [plansStr, commitId]
+}
+
+/**
+ * 统一处理store接受actions的commit后对updateQueue的操作
+ * @deps 依赖updateQueue变量
+ * @param operation
+ * @param info
+ * @returns
+ */
+function inQueue(operation, info) {
+  let queueItem = updateQueue[updateQueue.length - 1]
+
+  if (operation === 'delete') {
+    return queueItem.remove.push(info)
+  }
+
+  let plan = queueItem.update[info.planId]
+  plan || (plan = queueItem.update[info.planId] = {})
+
+  if (operation === 'update') {
+    Object.assign(plan, info.updateInfo)
+  } else if (operation === 'done') {
+    /** @namespace info.plandId */
+    delete info.plandId
+    Object.assign(plan, {
+      'progress.done': info.done,
+      status: info.status
+    })
+  }
 }
 
 export default store

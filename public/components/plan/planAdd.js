@@ -115,13 +115,16 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
         formValue['marked'] = formValue.marked.split(',').map(function (el) {
           return parseInt(el);
         });
+        formValue['days'] = parseInt(formValue.days);
   
         this.$http.post(apiCreatePlan, formValue).then(function (response) {
-          var plan = self._mixinPlanForm(formValue);
-          plan.id = response.body.message.plan_id;
+          if (response.status === 201) {
+            var plan = self._mixinPlanForm(formValue);
+            plan._id = plan.id = response.body.plan_id;
   
-          self.$store.commit('addPlan', { plan: plan });
-          router.push('/home');
+            self.$store.commit('addPlan', { plan: plan });
+            self.$router.push('/home');
+          }
         });
       },
       navBack: function navBack() {
@@ -129,32 +132,28 @@ define('public/components/plan/planAdd.vue', function(require, exports, module) 
       },
       _mixinPlanForm: function _mixinPlanForm(formValue) {
         var plan = {
+          _id: '',
           id: '',
           title: '',
           bg_image: '',
           color: '',
-          progress_color: '#ffffff',
+          progress_color: "#fff",
           progress: {
-            start_day: '05/17/2017',
-            days: 7,
-            marked: [1, 2, 4, 7],
-            done: []
+            days: 21,
+            start_day: '',
+            done: [],
+            marked: []
           },
           status: 'ing'
         };
   
-        var key = void 0,
-            isOnlyObject = void 0;
         var keySearch = function keySearch(obj) {
-          for (key in obj) {
-            if (obj.hasOwnProperty(key)) {
-              isOnlyObject = Object.prototype.toString.call(obj[key]) === '[object Object]';
-              isOnlyObject ? keySearch(obj[key]) : obj[key] = formValue[key] || obj[key];
-            }
-          }
+          Object.keys(obj).forEach(function (key) {
+            plan.hasOwnProperty(key) ? plan[key] = obj[key] : plan.progress[key] = obj[key];
+          });
         };
   
-        keySearch(plan);
+        keySearch(formValue);
   
         return plan;
       }

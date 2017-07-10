@@ -36,6 +36,7 @@ define('public/store/index', function(require, exports, module) {
   
   _vue2.default.use(_vuex2.default);
   _vue2.default.use(_vueResource2.default);
+  /** @namespace Vue.http */
   
   var updateQueue = [initQueueItem()];
   var plansBackup = void 0,
@@ -78,7 +79,7 @@ define('public/store/index', function(require, exports, module) {
   
     mutations: {
       initPlans: function initPlans(state, plans) {
-        state.plans = plans;
+        state.plans = plans || [];
         state.needInit = false;
       },
       changeNeedInit: function changeNeedInit(state, change) {
@@ -92,11 +93,13 @@ define('public/store/index', function(require, exports, module) {
         state.loading.tip = payload.tip || '';
       },
       coverPlans: function coverPlans(state, plans) {
-        state.plans = plans;
+        state.plans = plans || [];
       },
       addPlan: function addPlan(state, payload) {
         state.plans.push(payload.plan);
-        backupPlans(state.plans);
+        var result = backupPlans(state.plans);
+        plansBackup = result[0];
+        commitId = result[1];
       },
       updatePlan: function updatePlan(state, payload) {
         var i = 0,
@@ -114,14 +117,14 @@ define('public/store/index', function(require, exports, module) {
           i++;
         }
   
-        updateQueue[updateQueue.length - 1].update.push(payload);
+        inQueue('update', payload);
       },
       deletePlan: function deletePlan(state, payload) {
         state.plans = state.plans.filter(function (plan) {
           return plan.id !== payload.planId;
         });
   
-        updateQueue[updateQueue.length - 1].remove.push(payload.planId);
+        inQueue('delete', payload.planId);
       },
       donePlan: function donePlan(state, payload) {
         var plan = void 0,
@@ -140,7 +143,11 @@ define('public/store/index', function(require, exports, module) {
           plan.status = 'ing';
         }
   
-        updateQueue[updateQueue.length - 1].done[payload.planId] = plan.progress.done;
+        inQueue('done', {
+          planId: payload.planId,
+          status: plan.status,
+          done: plan.progress.done
+        });
       },
       initUser: function initUser(state, user) {
         state.user.nickname = user.nickname;
@@ -157,16 +164,15 @@ define('public/store/index', function(require, exports, module) {
       getPlans: function getPlans(_ref) {
         var commit = _ref.commit;
   
-        _vue2.default.http.get(apiGetPlans).then(function (response) {
+        return _vue2.default.http.get(apiGetPlans).then(function (response) {
           clearTimeout(syncTimer);
   
-          var plans = response.body.plans;
+          var plans = response.body;
           commit('initPlans', plans);
   
-          //cloneDeep plans
-          plansBackup = JSON.parse(JSON.stringify(plans));
-          commitId = response.body.commit_id;
-          syncPlans();
+          var result = backupPlans(plans);
+          plansBackup = result[0];
+          commitId = result[1];
         });
       },
       syncPlansOnce: function syncPlansOnce(_ref2, cb) {
@@ -234,8 +240,9 @@ define('public/store/index', function(require, exports, module) {
   
       if (response.body.code === 'ok') {
         //如果服务器端和plansBackup一致
-        plansStr = JSON.stringify(store.state.plans);
-        commitIdTemp = (0, _esModule.md5)(plansStr);
+        var result = backupPlans(store.state.plans);
+        plansStr = result[0];
+        commitIdTemp = result[1];
   
         if (commitIdTemp !== response.body.commit_id) {
           console.error('expected synchronization');
@@ -244,7 +251,7 @@ define('public/store/index', function(require, exports, module) {
             message: 'synchronize fail'
           });
         } else {
-          plansBackup = JSON.parse(plansStr);
+          plansBackup = plansStr;
           commitId = commitIdTemp;
   
           next();
@@ -261,8 +268,9 @@ define('public/store/index', function(require, exports, module) {
           update_info: plansMerge
         }).then(function (response) {
           if (response.status === 200) {
-            plansStr = JSON.stringify(plansMerge);
-            commitIdTemp = (0, _esModule.md5)(plansStr);
+            var _result = backupPlans(plansMerge);
+            plansStr = _result[0];
+            commitIdTemp = _result[1];
   
             if (commitIdTemp !== response.body.commit_id) {
               console.error('expected synchronization after merge');
@@ -271,7 +279,7 @@ define('public/store/index', function(require, exports, module) {
                 message: 'synchronize fail'
               });
             } else {
-              plansBackup = JSON.parse(plansStr);
+              plansBackup = plansStr;
               commitId = commitIdTemp;
               store.commit('coverPlans', plansMerge);
   
@@ -296,9 +304,8 @@ define('public/store/index', function(require, exports, module) {
   
   function initQueueItem() {
     return {
-      update: [],
-      remove: [],
-      done: {}
+      'update': {},
+      'remove': []
     };
   }
   
@@ -307,7 +314,6 @@ define('public/store/index', function(require, exports, module) {
    * @fn 当localPlans中有serverPlans没有的key-value时，添加到serverPlans
    * @param serverPlans（已按plan.id递增排序）
    * @param clientPlans（已按plan.id递增排序）
-   * @returns plans
    */
   function mergePlans(serverPlans, clientPlans) {
     var result = [],
@@ -319,20 +325,9 @@ define('public/store/index', function(require, exports, module) {
         lenBase = basePlans.length,
         lenLocal = localPlans.length;
   
-    var search = function search(basePlans, localPlans) {
-      var key = void 0;
-      for (key in localPlans) {
-        if (localPlans.hasOwnProperty(key)) {
-          if (localPlans.hasOwnProperty(key)) {
-            (0, _utils.isEmpty)(basePlans[key]) ? basePlans = localPlans[key] : (0, _utils.isPureObject)(localPlans[key]) && search(localPlans[key]);
-          }
-        }
-      }
-    };
-  
     while (i < lenBase && j < lenLocal) {
       if (basePlans[i].id === localPlans[j].id) {
-        search(basePlans, localPlans);
+        mergePlan(basePlans[i], localPlans[j]);
         result.push(basePlans[i]);
         i++;
         j++;
@@ -346,22 +341,79 @@ define('public/store/index', function(require, exports, module) {
     }
   
     if (i === lenBase) {
-      var _result;
-  
-      result = (_result = result).concat.apply(_result, _toConsumableArray(localPlans.slice(j, lenLocal)));
-    } else {
       var _result2;
   
-      result = (_result2 = result).concat.apply(_result2, _toConsumableArray(basePlans.slice(i, lenBase)));
+      result = (_result2 = result).concat.apply(_result2, _toConsumableArray(localPlans.slice(j, lenLocal)));
+    } else {
+      var _result3;
+  
+      result = (_result3 = result).concat.apply(_result3, _toConsumableArray(basePlans.slice(i, lenBase)));
     }
   
     return result;
   }
   
+  function mergePlan(basePlan, localPlan) {
+    Object.keys(localPlan).forEach(function (key) {
+      (0, _utils.isEmpty)(basePlan[key]) ? basePlan[key] = localPlan[key] : (0, _utils.isPureObject)(localPlan[key]) && mergePlan(basePlan[key], localPlan[key]);
+    });
+  }
+  
   function backupPlans(plans) {
-    var plansStr = JSON.stringify(plans);
-    plansBackup = JSON.parse(plansStr);
-    commitId = (0, _esModule.md5)(plansStr);
+    var planTemplate = {
+      _id: '',
+      id: '',
+      title: '',
+      bg_image: '',
+      color: 'rgb(255, 204, 51)',
+      progress_color: "#fff",
+      progress: {
+        days: 21,
+        start_day: '',
+        done: [],
+        marked: []
+      },
+      status: ''
+    };
+  
+    var plansStr = '';
+    plans.forEach(function (plan) {
+      var planTemp = Object.assign({}, planTemplate, plan);
+      plansStr += JSON.stringify(planTemp);
+    });
+  
+    var commitId = (0, _esModule.md5)(plansStr);
+  
+    return [plansStr, commitId];
+  }
+  
+  /**
+   * 统一处理store接受actions的commit后对updateQueue的操作
+   * @deps 依赖updateQueue变量
+   * @param operation
+   * @param info
+   * @returns
+   */
+  function inQueue(operation, info) {
+    var queueItem = updateQueue[updateQueue.length - 1];
+  
+    if (operation === 'delete') {
+      return queueItem.remove.push(info);
+    }
+  
+    var plan = queueItem.update[info.planId];
+    plan || (plan = queueItem.update[info.planId] = {});
+  
+    if (operation === 'update') {
+      Object.assign(plan, info.updateInfo);
+    } else if (operation === 'done') {
+      /** @namespace info.plandId */
+      delete info.plandId;
+      Object.assign(plan, {
+        'progress.done': info.done,
+        status: info.status
+      });
+    }
   }
   
   exports.default = store;

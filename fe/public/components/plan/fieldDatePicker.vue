@@ -56,7 +56,7 @@
 
     watch: {
       val(selectedDay) {
-        this.$emit('changeDate', selectedDay)
+        this.$emit('changeDate', formatDate(selectedDay, 'mm/dd/yy'))
       }
     },
 

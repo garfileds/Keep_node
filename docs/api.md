@@ -6,7 +6,7 @@
 ```json
 {
     "id": "p001",
-    "name": "背单词：A-Z",
+    "title": "背单词：A-Z",
     "bg_image": "",
     "color": "#A7ED84",
     "progress_color": "#ffffff",
@@ -22,6 +22,20 @@
       "id": "b001",
       "image_url": ""
     }
+}
+```
+
+2. /plan `[POST]`
+
+- request
+```json
+{
+  "title":"概率论",
+  "start_day":"7/7/2017",
+  "color":"#76FF7B",
+  "progress_color":"#fff",
+  "days":"21",
+  "marked":[1,11,21]
 }
 ```
 

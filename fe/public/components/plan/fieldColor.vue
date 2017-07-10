@@ -75,7 +75,7 @@
       },
 
       progressColor() {
-        return '#ffffff'
+        return '#fff'
       }
     },
 

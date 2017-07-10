@@ -98,11 +98,11 @@ define('public/components/home/home.vue', function(require, exports, module) {
       routerPlanAdd: function routerPlanAdd() {
         router.push('/planAdd');
       }
-    }, (0, _vuex.mapActions)(['getPlans'])),
+    }, (0, _vuex.mapActions)(['getPlans', 'startSyncTimer'])),
   
     created: function created() {
       if (this.needInit) {
-        this.getPlans();
+        this.getPlans().then(this.startSyncTimer);
       }
     },
   

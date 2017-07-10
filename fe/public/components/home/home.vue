@@ -97,13 +97,14 @@
       },
 
       ...mapActions([
-        'getPlans'
+        'getPlans',
+        'startSyncTimer'
       ])
     },
 
     created: function() {
       if (this.needInit) {
-        this.getPlans()
+        this.getPlans().then(this.startSyncTimer)
       }
     },
 

@@ -51,7 +51,7 @@
   import fieldSchedule from './fieldSchedule'
 
   import { mapMutations } from 'vuex'
-  import { formatDate, isDescendant, form2 } from '../../js/module/utils'
+  import { formatDate, isDescendant, form2, isPureObject } from '../../js/module/utils'
 
   const apiCreatePlan = '/api/plan'
 
@@ -97,14 +97,17 @@
         formValue['marked'] = formValue.marked.split(',').map(el => {
           return parseInt(el)
         })
+        formValue['days'] = parseInt(formValue.days)
 
         this.$http.post(apiCreatePlan, formValue)
         .then(response => {
-          let plan = self._mixinPlanForm(formValue)
-          plan.id = response.body.message.plan_id
+          if (response.status === 201) {
+            let plan = self._mixinPlanForm(formValue)
+            plan._id = plan.id = response.body.plan_id
 
-          self.$store.commit('addPlan', { plan })
-          router.push(`/home`)
+            self.$store.commit('addPlan', { plan })
+            self.$router.push(`/home`)
+          }
         })
       },
 
@@ -114,31 +117,29 @@
       
       _mixinPlanForm(formValue) {
         let plan = {
+          _id: '',
           id: '',
           title: '',
           bg_image: '',
           color: '',
-          progress_color: '#ffffff',
+          progress_color: "#fff",
           progress: {
-            start_day: '05/17/2017',
-            days: 7,
-            marked: [1, 2, 4, 7],
-            done: []
+            days: 21,
+            start_day: '',
+            done: [],
+            marked: []
           },
           status: 'ing'
         }
 
-        let key, isOnlyObject
-        let keySearch = function (obj) {
-          for (key in obj) {
-            if (obj.hasOwnProperty(key)) {
-              isOnlyObject = Object.prototype.toString.call(obj[key]) === '[object Object]'
-              isOnlyObject ? keySearch(obj[key]) : obj[key] = formValue[key] || obj[key]
-            }
-          }
+        const keySearch = function keySearch(obj) {
+          Object.keys(obj).forEach(key => {
+            plan.hasOwnProperty(key) ? plan[key] = obj[key]
+              : plan.progress[key] = obj[key]
+          })
         }
 
-        keySearch(plan)
+        keySearch(formValue)
 
         return plan
       }

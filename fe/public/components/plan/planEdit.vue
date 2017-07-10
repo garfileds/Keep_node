@@ -34,7 +34,8 @@
           :marked="plan.progress.marked"
           :done="plan.progress.done"
           :editable="false"
-          :tipVisible="false"></schedule>
+          :tipVisible="false"
+          @changeDay="handleChangeDay"></schedule>
       </form>
     </section>
   </main>
@@ -76,7 +77,8 @@
 
     methods: {
       ...mapMutations([
-        'updatePlan'
+        'updatePlan',
+        'donePlan'
       ]),
 
       handleConfirm() {
@@ -87,6 +89,11 @@
 
         self.updatePlan({ updateInfo, planId })
         router.push(`/planDetail/${planId}`)
+      },
+
+      handleChangeDay(day) {
+        const planId = this.plan.id
+        this.donePlan({ planId, day })
       },
 
       navBack() {

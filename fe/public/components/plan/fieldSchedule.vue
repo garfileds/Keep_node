@@ -6,7 +6,7 @@
          v-show="!scheduleVisible"
          @click.stop="togglePicker(true)">{{selectedSchedule}}</p>
 
-      <smooth-picker ref="picker"
+      <smooth-picker class="smooth-picker--keep" ref="picker"
        :data="config"
        :change="dataChange"
        v-show="scheduleVisible"></smooth-picker>
@@ -39,6 +39,10 @@
 
   .schedule-group {
     background: rgba(98, 186, 206, 0.8);
+  }
+
+  .field__content {
+    width: 78%;
   }
 
   .field__text {
@@ -118,6 +122,7 @@
       },
 
       handleChangeDay(day) {
+        //tip: 这时候是新建plan，所以可以在这里更新改plan
         let index = this.marked.indexOf(parseInt(day))
 
         if (index === -1) {

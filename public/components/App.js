@@ -35,7 +35,7 @@ define('public/components/App.vue', function(require, exports, module) {
   exports.default = {
     name: 'App',
   
-    computed: _extends({}, (0, _vuex.mapState)(['loading']))
+    computed: _extends({}, (0, _vuex.mapState)(['loading', 'plans']))
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){

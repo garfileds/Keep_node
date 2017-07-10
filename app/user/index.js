@@ -4,7 +4,6 @@
 
 const debug = require('debug')('app:app:user' + process.pid),
   _ = require('lodash'),
-  util = require('util'),
   path = require('path'),
   tokenUtils = require('./tokenUtils.js'),
   UnauthorizedAccessError = require(path.join(__dirname, '../..', 'errors', 'UnauthorizedAccessError.js')),

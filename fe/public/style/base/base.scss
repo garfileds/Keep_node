@@ -128,3 +128,10 @@ a {
 .el-date-editor--keep .el-input__icon + input.el-input__inner {
   padding-right: 10px;
 }
+
+/* modify smooth-picker */
+.smooth-picker--keep,
+.smooth-picker--keep .smooth-top,
+.smooth-picker--keep .smooth-bottom {
+  background: var(--color-opcity-primary) !important;
+}
