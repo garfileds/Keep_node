@@ -1,5 +1,6 @@
 <template>
-  <main class="main--bg">
+  <main>
+    <kBg></kBg>
     <header class="header l-grid">
       <div class="l-header__side l-grid__item--15">
         <img class="response-img" src="../../images/svg/return.svg" alt="返回"
@@ -31,10 +32,13 @@
 
   .l-header__side {
     padding: 1em;
+    max-width: 64px;
   }
 </style>
 
 <script>
+  import kBg from '../plan/kBg'
+
   import Vue from 'vue'
   import { mapMutations } from 'vuex'
   import { runQueue } from '../../js/module/async'
@@ -164,6 +168,8 @@
         'changeNeedInit',
         'initUser'
       ])
-    }
+    },
+
+    components: { kBg }
   }
 </script>

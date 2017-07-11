@@ -61,6 +61,12 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   //
   //
   //
+  //
+  //
+  
+  var _kBg = require('public/components/plan/kBg.vue');
+  
+  var _kBg2 = _interopRequireDefault(_kBg);
   
   var _fieldInputText = require('public/components/plan/fieldInputText.vue');
   
@@ -115,7 +121,7 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
       }
     }),
   
-    components: { fieldInputText: _fieldInputText2.default, fieldColor: _fieldColor2.default, schedule: _schedule2.default }
+    components: { kBg: _kBg2.default, fieldInputText: _fieldInputText2.default, fieldColor: _fieldColor2.default, schedule: _schedule2.default }
   };
   var __vue__options__;
   if(exports && exports.__esModule && exports.default){
@@ -123,7 +129,7 @@ define('public/components/plan/planEdit.vue', function(require, exports, module)
   }else{
     __vue__options__ = module.exports;
   }
-  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',{staticClass:"main--bg"},[_c('header',{staticClass:"header"},[_c('div',{staticClass:"l-grid l-grid--between"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认修改"},on:{"click":_vm.handleConfirm}})])])]),_vm._v(" "),_c('section',[_c('form',{attrs:{"id":"editPlanForm"}},[_c('fieldInputText',{attrs:{"title":"标题","inputName":"title","defaultValue":_vm.plan.title}}),_vm._v(" "),_c('fieldInputText',{attrs:{"title":"时间","inputName":"start_day","defaultValue":_vm.plan.progress.start_day,"disabled":true}}),_vm._v(" "),_c('fieldColor',{attrs:{"defaultColor":_vm.plan.color}}),_vm._v(" "),_c('schedule',{staticClass:"l-schedule",attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":false,"tipVisible":false},on:{"changeDay":_vm.handleChangeDay}})],1)])])}
+  __vue__options__.render =function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main',[_c('kBg'),_vm._v(" "),_c('header',{staticClass:"header"},[_c('div',{staticClass:"l-grid l-grid--between"},[_c('span',{staticClass:"header__side floatL"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/return.svg","alt":"返回"},on:{"click":_vm.navBack}})]),_vm._v(" "),_c('span',{staticClass:"header__side floatR"},[_c('img',{staticClass:"response-img",attrs:{"src":"/images/svg/right.svg","alt":"确认修改"},on:{"click":_vm.handleConfirm}})])])]),_vm._v(" "),_c('section',{staticClass:"l-wrap"},[_c('form',{attrs:{"id":"editPlanForm"}},[_c('fieldInputText',{attrs:{"title":"标题","inputName":"title","defaultValue":_vm.plan.title}}),_vm._v(" "),_c('fieldInputText',{attrs:{"title":"时间","inputName":"start_day","defaultValue":_vm.plan.progress.start_day,"disabled":true}}),_vm._v(" "),_c('fieldColor',{attrs:{"defaultColor":_vm.plan.color}}),_vm._v(" "),_c('schedule',{staticClass:"l-schedule l-wrap",attrs:{"startDay":_vm.plan.progress.start_day,"days":_vm.plan.progress.days,"marked":_vm.plan.progress.marked,"done":_vm.plan.progress.done,"editable":false,"tipVisible":false},on:{"changeDay":_vm.handleChangeDay}})],1)])],1)}
   __vue__options__.staticRenderFns =[]
   __vue__options__._scopeId = "_v-93f7987f"
   

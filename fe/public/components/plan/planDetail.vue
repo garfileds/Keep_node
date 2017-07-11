@@ -1,6 +1,6 @@
 <template>
   <main @click="toggleEditArea">
-    <img class="full-screen-img" src="../../images/planAdd_bg.jpg" alt="背景图片:在海边">
+    <kBg></kBg>
     <nav class="l-icon" v-show="!editAreaVisible">
       <p class="c-icon c-icon--menu c-icon--large"
        @click="navHome">Up!Up!</p>
@@ -160,6 +160,7 @@
 </style>
 
 <script>
+  import kBg from './kBg'
   import schedule from './schedule'
 
   import { mapMutations } from 'vuex'
@@ -245,6 +246,6 @@
       }
     },
 
-    components: { schedule }
+    components: { kBg, schedule }
   }
 </script>

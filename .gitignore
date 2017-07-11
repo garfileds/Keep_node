@@ -2,3 +2,4 @@
 node_modules
 /public/*
 html2hbs.py
+views/App.hbs

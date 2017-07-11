@@ -1,10 +1,20 @@
 /* layout module */
 .l-wrap {
+  width: 100%;
+
+  @media (min-width: 768px) {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.l-wrap--padding {
   padding-left: 1em;
   padding-right: 1em;
 
-  @media (min-width: 1000px) {
-    max-width: 800px;
+  @media (min-width: 768px) {
+    max-width: 768px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -46,3 +56,6 @@
   width: 15%;
 }
 
+.l-grid__item--16 {
+  width: 16%;
+}

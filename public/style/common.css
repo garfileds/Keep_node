@@ -682,10 +682,12 @@ a {
 
 /* global
 ---------- */
-.main--bg {
-  background: url(/images/planAdd_bg.jpg);
-  height: 100vh;
+.main-bg {
+  position: absolute;
   width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  overflow: hidden;
 }
 
 .header {
@@ -763,13 +765,25 @@ a {
 
 /* layout module */
 .l-wrap {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .l-wrap {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.l-wrap--padding {
   padding-left: 1em;
   padding-right: 1em;
 }
 
-@media (min-width: 1000px) {
-  .l-wrap {
-    max-width: 800px;
+@media (min-width: 768px) {
+  .l-wrap--padding {
+    max-width: 768px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -853,4 +867,8 @@ a {
 
 .l-grid__item--15 {
   width: 15%;
+}
+
+.l-grid__item--16 {
+  width: 16%;
 }

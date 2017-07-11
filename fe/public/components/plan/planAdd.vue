@@ -1,6 +1,6 @@
 <template>
-  <main class="main--bg"
-   @click="handleClickOutside">
+  <main @click="handleClickOutside">
+    <kBg></kBg>
     <header class="header">
       <div class="l-grid l-grid--between">
         <span class="header__side">
@@ -14,7 +14,7 @@
       </div>
     </header>
 
-    <section>
+    <section class="l-wrap">
       <form id="addPlanForm">
         <fieldInputText
          title="标题"
@@ -41,10 +41,12 @@
   .header__side {
     width: 15%;
     padding: 1em;
+    max-width: 64px;
   }
 </style>
 
 <script>
+  import kBg from './kBg'
   import fieldInputText from './fieldInputText'
   import fieldDatePicker from './fieldDatePicker'
   import fieldColor from './fieldColor'
@@ -145,6 +147,6 @@
       }
     },
 
-    components: { fieldInputText, fieldDatePicker, fieldColor, fieldSchedule }
+    components: { kBg, fieldInputText, fieldDatePicker, fieldColor, fieldSchedule }
   }
 </script>

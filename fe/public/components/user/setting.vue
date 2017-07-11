@@ -20,9 +20,6 @@
             <img class="response-img" src="../../images/svg/logout.svg" alt="登出">
           </span>
           <span class="c-list__content l-grid__item l-grid__item--8">登出</span>
-          <span class="c-list__content c-list__icon l-grid__item l-grid__item--1">
-            <img class="response-img" src="../../images/svg/return.svg" alt="返回">
-          </span>
         </div>
       </section>
       <div class="c-loader l-loader" v-show="loaderVisible">

@@ -41,4 +41,5 @@
 .header__side[_v-7ab53f60] {
   width: 15%;
   padding: 1em;
+  max-width: 64px;
 }

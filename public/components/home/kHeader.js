@@ -25,6 +25,11 @@ define('public/components/home/kHeader.vue', function(require, exports, module) 
   //
   //
   //
+  //
+  //
+  //
+  //
+  //
   
   exports.default = {
     name: 'kHeader'

@@ -13,8 +13,13 @@
 </template>
 
 <style lang="scss" scoped>
+  .l-grid {
+    justify-content: space-between;
+  }
+
   .l-header__side {
     padding: .5em;
+    max-width: 48px;
   }
 </style>
 

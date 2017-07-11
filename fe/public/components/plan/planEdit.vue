@@ -1,5 +1,6 @@
 <template>
-  <main class="main--bg">
+  <main>
+    <kBg></kBg>
     <header class="header">
       <div class="l-grid l-grid--between">
         <span class="header__side floatL">
@@ -13,7 +14,7 @@
       </div>
     </header>
 
-    <section>
+    <section class="l-wrap">
       <form id="editPlanForm">
         <fieldInputText
          title="标题"
@@ -28,7 +29,7 @@
 
         <fieldColor :defaultColor="plan.color"></fieldColor>
 
-        <schedule class="l-schedule"
+        <schedule class="l-schedule l-wrap"
           :startDay="plan.progress.start_day"
           :days="plan.progress.days"
           :marked="plan.progress.marked"
@@ -45,6 +46,7 @@
   .header__side {
     width: 15%;
     padding: 1em;
+    max-width: 64px;
   }
 
   .l-schedule {
@@ -54,6 +56,7 @@
 </style>
 
 <script>
+  import kBg from './kBg'
   import fieldInputText from './fieldInputText'
   import fieldColor from './fieldColor'
   import schedule from './schedule'
@@ -101,6 +104,6 @@
       }
     },
 
-    components: { fieldInputText, fieldColor, schedule }
+    components: { kBg, fieldInputText, fieldColor, schedule }
   }
 </script>

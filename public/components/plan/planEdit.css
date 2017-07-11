@@ -42,9 +42,11 @@
 
 
 
+
 .header__side[_v-93f7987f] {
   width: 15%;
   padding: 1em;
+  max-width: 64px;
 }
 
 .l-schedule[_v-93f7987f] {
