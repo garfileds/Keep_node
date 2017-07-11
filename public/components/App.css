@@ -31,3 +31,63 @@
 .l-dimmer[_v-9c5af8b7] {
   z-index: 100;
 }
+
+/* slide-left */
+.slide-left-enter-active[_v-9c5af8b7],
+.slide-left-leave-active[_v-9c5af8b7] {
+  transition: all .5s ease;
+}
+
+.slide-left-enter[_v-9c5af8b7] {
+  opacity: 0;
+  left: 100% !important;
+}
+
+.slide-left-leave-to[_v-9c5af8b7] {
+  opacity: 0;
+  left: -100% !important;
+}
+
+/* slide-right */
+.slide-right-enter-active[_v-9c5af8b7],
+.slide-right-leave-active[_v-9c5af8b7] {
+  transition: all .5s ease;
+}
+
+.slide-right-enter[_v-9c5af8b7] {
+  opacity: 0;
+  left: -100%;
+}
+
+.slide-right-leave-to[_v-9c5af8b7] {
+  opacity: 0;
+  left: 100%;
+}
+
+/* slide-up */
+.slide-up-enter-active[_v-9c5af8b7],
+.slide-up-leave-active[_v-9c5af8b7] {
+  transition: all .5s ease;
+}
+
+.slide-up-enter[_v-9c5af8b7] {
+  opacity: 0;
+  top: 100vh;
+}
+
+.slide-up-leave-to[_v-9c5af8b7] {
+  opacity: 0;
+  top: -100vh;
+}
+
+/* slide-el */
+.slide-enter-active[_v-9c5af8b7],
+.slide-leave-active[_v-9c5af8b7] {
+  transition: all .5s ease;
+}
+
+.slide-enter[_v-9c5af8b7],
+.slide-leave-to[_v-9c5af8b7] {
+  opacity: 0;
+  left: 100% !important;
+}

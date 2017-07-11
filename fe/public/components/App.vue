@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <transition :name="transitionName">
+      <router-view class="l-absolute"></router-view>
+    </transition>
+
     <div class="c-loader l-loader" v-show="loading.isLoading">
       <div class="c-loader__content pacman">
         <div></div>
@@ -19,6 +19,7 @@
 
 <style lang="scss" scoped>
   @import '../style/blocks/loader';
+  @import '../style/animations/animation';
 </style>
 
 <script>
@@ -27,11 +28,53 @@
   export default {
     name: 'App',
 
+    data: function () {
+      return {
+        transitionName: ''
+      }
+    },
+
     computed: {
       ...mapState([
         'loading',
         'plans'
       ])
+    },
+
+    watch: {
+      $route(to, from) {
+        switchTransitionName.call(this, to, from)
+      }
+    }
+  }
+
+  function switchTransitionName(to, from) {
+    const backRoute = {
+      '/userRegister': '/',
+      '/userLogin': '/',
+      '/planAdd': '/home',
+      '/setting': '/home',
+      '/planEdit': '/planDetail',
+      '/planDetail': '/home'
+    }
+    const backRouteFrom = Object.keys(backRoute)
+
+    let fromPath = from.path,
+      toPath = to.path;
+
+    //planEdit和planDetail路由含/:planId
+    [fromPath, toPath] = [fromPath, toPath].map(path => {
+      return path.replace(/^((\/planEdit)|(\/planDetail))\/.+$/, (match, group) => {
+        return group
+      })
+    })
+
+    if (backRouteFrom.indexOf(fromPath) > -1 && backRoute[fromPath] === toPath) {
+      this.transitionName = 'slide-right'
+    } else if (backRouteFrom.indexOf(toPath) > -1 && backRoute[toPath] === fromPath) {
+      this.transitionName = 'slide-left'
+    } else {
+      this.transitionName = 'slide-up'
     }
   }
 </script>

@@ -77,7 +77,7 @@
   @import '../../style/blocks/icon';
 
   .l-schedule {
-    position: absolute;
+    position: fixed;
     bottom: 8rem
   }
 

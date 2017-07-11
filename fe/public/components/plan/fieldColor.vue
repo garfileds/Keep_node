@@ -7,21 +7,24 @@
      :style="selectedColor"
      @click="togglePanel(true)"></div>
 
-    <section class="color-panel"
-     v-show="panelVisible"
-     @click="selectColor">
-      <div class="color-panel__return"
-       @click="togglePanel(false)"></div>
+    <transition name="slide">
+      <section class="color-panel"
+       v-show="panelVisible"
+       @click="selectColor">
+        <div class="color-panel__return"
+         @click="togglePanel(false)"></div>
 
-      <color-panel-item
-       v-for="color in colors"
-       :color="color"></color-panel-item>
-    </section>
+        <color-panel-item
+         v-for="color in colors"
+         :color="color"></color-panel-item>
+      </section>
+    </transition>
   </section>
 </template>
 
 <style lang="scss" scoped>
   @import '../../style/blocks/field';
+  @import '../../style/animations/animation';
 
   .field__content {
     width: 3em;
@@ -32,6 +35,7 @@
   .color-panel {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     z-index: 101;
   }
@@ -40,7 +44,7 @@
     background-image: url(../../images/svg/return.svg);
     background-size: 100%;
 
-    position: fixed;
+    position: absolute;
     top: 1em;
     left: 1em;
 

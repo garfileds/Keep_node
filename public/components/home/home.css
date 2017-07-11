@@ -45,3 +45,31 @@
   background-image: url(/images/svg/addition_fill.svg);
   background-size: 100%;
 }
+
+.fade-enter-active {
+  -webkit-animation: fade-in .5s .5s;
+          animation: fade-in .5s .5s;
+}
+
+.fade-leave-active {
+  -webkit-animation: fade-in .5s reverse;
+          animation: fade-in .5s reverse;
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

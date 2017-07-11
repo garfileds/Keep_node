@@ -23,7 +23,9 @@
          @click.native="catPlan(planDone.id, 'done')"></planThumbnail>
       </section>
 
-      <section class="add-plan-btn" @click="routerPlanAdd"></section>
+      <transition name="fade">
+        <section class="add-plan-btn" @click="routerPlanAdd"></section>
+      </transition>
     </section>
   </main>
 </template>
@@ -49,6 +51,23 @@
 
     background-image: url(../../images/svg/addition_fill.svg);
     background-size: 100%;
+  }
+
+  .fade-enter-active {
+    animation: fade-in .5s .5s;
+  }
+  .fade-leave-active {
+    animation: fade-in .5s reverse;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 </style>
 

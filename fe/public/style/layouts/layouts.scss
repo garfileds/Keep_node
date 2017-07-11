@@ -24,6 +24,13 @@
   width: 100%;
 }
 
+.l-absolute {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
 .l-box-shadow {
   border-bottom: 1px solid #dcd7d7;
   box-shadow: 0 2px 10px #dcd7d7;
