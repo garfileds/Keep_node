@@ -166,7 +166,7 @@
   import { mapMutations } from 'vuex'
   import { formatDate, withinParent } from '../../js/module/utils'
 
-  export default {
+  module.exports = {
     name: 'planDetail',
 
     data: function () {
@@ -229,20 +229,20 @@
       },
 
       handleEdit() {
-        router.push(`/planEdit/${this.plan.id}`)
+        this.$router.push(`/planEdit/${this.plan.id}`)
       },
 
       handleDelete() {
         this.deletePlan({ planId: this.plan.id })
-        router.push('/home')
+        this.$router.push('/home')
       },
 
       handleAdd() {
-        router.push('/planAdd')
+        this.$router.push('/planAdd')
       },
 
       navHome() {
-        router.push('/home')
+        this.$router.push('/home')
       }
     },
 

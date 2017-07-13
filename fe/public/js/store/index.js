@@ -8,9 +8,9 @@ import VueResource from 'vue-resource'
 
 import { isEqual, cloneDeep } from 'lodash'
 
-import { isPureObject, isEmpty } from '../js/module/utils'
-import { md5 } from '../js/module/esModule'
-import { runQueue } from '../js/module/async'
+import { isPureObject, isEmpty } from '../module/utils'
+import { md5 } from '../module/esModule'
+import { runQueue } from '../module/async'
 
 Vue.use(Vuex)
 Vue.use(VueResource)

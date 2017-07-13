@@ -64,7 +64,7 @@
   import { mapMutations } from 'vuex'
   import { formatDate, isDescendant, form2 } from '../../js/module/utils'
 
-  export default {
+  module.exports = {
     name: 'planEdit',
 
     data: function () {
@@ -91,7 +91,7 @@
         delete updateInfo.start_day
 
         self.updatePlan({ updateInfo, planId })
-        router.push(`/planDetail/${planId}`)
+        this.$router.push(`/planDetail/${planId}`)
       },
 
       handleChangeDay(day) {
@@ -100,7 +100,7 @@
       },
 
       navBack() {
-        router.go(-1)
+        this.$router.go(-1)
       }
     },
 

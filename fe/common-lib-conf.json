@@ -1,0 +1,13 @@
+[
+  "es6-promise",
+  "vue",
+  "vuex",
+  "vue-router",
+  "vue-resource",
+  "process",
+  "buffer",
+  "blueimp-md5",
+  "base64-js",
+  "ieee754",
+  "is-buffer"
+]

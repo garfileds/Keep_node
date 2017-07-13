@@ -1,5 +1,5 @@
 .idea
 node_modules
 /public/*
+!/public/favicon.ico
 html2hbs.py
-views/App.hbs

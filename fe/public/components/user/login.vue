@@ -47,7 +47,7 @@
 
   const apiPostToken = `/api/user/token`
 
-  export default {
+  module.exports = {
     name: 'userLogin',
     data: function() {
       return {
@@ -131,7 +131,8 @@
         })
       })
 
-      this.$el.querySelector(this.validRule.submitEl).addEventListener('click', () => {
+      this.$el.querySelector(this.validRule.submitEl).addEventListener('click', event => {
+        event.preventDefault()
         runQueue(validQueue, (fn, index, next) => fn(next), (error) => {
           self[self.validRule.submitHandler](!error)
         })
@@ -153,7 +154,7 @@
             setJWT(response.body.token)
             self.changeNeedInit(true)
             self.initUser(response.body)
-            router.push('/home')
+            self.$router.push('/home')
           }
         }, () => {
           window.alert('用户名或密码不正确')
@@ -161,7 +162,7 @@
       },
 
       navBack() {
-        router.go(-1)
+        this.$router.go(-1)
       },
 
       ...mapMutations([

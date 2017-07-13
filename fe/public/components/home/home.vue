@@ -77,7 +77,7 @@
 
   import { mapState, mapGetters, mapActions } from 'vuex'
 
-  export default {
+  module.exports = {
     name: 'home',
 
     data: function() {
@@ -108,11 +108,11 @@
       },
 
       catPlan(planId, status) {
-        router.push(`/planDetail/${planId}?status=${status}`)
+        this.$router.push(`/planDetail/${planId}?status=${status}`)
       },
 
       routerPlanAdd() {
-        router.push('/planAdd')
+        this.$router.push('/planAdd')
       },
 
       ...mapActions([

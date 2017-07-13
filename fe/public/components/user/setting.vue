@@ -66,7 +66,7 @@
 
   const apiDeleteToken = `/api/user/token`
 
-  export default {
+  module.exports = {
     name: 'setting',
 
     data: function () {
@@ -129,7 +129,7 @@
 
           self.clear()
           setJWT('')
-          router.push('/')
+          self.$router.push('/')
         }
       })
     })

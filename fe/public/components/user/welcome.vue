@@ -25,7 +25,7 @@
 <script>
   import welcomeSlide from './welcomeSlide'
 
-  export default {
+  module.exports = {
     name: 'welcome',
     components: { welcomeSlide }
   }

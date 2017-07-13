@@ -57,7 +57,7 @@
 
   const apiCreatePlan = '/api/plan'
 
-  export default {
+  module.exports = {
     name: 'planAdd',
 
     data: function () {
@@ -114,7 +114,7 @@
       },
 
       navBack() {
-        router.go(-1)
+        this.$router.go(-1)
       },
       
       _mixinPlanForm(formValue) {
