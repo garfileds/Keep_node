@@ -52,7 +52,7 @@
     const backRoute = {
       '/userRegister': '/',
       '/userLogin': '/',
-      '/planAdd': '/home',
+      '/planAdd': ['/home', '/planDetail'],
       '/setting': '/home',
       '/planEdit': '/planDetail',
       '/planDetail': '/home'
@@ -69,9 +69,9 @@
       })
     })
 
-    if (backRouteFrom.indexOf(fromPath) > -1 && backRoute[fromPath] === toPath) {
+    if (backRouteFrom.indexOf(fromPath) > -1 && backRoute[fromPath].indexOf(toPath) > -1) {
       this.transitionName = 'slide-right'
-    } else if (backRouteFrom.indexOf(toPath) > -1 && backRoute[toPath] === fromPath) {
+    } else if (backRouteFrom.indexOf(toPath) > -1 && backRoute[toPath].indexOf(fromPath) > -1) {
       this.transitionName = 'slide-left'
     } else {
       this.transitionName = 'slide-up'
