@@ -34,6 +34,12 @@ export default new VueRouter({
       }
     },
     {
+      path: '/pokemen',
+      component: function (resolve) {
+        require.async('../../components/user/pokemen.vue', resolve)
+      }
+    },
+    {
       path: '/home',
       component: function (resolve) {
         require.async('../../components/home/home.vue', resolve)

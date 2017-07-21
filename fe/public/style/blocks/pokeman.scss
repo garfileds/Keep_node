@@ -1,0 +1,110 @@
+.bg-grass {
+  background-color: #7c5 !important;
+}
+
+.bgl-grass {
+  background-color: #bdffa3 !important;
+}
+
+.bg-poison {
+  background-color: #a59 !important;
+}
+
+.bd-grass {
+  border: 3px solid #40c60a;
+}
+
+.b-poison {
+  border: 3px solid #a59;
+}
+
+.b-poison--slim {
+  border: 1px solid #a59;
+}
+
+.c-pokeman,
+.c-pokeman__name,
+.c-pokeman__num,
+.c-pokeman__img,
+.c-pokeman__attr,
+.c-pokeman__category,
+.c-pokeman__feature {
+  border-radius: 10px;
+}
+
+.c-pokeman {
+  text-align: center;
+  color: #000;
+  padding: 0 5px;
+}
+
+.c-pokeman__name {
+  background: #fff;
+  padding: .5em 0;
+  margin-left: 2.5%;
+  margin-top: 10px;
+}
+
+.c-pokeman__nature {
+  margin-left: 2.5%;
+}
+
+.c-pokeman__num {
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 10px;
+  background: #fff;
+  align-self: stretch;
+  line-height: 55px;
+}
+
+.c-pokeman__attr,
+.c-pokeman__category {
+  padding: .5em 0;
+}
+
+.c-pokeman__attr {
+  margin: 0 5% 0 2.5%;
+}
+
+.c-pokeman__sub-title {
+  padding-bottom: .5em;
+}
+
+.c-pokeman__description {
+  padding: 0 1em;
+  background: #fff;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.c-pokeman__feature {
+  margin: .5em 0;
+  padding: .5em 0;
+}
+
+.c-pokeman__description--item {
+  color: #000;
+  align-self: stretch;
+  padding: .5em 0;
+}
+
+.c-pokeman__description--item:first-child {
+  margin: 0 5% 0 2.5%;
+}
+
+/* c-pokeman-thumbnail */
+.c-pokeman-thumbnail {
+  border: 1px solid #dcd7d7;
+  color: #000;
+  border-radius: 5px;
+}
+
+.c-pokeman-thumbnail__content {
+  padding: .5em;
+  border-radius: 5px 5px 0 0;
+}
+
+.c-pokeman-thumbnail__title {
+  padding: .5em;
+}

@@ -7,7 +7,8 @@ const needLoadingReqs = {
   '[GET] /api/plans': {},
   '[DELETE] /user/token': {
     tip: '正在登出，我们会保存你最近的更改...'
-  }
+  },
+  '[GET] /api/pokemen': {}
 }
 
 export function setLoadingAndError(router) {

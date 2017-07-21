@@ -351,7 +351,9 @@ function backupPlans(plans) {
       done: [],
       marked: []
     },
-    status: ''
+    status: '',
+    pokeman_id: '',
+    pokeman_img: ''
   }
 
   let plansStr = ''

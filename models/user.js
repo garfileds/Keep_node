@@ -2,11 +2,11 @@
  * Created by chenpeng on 2017/6/10.
  */
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   bcrypt = require("bcryptjs"),
   Schema = mongoose.Schema
 
-var UserSchema = new Schema({
+const UserSchema = new Schema({
   nickname: {
     type: String,
     required: true
@@ -37,7 +37,7 @@ var UserSchema = new Schema({
 })
 
 UserSchema.pre('save', function (next) {
-  var user = this
+  const user = this
   if (this.isModified('password') || this.isNew) {
     bcrypt.genSalt(10, function (err, salt) {
       if (err) {

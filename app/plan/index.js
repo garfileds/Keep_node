@@ -7,10 +7,11 @@ const debug = require('debug')('app:app:plans' + process.pid),
   md5 = require('blueimp-md5'),
 
   NotFoundError = require(path.join(__dirname, '../..', 'errors', 'NotFoundError.js')),
-  Plan = require(path.join(__dirname, '../..', 'models', 'plan.js'))
+  Plan = require(path.join(__dirname, '../..', 'models', 'plan.js')),
+  Pokeman = require(path.join(__dirname, '../..', 'models', 'pokeman.js'))
 
 module.exports.getPlans = function getPlans(req, res, next) {
-  let planStatus = req.query.statu || 'all'
+  let planStatus = req.query.status || 'all'
   let queryCondition = { user_id: req.user._id }
 
   planStatus !== 'all' && (queryCondition.status = planStatus)
@@ -79,15 +80,23 @@ module.exports.updatePlans = function updatePlans(req, res, next) {
 
           Object.keys(update).forEach(planId => {
             let plan = update[planId]
-            plan.user_id = user._id
 
             sequence = sequence.then(() => {
-              return Plan.update({user_id: user._id}, plan).exec()
+              return Plan.
+                findOneAndUpdate({
+                  _id: planId
+                }, plan).
+                exec().
+                then(plan => {
+                  return plan
+                }, error => next(error))
             })
           })
 
           sequence.
             then(() => {
+              if (!remove.length) return
+
               return Plan.
                 remove({
                   '_id': {
@@ -123,10 +132,36 @@ module.exports.createPlan = function createPlan(req, res, next) {
   formatRequestPlan(plan, req.user._id)
 
   Plan.
-    create(plan).
-    then(plan => {
-      return res.status(201).json({ plan_id: plan._id })
-    }, error => next(error))
+    find({}, 'pokeman_id').
+    exec().
+    then(pokemanIds => {
+      pokemanIds = pokemanIds.map(pokemanIdModel => pokemanIdModel.toObject().pokeman_id)
+
+      return Pokeman.
+        findOne({
+          _id: {
+            $nin: pokemanIds
+          }
+        }).
+        exec().
+        then(pokeman => {
+          plan.pokeman_id = pokeman._id
+          plan.pokeman_img = pokeman.img
+          plan.pokeman_name = pokeman.name
+        })
+    }).
+    then(() => {
+      Plan.
+        create(plan).
+        then(plan => {
+          return res.status(201).json({
+            plan_id: plan._id,
+            pokeman_id: plan.pokeman_id,
+            pokeman_img: plan.pokeman_img,
+            pokeman_name: plan.pokeman_name
+          })
+        }, error => next(error))
+    })
 }
 
 function formatRequestPlan(plan, userId) {

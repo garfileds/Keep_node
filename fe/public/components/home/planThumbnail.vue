@@ -13,7 +13,8 @@
       </p>
     </div>
     <div class="c-plan__badge">
-      <img class="response-img" src="../../images/Bulbasaur.png" alt="Bulbasaur">
+      <img class="response-img" :src="plan.pokeman_img" :alt="plan.pokeman_name"
+       :style="pokemanStyle">
     </div>
   </div>
 </template>
@@ -40,11 +41,18 @@
 
     computed: {
       progressStyle() {
-        const doneRatio = Math.ceil(this.plan.progress.done.length / this.plan.progress.marked.length * 100)
+        let doneRatio = Math.ceil(this.plan.progress.done.length / this.plan.progress.marked.length * 100)
         return {
           'background-color': this.plan.progress_color,
           width: doneRatio + '%'
         }
+      },
+
+      pokemanStyle() {
+        let doneRatio = Math.ceil(this.plan.progress.done.length / this.plan.progress.marked.length * 100),
+          opacity = doneRatio === 100 ? 1 : doneRatio >= 60 ? 0.6 : 0.2
+
+        return { opacity }
       },
 
       nextDay() {

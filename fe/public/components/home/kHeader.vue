@@ -5,7 +5,7 @@
         <img class="response-img" src="../../images/svg/setting.svg" alt="设置">
       </router-link>
       <h1 class="header__center l-grid__item--8">Up! Up!</h1>
-      <router-link to="/myCup" class="l-header__side l-grid__item--1">
+      <router-link to="/pokemen" class="l-header__side l-grid__item--1">
         <img class="response-img" src="../../images/svg/cup.svg" alt="图鉴">
       </router-link>
     </div>

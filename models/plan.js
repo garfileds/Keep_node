@@ -2,10 +2,10 @@
  * Created by adoug on 2017/7/3.
  */
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   Schema = mongoose.Schema
 
-var PlanSchema = new Schema({
+const PlanSchema = new Schema({
   user_id: {
     type: String,
     required: true
@@ -53,6 +53,21 @@ var PlanSchema = new Schema({
       type: [Number],
       default: []
     }
+  },
+
+  pokeman_id: {
+    type: String,
+    required: true
+  },
+
+  pokeman_name: {
+    type: String,
+    required: true
+  },
+  
+  pokeman_img: {
+    type: String,
+    required: true
   }
 }, {
   toObject: {

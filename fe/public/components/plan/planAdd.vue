@@ -102,15 +102,20 @@
         formValue['days'] = parseInt(formValue.days)
 
         this.$http.post(apiCreatePlan, formValue)
-        .then(response => {
-          if (response.status === 201) {
-            let plan = self._mixinPlanForm(formValue)
-            plan._id = plan.id = response.body.plan_id
+          .then(response => {
+            if (response.status === 201) {
+              let plan = self._mixinPlanForm(formValue),
+                addInfo = response.body
 
-            self.$store.commit('addPlan', { plan })
-            self.$router.push(`/home`)
-          }
-        })
+              plan._id = plan.id = addInfo.plan_id
+              plan.pokeman_id = addInfo.pokeman_id
+              plan.pokeman_img = addInfo.pokeman_img
+              plan.pokeman_name = addInfo.pokeman_name
+
+              self.$store.commit('addPlan', { plan })
+              self.$router.push(`/home`)
+            }
+          })
       },
 
       navBack() {

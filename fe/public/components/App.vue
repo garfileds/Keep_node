@@ -54,6 +54,7 @@
       '/userLogin': '/',
       '/planAdd': ['/home', '/planDetail'],
       '/setting': '/home',
+      '/pokemen': '/home',
       '/planEdit': '/planDetail',
       '/planDetail': '/home'
     }
