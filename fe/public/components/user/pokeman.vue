@@ -12,7 +12,7 @@
       <div class="c-pokeman__img l-grid__item--10">
         <img class="response-img" :src="pokeman.img" :alt="pokeman.name">
       </div>
-      <div class="c-pokeman__attr l-grid__item--45" :class="[styleAttr.bglMain, styleAttr.bSlimSen]">
+      <div class="c-pokeman__attr l-grid__item--45 bw-1" :class="[styleAttr.bglMain, styleAttr.bSen]">
         <p class="c-pokeman__sub-title">属性</p>
         <div>
           <span class="c-pokeman__description"
@@ -20,18 +20,18 @@
            :class="index === 0 ? [styleAttr.bgMain] : [styleAttr.bgSen]">{{attribute}}</span>
         </div>
       </div>
-      <div class="c-pokeman__category l-grid__item--45" :class="[styleAttr.bSlimSen, styleAttr.bglMain]">
+      <div class="c-pokeman__category l-grid__item--45 bw-1" :class="[styleAttr.bSen, styleAttr.bglMain]">
         <p class="c-pokeman__sub-title">分类</p>
         <div>
           <span class="c-pokeman__description" :class="[styleAttr.bgMain]">{{pokeman.category}}</span>
         </div>
       </div>
-      <div class="c-pokeman__feature l-grid__item--10" :class="[styleAttr.bSlimSen, styleAttr.bglMain]">
+      <div class="c-pokeman__feature l-grid__item--10 bw-1" :class="[styleAttr.bSen, styleAttr.bglMain]">
         <p class="c-pokeman__sub-title">特性</p>
         <div class="l-grid">
-          <div class="l-grid__item--45 c-pokeman__description c-pokeman__description--item"
+          <div class="l-grid__item--45 c-pokeman__description c-pokeman__description--item bw-1"
            v-for="fea in pokeman.features"
-           :class="[styleAttr.bSlimSen]">
+           :class="[styleAttr.bSen]">
             <span v-for="subFea in fea.split(' ')">{{subFea}}</span>
           </div>
         </div>
@@ -45,7 +45,7 @@
 </style>
 
 <script>
-  import { ch2enPokeman } from '../../js/helper/ch2enPokeman'
+  import { attr2stylePokeman } from '../../js/helper/attr2stylePokeman'
 
   export default {
     name: 'pokeman',
@@ -60,7 +60,7 @@
 
     computed: {
       styleAttr() {
-        return this.pokeman ? ch2enPokeman(this.pokeman.attr) : {}
+        return this.pokeman ? attr2stylePokeman(this.pokeman.attr) : {}
       }
     }
   }

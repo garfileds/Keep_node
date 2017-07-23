@@ -15,7 +15,7 @@
 </style>
 
 <script>
-  import { ch2enPokeman } from '../../js/helper/ch2enPokeman'
+  import { attr2stylePokeman } from '../../js/helper/attr2stylePokeman'
 
   export default {
     name: 'pokemanThumbnail',
@@ -24,7 +24,7 @@
 
     computed: {
       bgMain() {
-        return this.pokeman ? ch2enPokeman(this.pokeman.attr).bgMain : ''
+        return this.pokeman ? attr2stylePokeman(this.pokeman.attr).bgMain : ''
       }
     }
   }

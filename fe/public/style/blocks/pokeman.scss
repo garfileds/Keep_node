@@ -1,26 +1,4 @@
-.bg-grass {
-  background-color: #7c5 !important;
-}
-
-.bgl-grass {
-  background-color: #bdffa3 !important;
-}
-
-.bg-poison {
-  background-color: #a59 !important;
-}
-
-.bd-grass {
-  border: 3px solid #40c60a;
-}
-
-.b-poison {
-  border: 3px solid #a59;
-}
-
-.b-poison--slim {
-  border: 1px solid #a59;
-}
+@import '../variables/pokemanColor';
 
 .c-pokeman,
 .c-pokeman__name,
