@@ -16,8 +16,13 @@ h1 {
   font-weight: var(--font-weight-base);
 }
 
-a {
+a,
+a:link,
+a:active,
+a:hover,
+a:visited {
   text-decoration: none;
+  color: #fff;
 }
 
 :focus {

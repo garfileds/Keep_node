@@ -74,16 +74,15 @@
 <script>
   import kHeader from './kHeader'
   import planThumbnail from './planThumbnail'
+  import draggable from 'vuedraggable'
 
-  import { mapState, mapGetters, mapActions } from 'vuex'
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
   module.exports = {
     name: 'home',
 
     data: function() {
-      return {
-        plansDoneShow: false,
-      }
+      return {}
     },
 
     computed: {
@@ -93,7 +92,8 @@
 
       ...mapState([
         'needInit',
-        'plans'
+        'plans',
+        'plansDoneShow'
       ]),
 
       ...mapGetters([
@@ -104,7 +104,7 @@
 
     methods: {
       switcher() {
-        this.plansDoneShow = !this.plansDoneShow
+        this.changePlansDoneShow(!this.plansDoneShow)
       },
 
       catPlan(planId, status) {
@@ -115,18 +115,24 @@
         this.$router.push('/planAdd')
       },
 
+      ...mapMutations([
+        'changePlansDoneShow'
+      ]),
+
       ...mapActions([
         'getPlans',
-        'startSyncTimer'
+        'startSyncTimer',
+        'getPokemen'
       ])
     },
 
     created: function() {
       if (this.needInit) {
         this.getPlans().then(this.startSyncTimer)
+        this.getPokemen()
       }
     },
 
-    components: { planThumbnail, kHeader }
+    components: { planThumbnail, kHeader, draggable }
   }
 </script>

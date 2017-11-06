@@ -9,5 +9,7 @@
   "blueimp-md5",
   "base64-js",
   "ieee754",
-  "is-buffer"
+  "is-buffer",
+  "lodash.isequal",
+  "lodash.clonedeep"
 ]

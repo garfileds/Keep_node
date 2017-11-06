@@ -1,6 +1,6 @@
 <template>
-  <img class="main-bg" src="../../images/bg@2x.jpg"
+  <img class="main-bg" src="../../images/bg_medium@1x.jpg"
        alt="背景图片：夏日游"
-       srcset="../../images/bg@1x.jpg 720w, ../../images/bg@2x.jpg 1440w"
+       srcset="../../images/bg_medium@1x.jpg 720w, ../../images/bg.jpg 1440w"
        sizes="100vw">
 </template>

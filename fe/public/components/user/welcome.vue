@@ -25,8 +25,11 @@
 <script>
   import welcomeSlide from './welcomeSlide'
 
+  import { reset401HasHappened } from '../../js/global/setHttp'
+
   module.exports = {
     name: 'welcome',
+
     components: { welcomeSlide }
   }
 </script>

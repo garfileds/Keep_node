@@ -6,10 +6,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 
-import { isEqual, cloneDeep } from 'lodash'
-
 import { isPureObject, isEmpty } from '../module/utils'
-import { md5 } from '../module/esModule'
+import { md5, cloneDeep, isEqual } from '../module/esModule'
 import { runQueue } from '../module/async'
 
 Vue.use(Vuex)
@@ -20,6 +18,8 @@ let updateQueue = [initQueueItem()]
 let plansBackup, commitId
 let syncTimer = 0
 
+const apiGetPokemen = '/api/pokemen'
+
 const apiGetPlans = '/api/plans'
 const apiPostPlans = '/api/plans'
 const synTime = 500
@@ -28,6 +28,9 @@ const store = new Vuex.Store({
   state: {
     //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
     needInit: true,
+
+    // /home路由需要记忆的状态
+    plansDoneShow: false,
 
     queueIsRunning: false,
 
@@ -38,6 +41,8 @@ const store = new Vuex.Store({
     },
 
     plans: [],
+    pokemen: [],
+
     user: {}
   },
 
@@ -52,6 +57,16 @@ const store = new Vuex.Store({
       return state.plans.filter(function (plan) {
         return plan.status === 'ing'
       })
+    },
+
+    pokemenCollected(state) {
+      let pokemenId = []
+
+      for (const plan of state.plans) {
+        plan.status === 'done' && pokemenId.push(plan.pokeman_id)
+      }
+
+      return state.pokemen.filter(pokeman => pokemenId.indexOf(pokeman.id) > -1)
     }
   },
 
@@ -59,6 +74,17 @@ const store = new Vuex.Store({
     initPlans(state, plans) {
       state.plans = plans || []
       state.needInit = false
+
+      console.log('[done] plan init')
+    },
+
+    initPokemen(state, pokemen) {
+      state.pokemen = pokemen || []
+      console.log('[done] pokemen init')
+    },
+
+    changePlansDoneShow(state, status) {
+      state.plansDoneShow = status
     },
 
     changeNeedInit(state, change) {
@@ -137,6 +163,7 @@ const store = new Vuex.Store({
     initUser(state, user) {
       state.user.nickname = user.nickname
       state.user.email = user.email
+      state.user.id = user._id
     },
 
     clear(state) {
@@ -158,6 +185,13 @@ const store = new Vuex.Store({
         plansBackup = result[0]
         commitId = result[1]
       })
+    },
+
+    getPokemen({ commit }) {
+      return Vue.http.get(apiGetPokemen)
+        .then(response => {
+          commit('initPokemen', response.body)
+        })
     },
 
     syncPlansOnce({}, cb) {
@@ -243,6 +277,10 @@ function processQueueItem(item, index, next) {
       plansServer = response.body.plans
       plansMerge = mergePlans(plansServer, store.state.plans)
       commitIdTemp = response.body.commit_id
+
+      for (const infoKey of plansMerge.keys()) {
+        plansMerge[infoKey].user_id = store.state.user.id
+      }
 
       return Vue.http.post(apiPostPlans, {
         type: 'global',
@@ -353,7 +391,9 @@ function backupPlans(plans) {
     },
     status: '',
     pokeman_id: '',
-    pokeman_img: ''
+    pokeman_name: '',
+    pokeman_img: '',
+    user_id: ''
   }
 
   let plansStr = ''
@@ -397,4 +437,3 @@ function inQueue(operation, info) {
 }
 
 export default store
-

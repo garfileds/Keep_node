@@ -37,14 +37,16 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     z-index: 101;
+    overflow: scroll;
   }
 
   .color-panel__return {
     background-image: url(../../images/svg/return.svg);
     background-size: 100%;
 
-    position: absolute;
+    position: fixed;
     top: 1em;
     left: 1em;
 

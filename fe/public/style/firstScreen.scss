@@ -1,0 +1,78 @@
+@import 'variables/variables';
+@import 'blocks/button';
+
+/* base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--font-color-base);
+}
+
+section {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+:focus {
+  outline: none;
+}
+
+/* layouts */
+.l-wrap {
+  width: 100%;
+
+  @media (min-width: 768px) {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.l-absolute {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* special */
+.l-slide[_v-tempKeep] {
+  margin: 2em 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+}
+
+.stage::before {
+  content: '';
+  padding-bottom: 56.25%;
+  width: 1px;
+  vertical-align: middle;
+}
+
+.stage__item {
+  max-height: 100%;
+}
+
+.description--temp {
+  color: #000;
+  text-align: center;
+  margin-top: 2em;
+}
+
+.button--login[_v-tempKeep] {
+  margin-top: 1em;
+  background: #eaeceb;
+  color: var(--color-black);
+}

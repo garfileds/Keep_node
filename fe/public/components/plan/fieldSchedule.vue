@@ -9,7 +9,7 @@
       <smooth-picker class="smooth-picker--keep" ref="picker"
        :data="config"
        :change="dataChange"
-       v-show="scheduleVisible"></smooth-picker>
+       v-if="scheduleVisible"></smooth-picker>
       <input type="hidden" name="days" :value="days">
       <input type="hidden" name="marked" :value="marked">
     </div>
@@ -60,7 +60,6 @@
 
   Vue.use(SmoothPicker)
 
-
   export default {
     name: 'fieldSchedule',
 
@@ -69,17 +68,18 @@
     data: function () {
       return {
         config: [{
-          currentIndex: 2,
+          currentIndex: 1,
           list: [
             '欢乐7', '走心14', '自定义'
           ],
+          flex: 3,
           textAlign: 'center',
           className: 'schedule-group'
         }],
 
         days: 7,
         marked: [1, 2, 4, 7],
-        editable: false
+        editable: true
       }
     },
 
@@ -98,20 +98,21 @@
 
     methods: {
       dataChange(gIndex, itemIndex) {
+        console.info('list', gIndex, itemIndex)
         switch (itemIndex) {
           case 0:
             this.days = 7
             this.marked = [1, 2, 4, 7]
-            this.editable = false
+            this.editable = true
             break
           case 1:
             this.days = 14
             this.marked = [1, 2, 4, 6, 9, 12, 14]
-            this.editable = false
+            this.editable = true
             break
           case 2:
             this.days = 21
-            this.marked = []
+            this.marked = [1, 2, 4, 6, 9, 12, 16, 20, 21]
             this.editable = true
             break;
         }
@@ -122,7 +123,7 @@
       },
 
       handleChangeDay(day) {
-        //tip: 这时候是新建plan，所以可以在这里更新改plan
+        //tip: 这时候是新建plan，所以可以在这里更新该plan
         let index = this.marked.indexOf(parseInt(day))
 
         if (index === -1) {

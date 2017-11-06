@@ -16,14 +16,14 @@ module.exports.getPlans = function getPlans(req, res, next) {
 
   planStatus !== 'all' && (queryCondition.status = planStatus)
 
-  Plan.
-    find(queryCondition, '-__v -user_id').
-    exec((error, plans) => {
-      if (error) {
-        return next(error)
-      }
-      return res.status(200).json(plans)
-    })
+  Plan
+  .find(queryCondition, '-__v -user_id')
+  .exec((error, plans) => {
+    if (error) {
+      return next(error)
+    }
+    return res.status(200).json(plans)
+  })
 }
 
 module.exports.updatePlans = function updatePlans(req, res, next) {
@@ -34,21 +34,21 @@ module.exports.updatePlans = function updatePlans(req, res, next) {
   let user = req.user
 
   if (type === 'global') {
-    Plan.
-      remove({user_id: user._id}).
-      exec().
-      then(() => {
-        return Plan.insertMany(updateInfo)
-      }, error => next(error)).
-      then(plans => {
-        let commitId
-        commitId = md5(JSON.stringify(plans))
+    Plan
+    .remove({user_id: user._id})
+    .exec()
+    .then(() => {
+      return Plan.insertMany(updateInfo)
+    }, error => next(error))
+    .then(plans => {
+      let commitId
+      [, commitId] = backupPlans(plans)
 
-        return res.status(200).json({
-          'code': 'ok',
-          'commit_id': commitId
-        })
-      }, error => next(error))
+      return res.status(200).json({
+        'code': 'ok',
+        'commit_id': commitId
+      })
+    }, error => next(error))
   }
 
   if (type === 'local') {
@@ -57,72 +57,72 @@ module.exports.updatePlans = function updatePlans(req, res, next) {
     remove = updateInfo.remove
 
     Plan.
-      find({}, '-__v -user_id').
-      exec((error, plans) => {
-        if (error) return next(error)
+    find({}, '-__v -user_id').
+    exec((error, plans) => {
+      if (error) return next(error)
 
-        let commitId
-        commitId = backupPlans(plans)[1]
+      let commitId
+      commitId = backupPlans(plans)[1]
 
-        if (commitId === clientCommitId) {
-          //如果客户端与服务端一致
-          let sequence
-          sequence = Promise.resolve()
+      if (commitId === clientCommitId) {
+        //如果客户端与服务端一致
+        let sequence
+        sequence = Promise.resolve()
 
-          /*sequence = Object.keys(update).reduce((sequence, planId) => {
-            let plan = update[planId]
-            plan.user_id = user._id
+        /*sequence = Object.keys(update).reduce((sequence, planId) => {
+         let plan = update[planId]
+         plan.user_id = user._id
 
-            return sequence.then(() => {
-              return Plan.update({ user_id: user._id }, plan).exec()
-            }, Promise.resolve())
-          })*/
+         return sequence.then(() => {
+         return Plan.update({ user_id: user._id }, plan).exec()
+         }, Promise.resolve())
+         })*/
 
-          Object.keys(update).forEach(planId => {
-            let plan = update[planId]
+        Object.keys(update).forEach(planId => {
+          let plan = update[planId]
 
-            sequence = sequence.then(() => {
-              return Plan.
-                findOneAndUpdate({
-                  _id: planId
-                }, plan).
-                exec().
-                then(plan => {
-                  return plan
-                }, error => next(error))
-            })
-          })
-
-          sequence.
-            then(() => {
-              if (!remove.length) return
-
-              return Plan.
-                remove({
-                  '_id': {
-                    $in: remove
-                  }
-                }).
-                exec()
-            }).
-            then(() => Plan.find({}, '-__v -user_id').exec()).
-            then(plans => {
-              let commitId
-              commitId = backupPlans(plans)[1]
-
-              return res.status(200).json({
-                code: 'ok',
-                commit_id: commitId
-              })
+          sequence = sequence.then(() => {
+            return Plan.
+            findOneAndUpdate({
+              _id: planId
+            }, plan).
+            exec().
+            then(plan => {
+              return plan
             }, error => next(error))
-        } else {
-          return res.status(200).json({
-            code: 'not synchronized',
-            commit_id: commitId,
-            plans: plans
           })
-        }
-      })
+        })
+
+        sequence.
+        then(() => {
+          if (!remove.length) return
+
+          return Plan.
+          remove({
+            '_id': {
+              $in: remove
+            }
+          }).
+          exec()
+        }).
+        then(() => Plan.find({}, '-__v -user_id').exec()).
+        then(plans => {
+          let commitId
+          commitId = backupPlans(plans)[1]
+
+          return res.status(200).json({
+            code: 'ok',
+            commit_id: commitId
+          })
+        }, error => next(error))
+      } else {
+        return res.status(200).json({
+          code: 'not synchronized',
+          commit_id: commitId,
+          plans: plans
+        })
+      }
+    })
   }
 }
 
@@ -131,37 +131,39 @@ module.exports.createPlan = function createPlan(req, res, next) {
 
   formatRequestPlan(plan, req.user._id)
 
-  Plan.
-    find({}, 'pokeman_id').
-    exec().
-    then(pokemanIds => {
-      pokemanIds = pokemanIds.map(pokemanIdModel => pokemanIdModel.toObject().pokeman_id)
+  Plan.find({}, 'pokeman_id')
+  .exec()
+  .then(pokemanIds => {
+    pokemanIds = pokemanIds.map(pokemanIdModel => pokemanIdModel.toObject().pokeman_id)
 
-      return Pokeman.
-        findOne({
-          _id: {
-            $nin: pokemanIds
-          }
-        }).
-        exec().
-        then(pokeman => {
-          plan.pokeman_id = pokeman._id
-          plan.pokeman_img = pokeman.img
-          plan.pokeman_name = pokeman.name
-        })
+    return Pokeman
+    .find({
+      _id: {
+        $nin: pokemanIds
+      }
     }).
-    then(() => {
-      Plan.
-        create(plan).
-        then(plan => {
-          return res.status(201).json({
-            plan_id: plan._id,
-            pokeman_id: plan.pokeman_id,
-            pokeman_img: plan.pokeman_img,
-            pokeman_name: plan.pokeman_name
-          })
-        }, error => next(error))
+    exec()
+    .then(pokemen => {
+      const randomIndex = Math.floor(Math.random() * pokemen.length)
+      const pokeman = pokemen[randomIndex]
+
+      plan.pokeman_id = pokeman._id
+      plan.pokeman_img = pokeman.img
+      plan.pokeman_name = pokeman.name
     })
+  })
+  .then(() => {
+    Plan
+    .create(plan)
+    .then(plan => {
+      return res.status(201).json({
+        plan_id: plan._id,
+        pokeman_id: plan.pokeman_id,
+        pokeman_img: plan.pokeman_img,
+        pokeman_name: plan.pokeman_name
+      })
+    }, error => next(error))
+  })
 }
 
 function formatRequestPlan(plan, userId) {
@@ -183,15 +185,24 @@ function backupPlans(plans) {
     color: 'rgb(255, 204, 51)',
     progress_color: "#fff",
     progress: {
-      days:21,
+      days: 21,
       start_day: '',
       done: [],
       marked: []
     },
-    status: ''
+    status: '',
+    pokeman_id: '',
+    pokeman_name: '',
+    pokeman_img: '',
+    user_id: ''
   }
 
-  let plansObject = plans.map(planModel => planModel.toObject())
+  let plansObject = plans.map(planModel => {
+    let plan = planModel.toObject()
+    plan.__v !== undefined && delete plan.__v
+
+    return plan
+  })
 
   let plansStr = ''
   plansObject.forEach(plan => {

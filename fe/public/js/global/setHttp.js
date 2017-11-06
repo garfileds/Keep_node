@@ -11,6 +11,9 @@ const needLoadingReqs = {
   '[GET] /api/pokemen': {}
 }
 
+// 标记401是否已经发生，避免对401报错执行多次alert
+let hasHappened401 = false
+
 export function setLoadingAndError(router) {
   Vue.http.interceptors.push(function(request, next) {
     let self = this || router.app
@@ -31,12 +34,19 @@ export function setLoadingAndError(router) {
       })
 
       if (response.status === 401) {
-        alert('验证失败，请重新登录。')
-        return self.$router.push('/')
+        if (!hasHappened401) {
+          hasHappened401 = true
+          alert('验证失败，请重新登录。')
+          return self.$router.push('/')
+        }
       }
       return response
     })
   })
+}
+
+export function reset401HasHappened() {
+  hasHappened401 = false
 }
 
 export function setJWT(token) {

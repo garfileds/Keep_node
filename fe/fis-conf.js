@@ -133,53 +133,9 @@ fis.match('node_modules/**', {
 
 // 打包: 这个过程介于url和deploy之间
 fis.match('::package', {
-  /*packager: fis.plugin('deps-pack', {
-    '/public/runtimes/packages.js': [
-      '/(node_modules/{' + require('./common-lib-conf.json').join(',') + '}/!**.js)'
-    ],
-
-    '/public/runtimes/common.js': [
-      '/public/js/{global, module, router, store}/!**.js',
-      '/public/components/App.vue',
-      '/public/components/App.vue:deps',
-      '/public/components/user/welcome.vue',
-      '/public/components/user/welcome.vue:deps'
-    ],
-
-    '/public/components/user/login.js': [
-      '/public/components/user/login.vue',
-      '/public/components/user/login.vue:deps'
-    ],
-
-    '/public/components/user/register.js': [
-      '/public/components/user/register.vue',
-      '/public/components/user/register.vue:deps'
-    ],
-
-    '/public/components/home/homePack.js': [
-      '/public/components/home/home.vue',
-      '/public/components/home/home.vue:deps'
-    ],
-
-    '/public/components/plan/planAdd.js': [
-      '/public/components/plan/planAdd.vue',
-      '/public/components/plan/planAdd.vue:deps'
-    ],
-
-    '/public/components/plan/planDetail.js': [
-      '/public/components/plan/planDetail.vue',
-      '/public/components/plan/planDetail.vue:deps'
-    ],
-
-    '/public/components/plan/planEdit.js': [
-      '/public/components/plan/planEdit.vue',
-      '/public/components/plan/planEdit.vue:deps'
-    ],
-
-    '/public/components/$1/$2Pack.js': [
-      '/public/components/(*)/(**).vue'
-    ]
-  }),*/
+  packager: fis.plugin('map', {
+    useSourceMap : true // 合并后开启 SourceMap 功能。
+  }),
 
   postpackager: fis.plugin('loader', {
     resourceType: 'mod',
@@ -207,4 +163,31 @@ fis.match('/public/components/(*)/(**).vue', {
 
 fis.match('/public/components/user/{welcome, welcomeSlide}.vue', {
   packTo: '/public/runtime/common.js'
+})
+
+
+fis.media('prod')
+.match('/public/components/**.vue:js', {
+  optimizer: fis.plugin('uglify-js', {
+    sourceMap: {
+      url: 'inline'
+    }
+  })
+})
+.match('/public/components/**.vue:scss', {
+  optimizer: fis.plugin('clean-css', {
+    'keepBreaks': true //保持一个规则一个换行
+  })
+})
+.match('**.{es, js}', {
+  optimizer: fis.plugin('uglify-js', {
+    sourceMap: {
+      url: 'inline'
+    }
+  })
+})
+.match('**.{scss, less, css}', {
+  optimizer: fis.plugin('clean-css', {
+    'keepBreaks': true //保持一个规则一个换行
+  })
 })

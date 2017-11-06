@@ -7,9 +7,15 @@ const md5 = require('blueimp-md5')
 
 const Promise = require('es6-promise').Promise
 
-export { md5, Promise }
+const isEqual = require('lodash.isequal')
+
+const cloneDeep = require('lodash.clonedeep')
+
+export { md5, Promise, isEqual, cloneDeep }
 
 export default {
   md5,
-  Promise
+  Promise,
+  isEqual,
+  cloneDeep
 }

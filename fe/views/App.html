@@ -1,16 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>努力！奋斗！</title>
 
-  <link rel="stylesheet" href="../public/style/common.scss">
+  <link rel="manifest" href="/manifest.json">
+  <!-- Add to home screen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#2196f3">
+  <meta name="apple-mobile-web-app-title" content="Up!Up!">
+  <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+  <!-- 由firstScreen.scss转换而来 -->
+  <style type="text/css">
+    :root{--color-warning:#db7093;--color-success:#60bd74;--color-primary:#61e2e2;--color-dark-primary:#129fea;--color-light-primary:#53bdbd;--color-opcity-primary:rgba(98,186,206,.8);--color-more-opacity-primary:rgba(98,186,206,.4);--color-white:#fff;--color-green:#76ff7b;--color-black:#000;--color-light-black:#1b1a1a;--color-opcity-black:rgba(0,0,0,.5);--color-base-gray:#dcd7d7;--color-dark-gray:#ddd;--color-secondary:#d3d3d3;--border-color-base:var(--color-base-gray);--box-shadow-base:0 2px 10px var(--color-dark-gray);--font-size-base:16px;--font-color-base:var(--color-white);--line-height:1.2;--font-weight-base:400;--button-primary-fill:var(--color-primary);--button-success-fill:var(--color-success);--button-warning-fill:var(--color-warning);--schedule-unselected-color:rgba(69,69,69,.4);--schedule-done-color:rgba(69,243,14,.4);--schedule-overdue-color:rgba(127,134,127,.8);--schedule-progress-color:rgba(69,243,14,.4)}
+    .c-button-group{padding:0 1em}
+    .c-button{background:var(--button-primary-fill);border:0;padding:.5em;color:var(--color-white);font-size:1rem;text-align:center}
+    .c-button--success{background:var(--button-success-fill)}
+    .c-button--small{font-size:.625em}
+    .l-button--full{display:inline-block;width:100%}
+    .l-button--full-align{padding:0 .75em}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-size:var(--font-size-base);line-height:var(--line-height);color:var(--font-color-base)}
+    section{display:block}
+    a{text-decoration:none}
+    :focus{outline:0}
+    .l-wrap{width:100%}
+    @media (min-width:768px){.l-wrap{max-width:768px;margin-left:auto;margin-right:auto}}
+    .l-absolute{position:absolute;width:100%;left:0;top:0}
+    .l-slide[_v-tempKeep]{margin:2em 0}
+    .stage{position:relative;width:100%}
+    .stage::before{content:'';padding-bottom:56.25%;width:1px;vertical-align:middle}
+    .stage__item{max-height:100%}
+    .description--temp{color:#000;text-align:center;margin-top:2em}
+  </style>
+
+  <!-- 预加载欢迎页图片和app主背景图片 -->
+  <!--<link rel="preload" href="/images/all-devices@2x.png" as="image" type="image/png">-->
+  <!--<link rel="preload" href="/images/bg@1x.jpg" as="image" type="image/jpeg">-->
 </head>
 <body>
-  <div id="app">
+  <div id="appTemp">
+    <main class="l-wrap l-absolute">
+      <section class="l-slide" _v-tempKeep>
+        <div class="stage">
+          <img src="" alt="随时随地使用" class="response-img stage__item">
+        </div>
+        <p class="description--temp">随时随地使用...</p>
+        <div class="bar"></div>
+      </section>
+      <section class="c-button-group">
+        <a href="" class="c-button l-button--full">创建账户</a>
+        <a href="" class="c-button l-button--full button--login" _v-tempKeep style="margin-top: 1em; background: #eaeceb; color: #000;">登录</a></section>
+    </main>
   </div>
 
+  <div id="app"></div>
+
+  <script>
+    // 延迟加载非关键的外部样式表
+    let styleLink = document.createElement('link')
+
+    styleLink.rel = 'stylesheet'
+    styleLink.href = '/style/common.css'
+
+    document.head.appendChild(styleLink)
+
+    // 延迟加载欢迎页图片：相比于等mainJs执行后加载或者preload加载，是种折中的做法
+    let welcomeImg = document.querySelector('.l-slide[_v-tempKeep] img')
+    welcomeImg.src = '/images/all-devices.png'
+  </script>
   <script src="../public/js/mod.js"></script>
   <script src="../public/js/main.js"></script>
 </body>

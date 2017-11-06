@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="stage">
-      <img class="response-img stage__item" src="../../images/all-devices@2x.png" alt="随时随地使用">
+      <img class="response-img stage__item" src="../../images/all-devices.png" alt="随时随地使用">
     </div>
     <p class="description">随时随地使用...</p>
     <div class="bar"></div>

@@ -9,5 +9,6 @@ const pokemenHandler = require('../../app/pokemen')
 
 /* get current user's all pokemen */
 router.get('/', pokemenHandler.getPokemen)
+router.get('/collection', pokemenHandler.getCollectedPokemen)
 
 module.exports = router

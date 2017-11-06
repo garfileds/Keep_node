@@ -12,7 +12,7 @@
     <div class="content l-grid"
      @click.stop="catPokeman">
       <pokemanThumbnail class="l-grid__item--3 l-pokeman-thumbnail"
-       v-for="pokeman in pokemen"
+       v-for="pokeman in pokemenCollected"
        :pokeman="pokeman || {}"></pokemanThumbnail>
 
       <pokeman class="l-grid__item--9 l-pokeman"
@@ -58,17 +58,15 @@
   import pokemanThumbnail from './pokemanThumbnail'
   import pokeman from './pokeman'
 
-  import { getParentEl } from '../../js/module/utils'
+  import { mapGetters } from 'vuex'
 
-  const apiGetPokemen = '/api/pokemen'
+  import { getParentEl } from '../../js/module/utils'
 
   module.exports = {
     name: 'pokemen',
 
     data: function() {
       return {
-        pokemen: [],
-
         selectedPokemanId: '',
 
         pokemanVisible: false
@@ -79,8 +77,10 @@
       selectedPokeman() {
         let self = this
 
-        return this.pokemen.filter(pokeman => pokeman.id === self.selectedPokemanId)[0] || {}
-      }
+        return this.pokemenCollected.filter(pokeman => pokeman.id === self.selectedPokemanId)[0] || {}
+      },
+
+      ...mapGetters(['pokemenCollected'])
     },
 
     methods: {
@@ -97,15 +97,6 @@
       hidePokeman() {
         this.pokemanVisible = false
       }
-    },
-
-    created: function() {
-      const self = this
-
-      this.$http.get(apiGetPokemen)
-        .then(response => {
-          self.pokemen = response.body
-        })
     },
 
     components: { pokemanThumbnail, pokeman }

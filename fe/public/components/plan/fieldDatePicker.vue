@@ -71,8 +71,8 @@
     },
 
     methods: {
-      handlePickerVisible(statu) {
-        this.$emit('changeVisible', statu)
+      handlePickerVisible(status) {
+        this.$emit('changeVisible', status)
 //        this.editorVisible = !statu
       }
     }
