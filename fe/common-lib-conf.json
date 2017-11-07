@@ -11,5 +11,7 @@
   "ieee754",
   "is-buffer",
   "lodash.isequal",
-  "lodash.clonedeep"
+  "lodash.clonedeep",
+  "vuedraggable",
+  "sortablejs"
 ]

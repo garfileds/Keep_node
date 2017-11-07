@@ -3,10 +3,19 @@
     <kHeader></kHeader>
     <section class="content">
       <section class="plans-ing">
-        <planThumbnail
-         v-for="plan in plansIng"
-         :plan="plan"
-         @click.native="catPlan(plan.id, 'ing')"></planThumbnail>
+        <draggable
+         v-model="plansIng"
+         :options="draggableOption"
+         :move="planMoveHandler"
+         @choose="planChooseHandler">
+          <transition-group name="plansList" tag="div">
+            <planThumbnail
+             v-for="plan in plansIng"
+             :plan="plan"
+             :key="plan.id"
+             @click.native="catPlan(plan.id, 'ing')"></planThumbnail>
+          </transition-group>
+        </draggable>
       </section>
 
       <section class="l-plans-switch"
@@ -17,20 +26,65 @@
 
       <section class="plans-done"
        v-show="plansDoneShow">
-        <planThumbnail
-         v-for="planDone in plansDone"
-         :plan="planDone"
-         @click.native="catPlan(planDone.id, 'done')"></planThumbnail>
+        <draggable
+         v-model="plansIng"
+         :options="draggableOption"
+         :move="planMoveHandler"
+         @choose="planChooseHandler">
+          <transition-group name="plansList" tag="div">
+            <planThumbnail
+             v-for="planDone in plansDone"
+             :key="planDone.id"
+             :plan="planDone"
+             @click.native="catPlan(planDone.id, 'done')"></planThumbnail>
+          </transition-group>
+        </draggable>
       </section>
 
-      <transition name="fade">
-        <section class="add-plan-btn" @click="routerPlanAdd"></section>
-      </transition>
+      <section>
+        <transition name="fade">
+          <div v-if="!isDragging" class="btn-first add-plan-btn" @click="routerPlanAdd" key="add"></div>
+
+          <draggable
+            key="remove"
+            :options="draggableOption"
+            class="btn-first delete-plan-btn"
+            id="removeBtn"
+            :class="{'hover-btn': deleteBtnIsHover}"
+            @add="dropPlanHandler"
+            v-else>
+          </draggable>
+
+        </transition>
+
+        <transition name="bounceInRight">
+          <div
+           class="btn-second cancel-btn"
+           @click="cancelDelHandler"
+           v-if="needOpt"></div>
+        </transition>
+
+        <transition name="bounceInLeft">
+          <div
+           class="btn-second confirm-btn"
+           @click="confirmDelHandler"
+           v-if="needOpt"></div>
+        </transition>
+      </section>
+
+      <draggable
+       class="outside-area"
+       :options="draggableOption"></draggable>
     </section>
+
+    <transition name="fade">
+      <section v-if="needOpt" class="mask"></section>
+    </transition>
   </main>
 </template>
 
 <style lang="scss">
+  @import '../../style/animations/animation';
   @import '../../style/blocks/button';
 
   .l-plans-switch {
@@ -38,9 +92,9 @@
     margin: .5em 0;
   }
 
-  .add-plan-btn {
+  .btn-first {
     position: fixed;
-    bottom: 2em;
+    bottom: 2rem;
     left: 0;
     right: 0;
 
@@ -49,15 +103,96 @@
     margin-left: auto;
     margin-right: auto;
 
-    background-image: url(../../images/svg/addition_fill.svg);
     background-size: 100%;
+
+    z-index: 100001;
+    transition: width 1s, height 1s;
+  }
+
+  .btn-second {
+    position: fixed;
+    bottom: 43px;
+    left: 0;
+    right: 0;
+
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-size: 100%;
+
+    z-index: 100001;
+  }
+
+  .add-plan-btn {
+    background-image: url(../../images/svg/addition_fill.svg);
+  }
+
+  .delete-plan-btn {
+    background-image: url(../../images/svg/delete_fill.svg);
+  }
+  
+  .delete-plan-btn .c-plan {
+    display: none;
+  }
+
+  .cancel-btn {
+    right: 10rem;
+    background-image: url(../../images/svg/cancel.svg);
+  }
+
+  .confirm-btn {
+    left: 10rem;
+    background-image: url(../../images/svg/confirm.svg);
+  }
+
+  .hover-btn {
+    width: 100px;
+    height: 100px;
+  }
+
+  .mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0, 0, 0, .2);
+  }
+
+  .outside-area {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: block;
+    min-height: 600px;
+  }
+
+  .outside-area .c-plan {
+    display: none;
+  }
+
+  /* for cancel-btn / confirm-btn */
+  .bounceInRight-enter-active {
+    animation: bounceInRight 1s;
+  }
+  .bounceInRight-leave-active {
+    animation: bounceOutRight 1s;
+  }
+  .bounceInLeft-enter-active {
+    animation: bounceInLeft 1s;
+  }
+  .bounceInLeft-leave-active {
+    animation: bounceOutLeft 1s;
   }
 
   .fade-enter-active {
-    animation: fade-in .5s .5s;
+    animation: fade-in 1s;
   }
   .fade-leave-active {
-    animation: fade-in .5s reverse;
+    animation: fade-in 1s reverse;
   }
 
   @keyframes fade-in {
@@ -82,7 +217,19 @@
     name: 'home',
 
     data: function() {
-      return {}
+      return {
+        isDragging: false,
+
+        deleteBtnIsHover: false,
+
+        needOpt: false,
+
+        draggableOption: {
+          group: 'plansIng'
+        },
+
+        toDeleteId: ''
+      }
     },
 
     computed: {
@@ -103,6 +250,35 @@
     },
 
     methods: {
+      planChooseHandler() {
+        this.isDragging = true
+      },
+
+      planMoveHandler(evt) {
+        const movedId = evt.relatedContext.component.$el.id
+
+        this.deleteBtnIsHover = movedId === 'removeBtn'
+      },
+
+      dropPlanHandler(evt) {
+        this.deleteBtnIsHover = false
+        this.needOpt = true
+        this.toDeleteId = evt.item.dataset.planid
+      },
+
+      cancelDelHandler() {
+        this.needOpt = false
+        this.deleteBtnIsHover = false
+        this.toDeleteId = ''
+      },
+
+      confirmDelHandler() {
+        if (this.toDeleteId) {
+          this.deletePlan({ planId: this.toDeleteId })
+          this.cancelDelHandler()
+        }
+      },
+
       switcher() {
         this.changePlansDoneShow(!this.plansDoneShow)
       },
@@ -116,7 +292,8 @@
       },
 
       ...mapMutations([
-        'changePlansDoneShow'
+        'changePlansDoneShow',
+        'deletePlan'
       ]),
 
       ...mapActions([

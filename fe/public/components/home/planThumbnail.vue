@@ -1,6 +1,7 @@
 <template>
   <div class="c-plan"
-   :style="colorStyle">
+   :style="colorStyle"
+   :data-planid="plan.id">
     <div class="c-plan__progress"
      :style="progressStyle"></div>
 
