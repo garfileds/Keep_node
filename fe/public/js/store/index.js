@@ -26,8 +26,14 @@ const synTime = 500
 
 const store = new Vuex.Store({
   state: {
-    //每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
+    // 每当由/userLogin或/userRegister进入/home时，需dispatch('getPlans')
     needInit: true,
+
+    // 动态清除<keep-alive>的缓存
+    needCache: true,
+
+    // 路由的过渡效果
+    transitionName: '',
 
     // /home路由需要记忆的状态
     plansDoneShow: false,
@@ -98,6 +104,18 @@ const store = new Vuex.Store({
     changeLoading(state, payload) {
       state.loading.isLoading = payload.isLoading
       state.loading.tip = payload.tip || ''
+    },
+
+    changeCache(state, needCache) {
+      state.needCache = needCache
+    },
+
+    changeTransitionName(state, transitionName) {
+      state.transitionName = transitionName
+    },
+
+    updateHistory(state, routeInfo) {
+      state.prev = routeInfo.to
     },
 
     coverPlans(state, plans) {

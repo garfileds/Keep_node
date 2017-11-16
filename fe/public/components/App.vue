@@ -1,7 +1,17 @@
 <template>
-  <div id="app">
+  <div
+   id="app"
+   @touchstart="onTouchstart"
+   @touchmove="onTouchmove"
+   @touchend="onTouchend">
     <transition :name="transitionName">
-      <router-view class="l-absolute"></router-view>
+      <keep-alive v-if="needCache">
+        <router-view class="l-absolute" v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+
+    <transition :name="transitionName">
+      <router-view class="l-absolute" v-if="!$route.meta.keepAlive"></router-view>
     </transition>
 
     <div class="c-loader l-loader" v-show="loading.isLoading">
@@ -23,59 +33,60 @@
 </style>
 
 <script>
-  import { mapState, mapGetters } from 'vuex'
+  import { mapState, mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: 'App',
 
     data: function () {
       return {
-        transitionName: ''
+        // 是否右滑触发后退路由
+        isRightSlide: false,
+        startScreenX: 0,
+        startScreenY: 0
       }
     },
 
     computed: {
       ...mapState([
         'loading',
-        'plans'
+        'plans',
+        'needCache',
+        'transitionName'
       ])
     },
 
-    watch: {
-      $route(to, from) {
-        switchTransitionName.call(this, to, from)
+    methods: {
+      onTouchstart(evt) {
+        let touch
+
+        if (evt.changedTouches.length === 1) {
+          touch = evt.changedTouches[0]
+
+          this.isRightSlide = false
+          this.startScreenX = touch.screenX
+          this.startScreenY = touch.screenY
+        }
+      },
+
+      onTouchmove(evt) {
+        evt.changedTouches.length === 1
+        && this._isRightSlide(evt.changedTouches[0])
+        && evt.preventDefault()
+      },
+
+      onTouchend(evt) {
+        evt.changedTouches.length === 1
+        && this._isRightSlide(evt.changedTouches[0])
+        && this.$router.go(-1)
+      },
+
+      _isRightSlide(targetTouch) {
+        const tranverse = targetTouch.screenX - this.startScreenX,
+          vertical = Math.abs(targetTouch.screenY - this.startScreenY)
+
+        return tranverse >= 50 && tranverse > vertical
       }
-    }
-  }
-
-  function switchTransitionName(to, from) {
-    const backRoute = {
-      '/userRegister': '/',
-      '/userLogin': '/',
-      '/planAdd': ['/home', '/planDetail'],
-      '/setting': '/home',
-      '/pokemen': '/home',
-      '/planEdit': '/planDetail',
-      '/planDetail': '/home'
-    }
-    const backRouteFrom = Object.keys(backRoute)
-
-    let fromPath = from.path,
-      toPath = to.path;
-
-    //planEdit和planDetail路由含/:planId
-    [fromPath, toPath] = [fromPath, toPath].map(path => {
-      return path.replace(/^((\/planEdit)|(\/planDetail))\/.+$/, (match, group) => {
-        return group
-      })
-    })
-
-    if (backRouteFrom.indexOf(fromPath) > -1 && backRoute[fromPath].indexOf(toPath) > -1) {
-      this.transitionName = 'slide-right'
-    } else if (backRouteFrom.indexOf(toPath) > -1 && backRoute[toPath].indexOf(fromPath) > -1) {
-      this.transitionName = 'slide-left'
-    } else {
-      this.transitionName = 'slide-up'
     }
   }
 </script>
