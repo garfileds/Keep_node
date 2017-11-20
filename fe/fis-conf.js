@@ -4,13 +4,18 @@
 
 /****************环境变量*****************/
 fis
-    .set('project.files', ['public/**', 'views/**', 'map.json'])
-    .set('project.ignore', [''])
-    .set('project.fileType.text', 'map, vue')
+.set('project.name', 'Keep')
+.set('project.files', ['public/**', 'views/**', 'map.json'])
+.set('project.fileType.text', 'map, vue')
+.set('project.ignore', ['node_modules/**'])
 
+const config = {
+  publicPrefix: '/public',
+  viewPrefix: '/views',
+  localDeploy: 'D:/JavaScript/Keep_node'
+}
 
-// 模块化支持插件
-// https://github.com/fex-team/fis3-hook-commonjs (forwardDeclaration: true)
+// 支持commonJs
 fis.hook('commonjs', {
   extList: [
     '.js', '.vue',
@@ -18,38 +23,55 @@ fis.hook('commonjs', {
   paths: {
     // vue: '/node_modules/vue/dist/vue.common.js'
   },
-  umd2commonjs: true,
-  ignoreDependencies: [
-
-  ]
+  umd2commonjs: true
 })
 
 // 禁用components，启用node_modules
 fis.unhook('components')
 fis.hook('node_modules')
 
-fis.match('node_modules/**.js', {
-  isMod: true
+fis.match('/node_modules/**', {
+  isMod: true,
+  release: `${config.publicPrefix}/$0`,
+  url: '$0'
 })
 
-// 所有scss文件
-fis.match('**.scss', {
+// 配置map.json
+fis.match('/map.json', {
+  release: `${config.publicPrefix}/map.json`
+})
+
+// 配置html：/views/
+fis.match('/views/(**).html', {
+  release: `${config.viewPrefix}/$1.html`
+})
+
+// 配置图片：压缩和响应式由gulp另行处理，fis3缺少相关插件
+fis.match('/public/(images/**)', {
+  release: `${config.publicPrefix}/$1`,
+  url: '$1'
+})
+
+// 配置scss
+fis.match('/public/(style/**).scss', {
   rExt: 'css',
   parser: [
-    fis.plugin('node-sass', {
-      sourceMap: true
-    })
+    fis.plugin('node-sass')
   ],
-  postprocessor: fis.plugin('autoprefixer')
+  postprocessor: fis.plugin('autoprefixer'),
+  release: `${config.publicPrefix}/$1.css`,
+  url: '/$1.css'
 })
 
-// 所有js文件
-fis.match('{**.js}', {
+// 配置js
+fis.match('/public/(**).{js,vue}', {
   isMod: true,
-  rExt: 'js'
+  rExt: 'js',
+  release: `${config.publicPrefix}/$1.js`,
+  url: '/$1.js'
 })
 
-// 编译vue组件
+// 配置vue组件
 fis.match('/public/components/**.vue', {
   isMod: true,
   rExt: 'js',
@@ -83,60 +105,26 @@ fis.match('/public/components/**.vue:scss', {
   postprocessor: fis.plugin('autoprefixer')
 })
 
-// 模块文件
-fis.match('/public/js/**.js', {
+// 配置模块文件
+fis.match('/public/(js/**).js', {
   isMod: true,
   parser: [
     fis.plugin('babel-6.x')
   ]
 })
 
-// 页面直接引入的主文件，不进行模块require包装
-fis.match('/public/js/main.js', {
-  parser: [
-    fis.plugin('babel-6.x')
-  ],
+// 页面直接引入的主文件，不进行模块require包装, i.e., mod.js & main.js
+fis.match('/public/js/*.js', {
   isMod: false
 })
 
 // mod.js文件
 fis.match('/public/js/mod.js', {
-  parser: null,
-  isMod: false
+  parser: null
 })
 
-//发布
-fis.match('/public/(**)', {
-  url: '/$1',
-  deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/'
-  })
-})
-
-fis.match('/views/(**)', {
-  deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/'
-  })
-})
-
-fis.match('map.json', {
-  deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/public/'
-  })
-})
-
-fis.match('node_modules/**', {
-  deploy: fis.plugin('local-deliver', {
-    to: 'D:/JavaScript/Keep_node/public'
-  })
-})
-
-// 打包: 这个过程介于url和deploy之间
+// 打包
 fis.match('::package', {
-  packager: fis.plugin('map', {
-    useSourceMap : true // 合并后开启 SourceMap 功能。
-  }),
-
   postpackager: fis.plugin('loader', {
     resourceType: 'mod',
     resourcemapWhitespace: 0,
@@ -144,49 +132,97 @@ fis.match('::package', {
   })
 })
 
-// node_modules 库, 只 packTo 部分文件, 有的文件不是全局依赖还是按需加载
-fis.match('/(node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js)', {
-  packTo: '/public/runtime/packages.js'
+fis.match('::package', {
+  useSourceMap : true,
+
+  packager: fis.plugin('deps-pack', {
+    // node_modules 库, 只打包部分文件, 有的文件不是全局依赖还是按需加载
+    [`${config.publicPrefix}/runtime/packages.js`]: [
+      '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js',
+      '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/elementDatepickerPack.js`]: [
+      '/node_modules/element-ui/lib/date-picker.js',
+      '/node_modules/element-ui/lib/date-picker.js:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/common.js`]: [
+      '/public/js/{global,module,router,store}/**.js',
+      '{/public/js/main.js,/public/components/App.vue}',
+      '/public/components/user/{welcome,welcomeSlide}.vue'
+    ],
+
+    // 按路由进行组件打包
+    [`${config.publicPrefix}/runtime/components/user/welcomePack`]: [
+      '/public/components/user/welcome.vue',
+      '/public/components/user/welcome.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/user/loginPack`]: [
+      '/public/components/user/login.vue',
+      '/public/components/user/login.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/user/registerPack`]: [
+      '/public/components/user/register.vue',
+      '/public/components/user/register.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/user/settingPack`]: [
+      '/public/components/user/setting.vue',
+      '/public/components/user/setting.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/user/pokemenPack`]: [
+      '/public/components/user/pokemen.vue',
+      '/public/components/user/pokemen.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/homePack`]: [
+      '/public/components/home/**.vue',
+      '/public/components/home/**.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/plan/planDetailPack.vue`]: [
+      '/public/components/plan/planDetail.vue',
+      '/public/components/plan/planDetail.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/plan/planAddPack.vue`]: [
+      '/public/components/plan/planAdd.vue',
+      '/public/components/plan/planAdd.vue:deps'
+    ],
+
+    [`${config.publicPrefix}/runtime/components/plan/planEdit.vue`]: [
+      '/public/components/plan/planEdit.vue',
+      '/public/components/plan/planEdit.vue:deps'
+    ]
+  })
 })
 
-fis.match('/public/js/{global, module, router, store}/**.js', {
-  packTo: '/public/runtime/common.js'
-})
+// 发布
+fis.match('**', {
+  deploy: [
+    fis.plugin('skip-packed', {
+      ignore: []
+    }),
 
-fis.match('{/public/js/main.js, /public/components/App.vue}', {
-  packTo: '/public/runtime/common.js'
+    fis.plugin('local-deliver', {
+      to: config.localDeploy
+    })
+  ]
 })
-
-fis.match('/public/components/(*)/(**).vue', {
-  packTo: '/public/runtime/components/$1/$2Pack.js'
-})
-
-fis.match('/public/components/user/{welcome, welcomeSlide}.vue', {
-  packTo: '/public/runtime/common.js'
-})
-
 
 fis.media('prod')
-.match('/public/components/**.vue:js', {
+.match('**.{es, js ,vue:js}', {
   optimizer: fis.plugin('uglify-js', {
     sourceMap: {
       url: 'inline'
     }
   })
 })
-.match('/public/components/**.vue:scss', {
-  optimizer: fis.plugin('clean-css', {
-    'keepBreaks': true //保持一个规则一个换行
-  })
-})
-.match('**.{es, js}', {
-  optimizer: fis.plugin('uglify-js', {
-    sourceMap: {
-      url: 'inline'
-    }
-  })
-})
-.match('**.{scss, less, css}', {
+.match('**.{scss, less, css, vue:scss}', {
   optimizer: fis.plugin('clean-css', {
     'keepBreaks': true //保持一个规则一个换行
   })

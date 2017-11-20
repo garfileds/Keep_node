@@ -21,7 +21,7 @@
 
 <style lang="scss" scoped>
   @import '../../style/blocks/field';
-  @import url(/node_modules/element-ui/lib/theme-default/date-picker.css);
+  @import '../../../node_modules/element-ui/lib/theme-default/date-picker.css';
 
   .field__content {
     text-align: left;

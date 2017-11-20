@@ -58,7 +58,8 @@ app.use(jwtCheck.unless({
     '/api/user/emailStatus',
     /\/page\/.+/,
     '/',
-    /\/components\/.*/
+    /\/components\/.*/,
+    /\/service-worker\.js/
   ]
 }))
 app.use(tokenUtils.middleware().unless({
@@ -68,7 +69,8 @@ app.use(tokenUtils.middleware().unless({
     '/api/user/emailStatus',
     /\/page\/.+/,
     '/',
-    /\/components\/.*/
+    /\/components\/.*/,
+    /\/service-worker\.js/
   ]
 }))
 

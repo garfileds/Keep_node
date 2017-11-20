@@ -25,7 +25,7 @@
 </template>
 
 <style lang="scss" scoped>
-  @import url(/node_modules/vue-smooth-picker/dist/css/style.css);
+  @import '../../../node_modules/vue-smooth-picker/dist/css/style.css';
   @import '../../style/blocks/field';
 
   .l-schedule {
