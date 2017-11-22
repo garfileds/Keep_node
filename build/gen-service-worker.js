@@ -3,23 +3,18 @@
  * @FileOverview: generate service-worker.js
  */
 
-let gulp = require('gulp')
-let packageJson = require('./package.json')
+let packageJson = require('../package.json')
 let path = require('path')
 let swPrecache = require('sw-precache')
 
 let DEV_DIR = 'public'
 let DIST_DIR = 'public'
 
-gulp.task('generate-service-worker-dev', function(callback) {
-  writeServiceWorkerFile(DEV_DIR, false, callback)
-})
+const selectedType = process.argv[1]
 
-gulp.task('generate-service-worker-dist', function(callback) {
-  writeServiceWorkerFile(DIST_DIR, true, callback)
-})
+const callback = function () {}
 
-gulp.task('default', ['generate-service-worker-dist'])
+selectedType === 'dev' ? writeServiceWorkerFile(DEV_DIR, false, callback) : writeServiceWorkerFile(DIST_DIR, true, callback)
 
 function writeServiceWorkerFile(rootDir, handleFetch, callback) {
   var config = {

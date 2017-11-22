@@ -6,7 +6,8 @@
     "node_modules/**/node_modules",
     "fe/**",
     "public/**",
-    "view/**",
+    "views/**",
+    "docs/**",
     "html2hbs.py"
   ],
   "verbose": true,

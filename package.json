@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "god": "nodemon --help"
+    "gen:sw": "node ./build/gen-service-worker.js dev",
+
+    "prestart": "npm run gen:sw"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -28,9 +30,11 @@
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
+    "commander": "^2.11.0",
     "gulp": "^3.9.1",
     "gulp-load-plugins": "^1.5.0",
     "nodemon": "^1.11.0",
-    "sw-precache": "^5.2.0"
+    "sw-precache": "^5.2.0",
+    "watch": "^1.0.2"
   }
 }

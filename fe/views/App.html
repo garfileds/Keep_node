@@ -57,20 +57,25 @@
 
   <div id="app"></div>
 
+  <!--
+    @require "modules/style/common.scss"
+    @require "images/all-devices.png"
+  -->
+  <script src="./libs/mod.js"></script>
   <script>
-    // 延迟加载非关键的外部样式表
+    const resources = __RESOURCE_MAP__
+    // 延迟加载非关键的外部样式表，用了fis3的资源依赖表，代码稍稍被侵入
     let styleLink = document.createElement('link')
 
     styleLink.rel = 'stylesheet'
-    styleLink.href = '/style/common.css'
+    styleLink.href = resources.res['modules/style/common.scss'].uri
 
     document.head.appendChild(styleLink)
 
     // 延迟加载欢迎页图片：相比于等mainJs执行后加载或者preload加载，是种折中的做法
     let welcomeImg = document.querySelector('.l-slide[_v-tempKeep] img')
-    welcomeImg.src = '/images/all-devices.png'
+    welcomeImg.src = resources.res['images/all-devices.png'].uri
   </script>
-  <script src="../public/js/mod.js"></script>
-  <script src="../public/js/main.js"></script>
+  <script src="./main.js"></script>
 </body>
 </html>

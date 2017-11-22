@@ -1,6 +1,6 @@
 .idea
 node_modules
-/public/*
+/public/
 !/public/favicon.ico
 html2hbs.py
 /fe/performance-evalution.docx

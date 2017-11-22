@@ -13,32 +13,142 @@
   <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
   <!-- 由firstScreen.scss转换而来 -->
   
+
   <!-- 预加载欢迎页图片和app主背景图片 -->
   <!--<link rel="preload" href="/images/all-devices@2x.png" as="image" type="image/png">-->
   <!--<link rel="preload" href="/images/bg@1x.jpg" as="image" type="image/jpeg">-->
 
-    <style type="text/css">
-    :root{--color-warning:#db7093;--color-success:#60bd74;--color-primary:#61e2e2;--color-dark-primary:#129fea;--color-light-primary:#53bdbd;--color-opcity-primary:rgba(98,186,206,.8);--color-more-opacity-primary:rgba(98,186,206,.4);--color-white:#fff;--color-green:#76ff7b;--color-black:#000;--color-light-black:#1b1a1a;--color-opcity-black:rgba(0,0,0,.5);--color-base-gray:#dcd7d7;--color-dark-gray:#ddd;--color-secondary:#d3d3d3;--border-color-base:var(--color-base-gray);--box-shadow-base:0 2px 10px var(--color-dark-gray);--font-size-base:16px;--font-color-base:var(--color-white);--line-height:1.2;--font-weight-base:400;--button-primary-fill:var(--color-primary);--button-success-fill:var(--color-success);--button-warning-fill:var(--color-warning);--schedule-unselected-color:rgba(69,69,69,.4);--schedule-done-color:rgba(69,243,14,.4);--schedule-overdue-color:rgba(127,134,127,.8);--schedule-progress-color:rgba(69,243,14,.4)}
-    .c-button-group{padding:0 1em}
-    .c-button{background:var(--button-primary-fill);border:0;padding:.5em;color:var(--color-white);font-size:1rem;text-align:center}
-    .c-button--success{background:var(--button-success-fill)}
-    .c-button--small{font-size:.625em}
-    .l-button--full{display:inline-block;width:100%}
-    .l-button--full-align{padding:0 .75em}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-size:var(--font-size-base);line-height:var(--line-height);color:var(--font-color-base)}
-    section{display:block}
-    a{text-decoration:none}
-    :focus{outline:0}
-    .l-wrap{width:100%}
-    @media (min-width:768px){.l-wrap{max-width:768px;margin-left:auto;margin-right:auto}}
-    .l-absolute{position:absolute;width:100%;left:0;top:0}
-    .l-slide[_v-tempKeep]{margin:2em 0}
-    .stage{position:relative;width:100%}
-    .stage::before{content:'';padding-bottom:56.25%;width:1px;vertical-align:middle}
-    .stage__item{max-height:100%}
-    .description--temp{color:#000;text-align:center;margin-top:2em}
-  </style>
+    <link rel="stylesheet" type="text/css" href="/modules/style/common.css" />
+    <style type="text/css">:root {
+  --color-warning: #db7093;
+  --color-success: #60bd74;
+  --color-primary: #61e2e2;
+  --color-dark-primary: #129fea;
+  --color-light-primary: #53bdbd;
+  --color-opcity-primary: rgba(98, 186, 206, 0.8);
+  --color-more-opacity-primary: rgba(98, 186, 206, 0.4);
+  --color-white: #fff;
+  --color-green: #76ff7b;
+  --color-black: #000;
+  --color-light-black: #1b1a1a;
+  --color-opcity-black: rgba(0, 0, 0, 0.5);
+  --color-base-gray: #dcd7d7;
+  --color-dark-gray: #ddd;
+  --color-secondary: #d3d3d3;
+  --border-color-base: var(--color-base-gray);
+  --box-shadow-base: 0 2px 10px var(--color-dark-gray);
+  --font-size-base: 16px;
+  --font-color-base: var(--color-white);
+  --line-height: 1.2;
+  --font-weight-base: 400;
+  --button-primary-fill: var(--color-primary);
+  --button-success-fill: var(--color-success);
+  --button-warning-fill: var(--color-warning);
+  --schedule-unselected-color: rgba(69, 69, 69, 0.4);
+  --schedule-done-color: rgba(69, 243, 14, 0.4);
+  --schedule-overdue-color: rgba(127, 134, 127, 0.8);
+  --schedule-progress-color: rgba(69, 243, 14, 0.4);
+}
+
+.c-button-group {
+  padding: 0 1em;
+}
+
+.c-button {
+  background: var(--button-primary-fill);
+  border: 0;
+  padding: .5em;
+  color: var(--color-white);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.c-button--success {
+  background: var(--button-success-fill);
+}
+
+.c-button--small {
+  font-size: .625em;
+}
+
+.l-button--full {
+  display: inline-block;
+  width: 100%;
+}
+
+.l-button--full-align {
+  padding: 0 .75em;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--font-color-base);
+}
+
+section {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+:focus {
+  outline: 0;
+}
+
+.l-wrap {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .l-wrap {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.l-absolute {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.l-slide[_v-tempKeep] {
+  margin: 2em 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+}
+
+.stage::before {
+  content: '';
+  padding-bottom: 56.25%;
+  width: 1px;
+  vertical-align: middle;
+}
+
+.stage__item {
+  max-height: 100%;
+}
+
+.description--temp {
+  color: #000;
+  text-align: center;
+  margin-top: 2em;
+}
+</style>
 </head>
 <body>
   <div id="appTemp">
@@ -57,23 +167,1374 @@
   </div>
 
   <div id="app"></div>
-<script src="/js/mod.js"></script>
-<script type="text/javascript">/*resourcemap*/
-require.resourceMap({"res":{"public/components/plan/kBg.vue":{"url":"/components/plan/kBg.js","type":"js","pkg":"p9"},"public/components/plan/schedule.vue":{"url":"/components/plan/schedule.js","type":"js","pkg":"p9"},"public/components/plan/planDetail.vue":{"url":"/components/plan/planDetail.js","type":"js","deps":["public/components/plan/kBg.vue","public/components/plan/schedule.vue"],"pkg":"p9"},"public/components/user/login.vue":{"url":"/components/user/login.js","type":"js","deps":["public/components/plan/kBg.vue"]},"public/components/user/register.vue":{"url":"/components/user/register.js","type":"js","deps":["public/components/plan/kBg.vue"]},"public/components/user/setting.vue":{"url":"/components/user/setting.js","type":"js"},"public/js/helper/attr2stylePokeman":{"url":"/js/helper/attr2stylePokeman.js","type":"js"},"public/components/user/pokemanThumbnail.vue":{"url":"/components/user/pokemanThumbnail.js","type":"js","deps":["public/js/helper/attr2stylePokeman"]},"public/components/user/pokeman.vue":{"url":"/components/user/pokeman.js","type":"js","deps":["public/js/helper/attr2stylePokeman"]},"public/components/user/pokemen.vue":{"url":"/components/user/pokemen.js","type":"js","deps":["public/components/user/pokemanThumbnail.vue","public/components/user/pokeman.vue"]},"public/components/home/kHeader.vue":{"url":"/components/home/kHeader.js","type":"js"},"public/components/home/planThumbnail.vue":{"url":"/components/home/planThumbnail.js","type":"js"},"node_modules/sortablejs/Sortable":{"url":"/node_modules/sortablejs/Sortable.js","type":"js"},"node_modules/vuedraggable/dist/vuedraggable":{"url":"/node_modules/vuedraggable/dist/vuedraggable.js","type":"js","deps":["node_modules/sortablejs/Sortable"]},"public/components/home/home.vue":{"url":"/components/home/home.js","type":"js","deps":["public/components/home/kHeader.vue","public/components/home/planThumbnail.vue","node_modules/vuedraggable/dist/vuedraggable"]},"public/components/plan/fieldInputText.vue":{"url":"/components/plan/fieldInputText.js","type":"js","pkg":"p10"},"public/components/plan/fieldDatePicker.vue":{"url":"/components/plan/fieldDatePicker.js","type":"js","deps":["node_modules/element-ui/lib/date-picker"],"pkg":"p10"},"public/components/plan/colorPanelItem.vue":{"url":"/components/plan/colorPanelItem.js","type":"js","pkg":"p10"},"public/components/plan/fieldColor.vue":{"url":"/components/plan/fieldColor.js","type":"js","deps":["public/components/plan/colorPanelItem.vue"],"pkg":"p10"},"node_modules/vue-smooth-picker/dist/smooth-picker":{"url":"/node_modules/vue-smooth-picker/dist/smooth-picker.js","type":"js","pkg":"p10"},"public/components/plan/fieldSchedule.vue":{"url":"/components/plan/fieldSchedule.js","type":"js","deps":["node_modules/vue-smooth-picker/dist/smooth-picker","public/components/plan/schedule.vue"],"pkg":"p10"},"public/components/plan/planAdd.vue":{"url":"/components/plan/planAdd.js","type":"js","deps":["public/components/plan/kBg.vue","public/components/plan/fieldInputText.vue","public/components/plan/fieldDatePicker.vue","public/components/plan/fieldColor.vue","public/components/plan/fieldSchedule.vue"],"pkg":"p10"},"node_modules/element-ui/lib/date-picker":{"url":"/node_modules/element-ui/lib/date-picker.js","type":"js","deps":["node_modules/element-ui/lib/input","node_modules/element-ui/lib/utils/clickoutside","node_modules/element-ui/lib/utils/vue-popper","node_modules/element-ui/lib/mixins/emitter","node_modules/element-ui/lib/scrollbar","node_modules/throttle-debounce/debounce","node_modules/element-ui/lib/mixins/locale","node_modules/element-ui/lib/utils/date","node_modules/element-ui/lib/utils/dom"],"pkg":"p1"},"node_modules/element-ui/lib/mixins/emitter":{"url":"/node_modules/element-ui/lib/mixins/emitter.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/utils/merge":{"url":"/node_modules/element-ui/lib/utils/merge.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/input":{"url":"/node_modules/element-ui/lib/input.js","type":"js","deps":["node_modules/element-ui/lib/mixins/emitter","node_modules/element-ui/lib/utils/merge"],"pkg":"p1"},"node_modules/element-ui/lib/utils/dom":{"url":"/node_modules/element-ui/lib/utils/dom.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/utils/clickoutside":{"url":"/node_modules/element-ui/lib/utils/clickoutside.js","type":"js","deps":["node_modules/element-ui/lib/utils/dom"],"pkg":"p1"},"node_modules/element-ui/lib/utils/popup/popup-manager":{"url":"/node_modules/element-ui/lib/utils/popup/popup-manager.js","type":"js","deps":["node_modules/element-ui/lib/utils/dom"],"pkg":"p1"},"node_modules/element-ui/lib/utils/scrollbar-width":{"url":"/node_modules/element-ui/lib/utils/scrollbar-width.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/utils/popup/index":{"url":"/node_modules/element-ui/lib/utils/popup/index.js","type":"js","deps":["node_modules/element-ui/lib/utils/merge","node_modules/element-ui/lib/utils/popup/popup-manager","node_modules/element-ui/lib/utils/scrollbar-width"],"pkg":"p1"},"node_modules/element-ui/lib/utils/popper":{"url":"/node_modules/element-ui/lib/utils/popper.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/utils/vue-popper":{"url":"/node_modules/element-ui/lib/utils/vue-popper.js","type":"js","deps":["node_modules/element-ui/lib/utils/popup/index","node_modules/element-ui/lib/utils/popper"],"pkg":"p1"},"node_modules/element-ui/lib/utils/resize-event":{"url":"/node_modules/element-ui/lib/utils/resize-event.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/utils/util":{"url":"/node_modules/element-ui/lib/utils/util.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/scrollbar":{"url":"/node_modules/element-ui/lib/scrollbar.js","type":"js","deps":["node_modules/element-ui/lib/utils/resize-event","node_modules/element-ui/lib/utils/dom","node_modules/element-ui/lib/utils/scrollbar-width","node_modules/element-ui/lib/utils/util"],"pkg":"p1"},"node_modules/throttle-debounce/throttle":{"url":"/node_modules/throttle-debounce/throttle.js","type":"js","pkg":"p1"},"node_modules/throttle-debounce/debounce":{"url":"/node_modules/throttle-debounce/debounce.js","type":"js","deps":["node_modules/throttle-debounce/throttle"],"pkg":"p1"},"node_modules/element-ui/lib/locale/lang/zh-CN":{"url":"/node_modules/element-ui/lib/locale/lang/zh-CN.js","type":"js","pkg":"p1"},"node_modules/deepmerge/index":{"url":"/node_modules/deepmerge/index.js","type":"js","pkg":"p1"},"node_modules/element-ui/lib/locale/format":{"url":"/node_modules/element-ui/lib/locale/format.js","type":"js","deps":["node_modules/element-ui/lib/utils/util"],"pkg":"p1"},"node_modules/element-ui/lib/locale/index":{"url":"/node_modules/element-ui/lib/locale/index.js","type":"js","deps":["node_modules/element-ui/lib/locale/lang/zh-CN","node_modules/deepmerge/index","node_modules/element-ui/lib/locale/format"],"pkg":"p1"},"node_modules/element-ui/lib/mixins/locale":{"url":"/node_modules/element-ui/lib/mixins/locale.js","type":"js","deps":["node_modules/element-ui/lib/locale/index"],"pkg":"p1"},"node_modules/element-ui/lib/utils/date":{"url":"/node_modules/element-ui/lib/utils/date.js","type":"js","pkg":"p1"},"public/components/plan/planEdit.vue":{"url":"/components/plan/planEdit.js","type":"js","deps":["public/components/plan/kBg.vue","public/components/plan/fieldInputText.vue","public/components/plan/fieldColor.vue","public/components/plan/schedule.vue"],"pkg":"p11"}},"pkg":{"p9":{"url":"/runtime/components/plan/planDetailPack.js","type":"js"},"p10":{"url":"/runtime/components/plan/planAddPack.js","type":"js"},"p1":{"url":"/runtime/elementDatepickerPack.js","type":"js"},"p11":{"url":"/runtime/components/plan/planEdit.js","type":"js"}}});
 
-    // 延迟加载非关键的外部样式表
+  <!--
+    @require "modules/style/common.scss"
+    @require "images/all-devices.png"
+  -->
+
+<script src="/viewJs/libs/mod.js"></script>
+<script type="text/javascript">/*resourcemap*/
+require.resourceMap({
+  "res": {
+    "components/plan/kBg.vue": {
+      "url": "/components/plan/kBg.js",
+      "type": "js",
+      "pkg": "p4"
+    },
+    "components/user/login.vue": {
+      "url": "/components/user/login.js",
+      "type": "js",
+      "deps": [
+        "components/plan/kBg.vue"
+      ],
+      "pkg": "p4"
+    },
+    "components/user/register.vue": {
+      "url": "/components/user/register.js",
+      "type": "js",
+      "deps": [
+        "components/plan/kBg.vue"
+      ],
+      "pkg": "p5"
+    },
+    "components/user/setting.vue": {
+      "url": "/components/user/setting.js",
+      "type": "js",
+      "pkg": "p6"
+    },
+    "components/user/pokemanThumbnail.vue": {
+      "url": "/components/user/pokemanThumbnail.js",
+      "type": "js",
+      "pkg": "p7"
+    },
+    "components/user/pokeman.vue": {
+      "url": "/components/user/pokeman.js",
+      "type": "js",
+      "pkg": "p7"
+    },
+    "components/user/pokemen.vue": {
+      "url": "/components/user/pokemen.js",
+      "type": "js",
+      "deps": [
+        "components/user/pokemanThumbnail.vue",
+        "components/user/pokeman.vue"
+      ],
+      "pkg": "p7"
+    },
+    "components/home/kHeader.vue": {
+      "url": "/components/home/kHeader.js",
+      "type": "js",
+      "pkg": "p8"
+    },
+    "components/home/planThumbnail.vue": {
+      "url": "/components/home/planThumbnail.js",
+      "type": "js",
+      "pkg": "p8"
+    },
+    "node_modules/sortablejs/Sortable": {
+      "url": "/node_modules/sortablejs/Sortable.js",
+      "type": "js",
+      "pkg": "p8"
+    },
+    "node_modules/vuedraggable/dist/vuedraggable": {
+      "url": "/node_modules/vuedraggable/dist/vuedraggable.js",
+      "type": "js",
+      "deps": [
+        "node_modules/sortablejs/Sortable"
+      ],
+      "pkg": "p8"
+    },
+    "components/home/home.vue": {
+      "url": "/components/home/home.js",
+      "type": "js",
+      "deps": [
+        "components/home/kHeader.vue",
+        "components/home/planThumbnail.vue",
+        "node_modules/vuedraggable/dist/vuedraggable"
+      ],
+      "pkg": "p8"
+    },
+    "components/plan/fieldInputText.vue": {
+      "url": "/components/plan/fieldInputText.js",
+      "type": "js",
+      "pkg": "p10"
+    },
+    "components/plan/fieldDatePicker.vue": {
+      "url": "/components/plan/fieldDatePicker.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/date-picker"
+      ],
+      "pkg": "p10"
+    },
+    "components/plan/colorPanelItem.vue": {
+      "url": "/components/plan/colorPanelItem.js",
+      "type": "js",
+      "pkg": "p10"
+    },
+    "components/plan/fieldColor.vue": {
+      "url": "/components/plan/fieldColor.js",
+      "type": "js",
+      "deps": [
+        "components/plan/colorPanelItem.vue"
+      ],
+      "pkg": "p10"
+    },
+    "node_modules/vue-smooth-picker/dist/smooth-picker": {
+      "url": "/node_modules/vue-smooth-picker/dist/smooth-picker.js",
+      "type": "js",
+      "pkg": "p10"
+    },
+    "components/plan/fieldSchedule.vue": {
+      "url": "/components/plan/fieldSchedule.js",
+      "type": "js",
+      "deps": [
+        "node_modules/vue-smooth-picker/dist/smooth-picker",
+        "components/plan/schedule.vue"
+      ],
+      "pkg": "p10"
+    },
+    "components/plan/planAdd.vue": {
+      "url": "/components/plan/planAdd.js",
+      "type": "js",
+      "deps": [
+        "components/plan/kBg.vue",
+        "components/plan/fieldInputText.vue",
+        "components/plan/fieldDatePicker.vue",
+        "components/plan/fieldColor.vue",
+        "components/plan/fieldSchedule.vue"
+      ],
+      "pkg": "p10"
+    },
+    "node_modules/element-ui/lib/date-picker": {
+      "url": "/node_modules/element-ui/lib/date-picker.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/input",
+        "node_modules/element-ui/lib/utils/clickoutside",
+        "node_modules/element-ui/lib/utils/vue-popper",
+        "node_modules/element-ui/lib/mixins/emitter",
+        "node_modules/element-ui/lib/scrollbar",
+        "node_modules/throttle-debounce/debounce",
+        "node_modules/element-ui/lib/mixins/locale",
+        "node_modules/element-ui/lib/utils/date",
+        "node_modules/element-ui/lib/utils/dom"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/mixins/emitter": {
+      "url": "/node_modules/element-ui/lib/mixins/emitter.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/merge": {
+      "url": "/node_modules/element-ui/lib/utils/merge.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/input": {
+      "url": "/node_modules/element-ui/lib/input.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/mixins/emitter",
+        "node_modules/element-ui/lib/utils/merge"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/dom": {
+      "url": "/node_modules/element-ui/lib/utils/dom.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/clickoutside": {
+      "url": "/node_modules/element-ui/lib/utils/clickoutside.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/utils/dom"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/popup/popup-manager": {
+      "url": "/node_modules/element-ui/lib/utils/popup/popup-manager.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/utils/dom"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/scrollbar-width": {
+      "url": "/node_modules/element-ui/lib/utils/scrollbar-width.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/popup/index": {
+      "url": "/node_modules/element-ui/lib/utils/popup/index.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/utils/merge",
+        "node_modules/element-ui/lib/utils/popup/popup-manager",
+        "node_modules/element-ui/lib/utils/scrollbar-width"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/popper": {
+      "url": "/node_modules/element-ui/lib/utils/popper.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/vue-popper": {
+      "url": "/node_modules/element-ui/lib/utils/vue-popper.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/utils/popup/index",
+        "node_modules/element-ui/lib/utils/popper"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/resize-event": {
+      "url": "/node_modules/element-ui/lib/utils/resize-event.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/util": {
+      "url": "/node_modules/element-ui/lib/utils/util.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/scrollbar": {
+      "url": "/node_modules/element-ui/lib/scrollbar.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/utils/resize-event",
+        "node_modules/element-ui/lib/utils/dom",
+        "node_modules/element-ui/lib/utils/scrollbar-width",
+        "node_modules/element-ui/lib/utils/util"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/throttle-debounce/throttle": {
+      "url": "/node_modules/throttle-debounce/throttle.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/throttle-debounce/debounce": {
+      "url": "/node_modules/throttle-debounce/debounce.js",
+      "type": "js",
+      "deps": [
+        "node_modules/throttle-debounce/throttle"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/locale/lang/zh-CN": {
+      "url": "/node_modules/element-ui/lib/locale/lang/zh-CN.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/deepmerge/index": {
+      "url": "/node_modules/deepmerge/index.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/locale/format": {
+      "url": "/node_modules/element-ui/lib/locale/format.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/utils/util"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/locale/index": {
+      "url": "/node_modules/element-ui/lib/locale/index.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/locale/lang/zh-CN",
+        "node_modules/deepmerge/index",
+        "node_modules/element-ui/lib/locale/format"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/mixins/locale": {
+      "url": "/node_modules/element-ui/lib/mixins/locale.js",
+      "type": "js",
+      "deps": [
+        "node_modules/element-ui/lib/locale/index"
+      ],
+      "pkg": "p1"
+    },
+    "node_modules/element-ui/lib/utils/date": {
+      "url": "/node_modules/element-ui/lib/utils/date.js",
+      "type": "js",
+      "pkg": "p1"
+    },
+    "components/plan/schedule.vue": {
+      "url": "/components/plan/schedule.js",
+      "type": "js",
+      "pkg": "p9"
+    },
+    "components/plan/planDetail.vue": {
+      "url": "/components/plan/planDetail.js",
+      "type": "js",
+      "deps": [
+        "components/plan/kBg.vue",
+        "components/plan/schedule.vue"
+      ],
+      "pkg": "p9"
+    },
+    "components/plan/planEdit.vue": {
+      "url": "/components/plan/planEdit.js",
+      "type": "js",
+      "deps": [
+        "components/plan/kBg.vue",
+        "components/plan/fieldInputText.vue",
+        "components/plan/fieldColor.vue",
+        "components/plan/schedule.vue"
+      ],
+      "pkg": "p11"
+    }
+  },
+  "pkg": {
+    "p4": {
+      "url": "/pkgs/components/user/loginPack.js",
+      "type": "js"
+    },
+    "p5": {
+      "url": "/pkgs/components/user/registerPack.js",
+      "type": "js"
+    },
+    "p6": {
+      "url": "/pkgs/components/user/settingPack.js",
+      "type": "js"
+    },
+    "p7": {
+      "url": "/pkgs/components/user/pokemenPack.js",
+      "type": "js"
+    },
+    "p8": {
+      "url": "/pkgs/components/homePack.js",
+      "type": "js"
+    },
+    "p10": {
+      "url": "/pkgs/components/plan/planAddPack.js",
+      "type": "js"
+    },
+    "p1": {
+      "url": "/pkgs/libs/elementDatepickerPack.js",
+      "type": "js"
+    },
+    "p9": {
+      "url": "/pkgs/components/plan/planDetailPack.js",
+      "type": "js"
+    },
+    "p11": {
+      "url": "/pkgs/components/plan/planEditPack.js",
+      "type": "js"
+    }
+  }
+});
+
+    const resources = {
+    "res": {
+        "modules/global/setHttp.js": {
+            "uri": "/modules/global/setHttp.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/global/setHttp"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js"
+            ],
+            "pkg": "p2"
+        },
+        "modules/helper/async.js": {
+            "uri": "/modules/helper/async.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/helper/async"
+            },
+            "pkg": "p2"
+        },
+        "modules/helper/attr2stylePokeman.js": {
+            "uri": "/modules/helper/attr2stylePokeman.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/helper/attr2stylePokeman"
+            },
+            "pkg": "p2"
+        },
+        "modules/helper/aysncPromise.js": {
+            "uri": "/modules/helper/aysncPromise.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/helper/aysncPromise"
+            },
+            "pkg": "p2"
+        },
+        "modules/helper/esModule.js": {
+            "uri": "/modules/helper/esModule.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/helper/esModule"
+            },
+            "deps": [
+                "node_modules/blueimp-md5/js/md5.js",
+                "node_modules/es6-promise/dist/es6-promise.js",
+                "node_modules/lodash.isequal/index.js",
+                "node_modules/lodash.clonedeep/index.js"
+            ],
+            "pkg": "p2"
+        },
+        "modules/helper/utils.js": {
+            "uri": "/modules/helper/utils.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/helper/utils"
+            },
+            "pkg": "p2"
+        },
+        "modules/router/index.js": {
+            "uri": "/modules/router/index.js",
+            "type": "js",
+            "extras": {
+                "async": [
+                    "components/user/login.vue",
+                    "components/user/register.vue",
+                    "components/user/setting.vue",
+                    "components/user/pokemen.vue",
+                    "components/home/home.vue",
+                    "components/plan/planAdd.vue",
+                    "components/plan/planDetail.vue",
+                    "components/plan/planEdit.vue"
+                ],
+                "moduleId": "modules/router/index"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vue-router/dist/vue-router.common.js",
+                "modules/store/index.js",
+                "components/user/welcome.vue"
+            ],
+            "pkg": "p2"
+        },
+        "modules/store/index.js": {
+            "uri": "/modules/store/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "modules/store/index"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "node_modules/vue-resource/dist/vue-resource.common.js",
+                "modules/helper/utils.js",
+                "modules/helper/esModule.js",
+                "modules/helper/async.js"
+            ],
+            "pkg": "p2"
+        },
+        "modules/style/base.scss": {
+            "uri": "/modules/style/base.css",
+            "type": "css"
+        },
+        "modules/style/blocks/button.scss": {
+            "uri": "/modules/style/blocks/button.css",
+            "type": "css"
+        },
+        "modules/style/blocks/field.scss": {
+            "uri": "/modules/style/blocks/field.css",
+            "type": "css"
+        },
+        "modules/style/blocks/form.scss": {
+            "uri": "/modules/style/blocks/form.css",
+            "type": "css"
+        },
+        "modules/style/blocks/icon.scss": {
+            "uri": "/modules/style/blocks/icon.css",
+            "type": "css"
+        },
+        "modules/style/blocks/list.scss": {
+            "uri": "/modules/style/blocks/list.css",
+            "type": "css"
+        },
+        "modules/style/blocks/loader.scss": {
+            "uri": "/modules/style/blocks/loader.css",
+            "type": "css"
+        },
+        "modules/style/blocks/plan.scss": {
+            "uri": "/modules/style/blocks/plan.css",
+            "type": "css"
+        },
+        "modules/style/blocks/pokeman.scss": {
+            "uri": "/modules/style/blocks/pokeman.css",
+            "type": "css"
+        },
+        "modules/style/blocks/schedule.scss": {
+            "uri": "/modules/style/blocks/schedule.css",
+            "type": "css"
+        },
+        "modules/style/common.scss": {
+            "uri": "/modules/style/common.css",
+            "type": "css"
+        },
+        "modules/style/firstScreen.scss": {
+            "uri": "/modules/style/firstScreen.css",
+            "type": "css"
+        },
+        "modules/style/layouts.scss": {
+            "uri": "/modules/style/layouts.css",
+            "type": "css"
+        },
+        "modules/style/libs/normalize.scss": {
+            "uri": "/modules/style/libs/normalize.css",
+            "type": "css"
+        },
+        "modules/style/libs/pacman.scss": {
+            "uri": "/modules/style/libs/pacman.css",
+            "type": "css"
+        },
+        "modules/style/mixins.scss": {
+            "uri": "/modules/style/mixins.css",
+            "type": "css"
+        },
+        "modules/style/style.scss": {
+            "uri": "/modules/style/style.css",
+            "type": "css"
+        },
+        "modules/style/transitions.scss": {
+            "uri": "/modules/style/transitions.css",
+            "type": "css"
+        },
+        "modules/style/variables/_pokemanColor.scss": {
+            "uri": "/modules/style/variables/_pokemanColor.css",
+            "type": "css"
+        },
+        "modules/style/variables/variables.scss": {
+            "uri": "/modules/style/variables/variables.css",
+            "type": "css"
+        },
+        "components/App.vue": {
+            "uri": "/components/App.js",
+            "type": "js",
+            "deps": [
+                "node_modules/vuex/dist/vuex.js"
+            ],
+            "pkg": "p2"
+        },
+        "components/home/home.vue": {
+            "uri": "/components/home/home.js",
+            "type": "js",
+            "deps": [
+                "components/home/kHeader.vue",
+                "components/home/planThumbnail.vue",
+                "node_modules/vuedraggable/dist/vuedraggable.js",
+                "node_modules/vuex/dist/vuex.js"
+            ],
+            "pkg": "p8"
+        },
+        "components/home/kHeader.vue": {
+            "uri": "/components/home/kHeader.js",
+            "type": "js",
+            "pkg": "p8"
+        },
+        "components/home/planThumbnail.vue": {
+            "uri": "/components/home/planThumbnail.js",
+            "type": "js",
+            "deps": [
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p8"
+        },
+        "components/plan/colorPanelItem.vue": {
+            "uri": "/components/plan/colorPanelItem.js",
+            "type": "js",
+            "pkg": "p10"
+        },
+        "components/plan/fieldColor.vue": {
+            "uri": "/components/plan/fieldColor.js",
+            "type": "js",
+            "deps": [
+                "modules/helper/utils.js",
+                "components/plan/colorPanelItem.vue"
+            ],
+            "pkg": "p10"
+        },
+        "components/plan/fieldDatePicker.vue": {
+            "uri": "/components/plan/fieldDatePicker.js",
+            "type": "js",
+            "deps": [
+                "node_modules/element-ui/lib/date-picker.js",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p10"
+        },
+        "components/plan/fieldInputText.vue": {
+            "uri": "/components/plan/fieldInputText.js",
+            "type": "js",
+            "pkg": "p10"
+        },
+        "components/plan/fieldSchedule.vue": {
+            "uri": "/components/plan/fieldSchedule.js",
+            "type": "js",
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vue-smooth-picker/dist/smooth-picker.js",
+                "components/plan/schedule.vue"
+            ],
+            "pkg": "p10"
+        },
+        "components/plan/kBg.vue": {
+            "uri": "/components/plan/kBg.js",
+            "type": "js",
+            "pkg": "p4"
+        },
+        "components/plan/planAdd.vue": {
+            "uri": "/components/plan/planAdd.js",
+            "type": "js",
+            "deps": [
+                "components/plan/kBg.vue",
+                "components/plan/fieldInputText.vue",
+                "components/plan/fieldDatePicker.vue",
+                "components/plan/fieldColor.vue",
+                "components/plan/fieldSchedule.vue",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p10"
+        },
+        "components/plan/planDetail.vue": {
+            "uri": "/components/plan/planDetail.js",
+            "type": "js",
+            "deps": [
+                "components/plan/kBg.vue",
+                "components/plan/schedule.vue",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p9"
+        },
+        "components/plan/planEdit.vue": {
+            "uri": "/components/plan/planEdit.js",
+            "type": "js",
+            "deps": [
+                "components/plan/kBg.vue",
+                "components/plan/fieldInputText.vue",
+                "components/plan/fieldColor.vue",
+                "components/plan/schedule.vue",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p11"
+        },
+        "components/plan/schedule.vue": {
+            "uri": "/components/plan/schedule.js",
+            "type": "js",
+            "deps": [
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p9"
+        },
+        "components/user/login.vue": {
+            "uri": "/components/user/login.js",
+            "type": "js",
+            "deps": [
+                "components/plan/kBg.vue",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/async.js",
+                "modules/global/setHttp.js"
+            ],
+            "pkg": "p4"
+        },
+        "components/user/pokeman.vue": {
+            "uri": "/components/user/pokeman.js",
+            "type": "js",
+            "deps": [
+                "modules/helper/attr2stylePokeman.js"
+            ],
+            "pkg": "p7"
+        },
+        "components/user/pokemanThumbnail.vue": {
+            "uri": "/components/user/pokemanThumbnail.js",
+            "type": "js",
+            "deps": [
+                "modules/helper/attr2stylePokeman.js"
+            ],
+            "pkg": "p7"
+        },
+        "components/user/pokemen.vue": {
+            "uri": "/components/user/pokemen.js",
+            "type": "js",
+            "deps": [
+                "components/user/pokemanThumbnail.vue",
+                "components/user/pokeman.vue",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/utils.js"
+            ],
+            "pkg": "p7"
+        },
+        "components/user/register.vue": {
+            "uri": "/components/user/register.js",
+            "type": "js",
+            "deps": [
+                "components/plan/kBg.vue",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/async.js",
+                "modules/global/setHttp.js"
+            ],
+            "pkg": "p5"
+        },
+        "components/user/setting.vue": {
+            "uri": "/components/user/setting.js",
+            "type": "js",
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/global/setHttp.js"
+            ],
+            "pkg": "p6"
+        },
+        "components/user/welcome.vue": {
+            "uri": "/components/user/welcome.js",
+            "type": "js",
+            "deps": [
+                "components/user/welcomeSlide.vue",
+                "modules/global/setHttp.js"
+            ],
+            "pkg": "p2"
+        },
+        "components/user/welcomeSlide.vue": {
+            "uri": "/components/user/welcomeSlide.js",
+            "type": "js",
+            "pkg": "p2"
+        },
+        "views/libs/mod.js": {
+            "uri": "/viewJs/libs/mod.js",
+            "type": "js"
+        },
+        "views/main.js": {
+            "uri": "/viewJs/main.js",
+            "type": "js",
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vue-resource/dist/vue-resource.common.js",
+                "modules/global/setHttp.js",
+                "modules/store/index.js",
+                "modules/router/index.js",
+                "components/App.vue",
+                "node_modules/es6-promise/dist/es6-promise.js"
+            ],
+            "pkg": "p2"
+        },
+        "node_modules/vue/dist/vue.runtime.common.js": {
+            "uri": "/node_modules/vue/dist/vue.runtime.common.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/vue/dist/vue.runtime.common"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/blueimp-md5/js/md5.js": {
+            "uri": "/node_modules/blueimp-md5/js/md5.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/blueimp-md5/js/md5"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/es6-promise/dist/es6-promise.js": {
+            "uri": "/node_modules/es6-promise/dist/es6-promise.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/es6-promise/dist/es6-promise"
+            },
+            "deps": [
+                "node_modules/process/browser.js"
+            ],
+            "pkg": "p0"
+        },
+        "node_modules/es6-promise/dist/es6-promise.map": {
+            "uri": "/node_modules/es6-promise/dist/es6-promise.map",
+            "type": "map"
+        },
+        "node_modules/lodash.isequal/index.js": {
+            "uri": "/node_modules/lodash.isequal/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/lodash.isequal/index"
+            },
+            "deps": [
+                "node_modules/process/browser.js",
+                "node_modules/buffer/index.js",
+                "node_modules/is-buffer/index.js"
+            ],
+            "pkg": "p0"
+        },
+        "node_modules/lodash.clonedeep/index.js": {
+            "uri": "/node_modules/lodash.clonedeep/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/lodash.clonedeep/index"
+            },
+            "deps": [
+                "node_modules/buffer/index.js",
+                "node_modules/is-buffer/index.js"
+            ],
+            "pkg": "p0"
+        },
+        "node_modules/vue-router/dist/vue-router.common.js": {
+            "uri": "/node_modules/vue-router/dist/vue-router.common.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/vue-router/dist/vue-router.common"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/vuex/dist/vuex.js": {
+            "uri": "/node_modules/vuex/dist/vuex.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/vuex/dist/vuex"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/vue-resource/dist/vue-resource.common.js": {
+            "uri": "/node_modules/vue-resource/dist/vue-resource.common.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/vue-resource/dist/vue-resource.common"
+            },
+            "deps": [
+                "this_should_be_null"
+            ],
+            "pkg": "p0"
+        },
+        "node_modules/vuedraggable/dist/vuedraggable.js": {
+            "uri": "/node_modules/vuedraggable/dist/vuedraggable.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/vuedraggable/dist/vuedraggable"
+            },
+            "deps": [
+                "node_modules/sortablejs/Sortable.js"
+            ],
+            "pkg": "p8"
+        },
+        "node_modules/element-ui/lib/date-picker.js": {
+            "uri": "/node_modules/element-ui/lib/date-picker.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/date-picker"
+            },
+            "deps": [
+                "node_modules/element-ui/lib/input.js",
+                "node_modules/element-ui/lib/utils/clickoutside.js",
+                "node_modules/element-ui/lib/utils/vue-popper.js",
+                "node_modules/element-ui/lib/mixins/emitter.js",
+                "node_modules/element-ui/lib/scrollbar.js",
+                "node_modules/throttle-debounce/debounce.js",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/element-ui/lib/mixins/locale.js",
+                "node_modules/element-ui/lib/utils/date.js",
+                "node_modules/element-ui/lib/utils/dom.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/vue-smooth-picker/dist/smooth-picker.js": {
+            "uri": "/node_modules/vue-smooth-picker/dist/smooth-picker.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/vue-smooth-picker/dist/smooth-picker"
+            },
+            "pkg": "p10"
+        },
+        "node_modules/process/browser.js": {
+            "uri": "/node_modules/process/browser.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/process/browser"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/buffer/index.js": {
+            "uri": "/node_modules/buffer/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/buffer/index"
+            },
+            "deps": [
+                "node_modules/base64-js/index.js",
+                "node_modules/ieee754/index.js"
+            ],
+            "pkg": "p0"
+        },
+        "node_modules/is-buffer/index.js": {
+            "uri": "/node_modules/is-buffer/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/is-buffer/index"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/sortablejs/Sortable.js": {
+            "uri": "/node_modules/sortablejs/Sortable.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/sortablejs/Sortable"
+            },
+            "pkg": "p8"
+        },
+        "node_modules/element-ui/lib/input.js": {
+            "uri": "/node_modules/element-ui/lib/input.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/input"
+            },
+            "deps": [
+                "node_modules/element-ui/lib/mixins/emitter.js",
+                "node_modules/element-ui/lib/utils/merge.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/clickoutside.js": {
+            "uri": "/node_modules/element-ui/lib/utils/clickoutside.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/clickoutside"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/element-ui/lib/utils/dom.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/vue-popper.js": {
+            "uri": "/node_modules/element-ui/lib/utils/vue-popper.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/vue-popper"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/element-ui/lib/utils/popup/index.js",
+                "node_modules/element-ui/lib/utils/popper.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/mixins/emitter.js": {
+            "uri": "/node_modules/element-ui/lib/mixins/emitter.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/mixins/emitter"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/scrollbar.js": {
+            "uri": "/node_modules/element-ui/lib/scrollbar.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/scrollbar"
+            },
+            "deps": [
+                "node_modules/element-ui/lib/utils/resize-event.js",
+                "node_modules/element-ui/lib/utils/dom.js",
+                "node_modules/element-ui/lib/utils/scrollbar-width.js",
+                "node_modules/element-ui/lib/utils/util.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/throttle-debounce/debounce.js": {
+            "uri": "/node_modules/throttle-debounce/debounce.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/throttle-debounce/debounce"
+            },
+            "deps": [
+                "node_modules/throttle-debounce/throttle.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/mixins/locale.js": {
+            "uri": "/node_modules/element-ui/lib/mixins/locale.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/mixins/locale"
+            },
+            "deps": [
+                "node_modules/element-ui/lib/locale/index.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/date.js": {
+            "uri": "/node_modules/element-ui/lib/utils/date.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/date"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/dom.js": {
+            "uri": "/node_modules/element-ui/lib/utils/dom.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/dom"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/base64-js/index.js": {
+            "uri": "/node_modules/base64-js/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/base64-js/index"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/ieee754/index.js": {
+            "uri": "/node_modules/ieee754/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/ieee754/index"
+            },
+            "pkg": "p0"
+        },
+        "node_modules/element-ui/lib/utils/merge.js": {
+            "uri": "/node_modules/element-ui/lib/utils/merge.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/merge"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/popup/index.js": {
+            "uri": "/node_modules/element-ui/lib/utils/popup/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/popup/index"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/element-ui/lib/utils/merge.js",
+                "node_modules/element-ui/lib/utils/popup/popup-manager.js",
+                "node_modules/element-ui/lib/utils/scrollbar-width.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/popper.js": {
+            "uri": "/node_modules/element-ui/lib/utils/popper.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/popper"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/resize-event.js": {
+            "uri": "/node_modules/element-ui/lib/utils/resize-event.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/resize-event"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/scrollbar-width.js": {
+            "uri": "/node_modules/element-ui/lib/utils/scrollbar-width.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/scrollbar-width"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/util.js": {
+            "uri": "/node_modules/element-ui/lib/utils/util.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/util"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/throttle-debounce/throttle.js": {
+            "uri": "/node_modules/throttle-debounce/throttle.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/throttle-debounce/throttle"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/locale/index.js": {
+            "uri": "/node_modules/element-ui/lib/locale/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/locale/index"
+            },
+            "deps": [
+                "node_modules/element-ui/lib/locale/lang/zh-CN.js",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/deepmerge/index.js",
+                "node_modules/element-ui/lib/locale/format.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/utils/popup/popup-manager.js": {
+            "uri": "/node_modules/element-ui/lib/utils/popup/popup-manager.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/utils/popup/popup-manager"
+            },
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/element-ui/lib/utils/dom.js"
+            ],
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/locale/lang/zh-CN.js": {
+            "uri": "/node_modules/element-ui/lib/locale/lang/zh-CN.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/locale/lang/zh-CN"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/deepmerge/index.js": {
+            "uri": "/node_modules/deepmerge/index.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/deepmerge/index"
+            },
+            "pkg": "p1"
+        },
+        "node_modules/element-ui/lib/locale/format.js": {
+            "uri": "/node_modules/element-ui/lib/locale/format.js",
+            "type": "js",
+            "extras": {
+                "moduleId": "node_modules/element-ui/lib/locale/format"
+            },
+            "deps": [
+                "node_modules/element-ui/lib/utils/util.js"
+            ],
+            "pkg": "p1"
+        }
+    },
+    "pkg": {
+        "p0": {
+            "uri": "/pkgs/dependencies.js",
+            "type": "js",
+            "has": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/blueimp-md5/js/md5.js",
+                "node_modules/process/browser.js",
+                "node_modules/es6-promise/dist/es6-promise.js",
+                "node_modules/base64-js/index.js",
+                "node_modules/ieee754/index.js",
+                "node_modules/buffer/index.js",
+                "node_modules/is-buffer/index.js",
+                "node_modules/lodash.isequal/index.js",
+                "node_modules/lodash.clonedeep/index.js",
+                "node_modules/vue-router/dist/vue-router.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "node_modules/vue-resource/dist/vue-resource.common.js"
+            ],
+            "deps": [
+                "this_should_be_null"
+            ]
+        },
+        "p1": {
+            "uri": "/pkgs/libs/elementDatepickerPack.js",
+            "type": "js",
+            "has": [
+                "node_modules/element-ui/lib/mixins/emitter.js",
+                "node_modules/element-ui/lib/utils/merge.js",
+                "node_modules/element-ui/lib/input.js",
+                "node_modules/element-ui/lib/utils/dom.js",
+                "node_modules/element-ui/lib/utils/clickoutside.js",
+                "node_modules/element-ui/lib/utils/popup/popup-manager.js",
+                "node_modules/element-ui/lib/utils/scrollbar-width.js",
+                "node_modules/element-ui/lib/utils/popup/index.js",
+                "node_modules/element-ui/lib/utils/popper.js",
+                "node_modules/element-ui/lib/utils/vue-popper.js",
+                "node_modules/element-ui/lib/utils/resize-event.js",
+                "node_modules/element-ui/lib/utils/util.js",
+                "node_modules/element-ui/lib/scrollbar.js",
+                "node_modules/throttle-debounce/throttle.js",
+                "node_modules/throttle-debounce/debounce.js",
+                "node_modules/element-ui/lib/locale/lang/zh-CN.js",
+                "node_modules/deepmerge/index.js",
+                "node_modules/element-ui/lib/locale/format.js",
+                "node_modules/element-ui/lib/locale/index.js",
+                "node_modules/element-ui/lib/mixins/locale.js",
+                "node_modules/element-ui/lib/utils/date.js",
+                "node_modules/element-ui/lib/date-picker.js"
+            ],
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js"
+            ]
+        },
+        "p2": {
+            "uri": "/pkgs/main.js",
+            "type": "js",
+            "has": [
+                "modules/global/setHttp.js",
+                "modules/helper/async.js",
+                "modules/helper/attr2stylePokeman.js",
+                "modules/helper/aysncPromise.js",
+                "modules/helper/esModule.js",
+                "modules/helper/utils.js",
+                "modules/store/index.js",
+                "components/user/welcomeSlide.vue",
+                "components/user/welcome.vue",
+                "modules/router/index.js",
+                "components/App.vue",
+                "views/main.js"
+            ],
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/blueimp-md5/js/md5.js",
+                "node_modules/es6-promise/dist/es6-promise.js",
+                "node_modules/lodash.isequal/index.js",
+                "node_modules/lodash.clonedeep/index.js",
+                "node_modules/vuex/dist/vuex.js",
+                "node_modules/vue-resource/dist/vue-resource.common.js",
+                "node_modules/vue-router/dist/vue-router.common.js"
+            ]
+        },
+        "p4": {
+            "uri": "/pkgs/components/user/loginPack.js",
+            "type": "js",
+            "has": [
+                "components/plan/kBg.vue",
+                "components/user/login.vue"
+            ],
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/async.js",
+                "modules/global/setHttp.js"
+            ]
+        },
+        "p5": {
+            "uri": "/pkgs/components/user/registerPack.js",
+            "type": "js",
+            "has": [
+                "components/user/register.vue"
+            ],
+            "deps": [
+                "components/plan/kBg.vue",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/async.js",
+                "modules/global/setHttp.js"
+            ]
+        },
+        "p6": {
+            "uri": "/pkgs/components/user/settingPack.js",
+            "type": "js",
+            "has": [
+                "components/user/setting.vue"
+            ],
+            "deps": [
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/global/setHttp.js"
+            ]
+        },
+        "p7": {
+            "uri": "/pkgs/components/user/pokemenPack.js",
+            "type": "js",
+            "has": [
+                "components/user/pokemanThumbnail.vue",
+                "components/user/pokeman.vue",
+                "components/user/pokemen.vue"
+            ],
+            "deps": [
+                "modules/helper/attr2stylePokeman.js",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/utils.js"
+            ]
+        },
+        "p8": {
+            "uri": "/pkgs/components/homePack.js",
+            "type": "js",
+            "has": [
+                "components/home/kHeader.vue",
+                "components/home/planThumbnail.vue",
+                "node_modules/sortablejs/Sortable.js",
+                "node_modules/vuedraggable/dist/vuedraggable.js",
+                "components/home/home.vue"
+            ],
+            "deps": [
+                "modules/helper/utils.js",
+                "node_modules/vuex/dist/vuex.js"
+            ]
+        },
+        "p9": {
+            "uri": "/pkgs/components/plan/planDetailPack.js",
+            "type": "js",
+            "has": [
+                "components/plan/schedule.vue",
+                "components/plan/planDetail.vue"
+            ],
+            "deps": [
+                "modules/helper/utils.js",
+                "components/plan/kBg.vue",
+                "node_modules/vuex/dist/vuex.js"
+            ]
+        },
+        "p10": {
+            "uri": "/pkgs/components/plan/planAddPack.js",
+            "type": "js",
+            "has": [
+                "components/plan/fieldInputText.vue",
+                "components/plan/fieldDatePicker.vue",
+                "components/plan/colorPanelItem.vue",
+                "components/plan/fieldColor.vue",
+                "node_modules/vue-smooth-picker/dist/smooth-picker.js",
+                "components/plan/fieldSchedule.vue",
+                "components/plan/planAdd.vue"
+            ],
+            "deps": [
+                "node_modules/element-ui/lib/date-picker.js",
+                "node_modules/vue/dist/vue.runtime.common.js",
+                "modules/helper/utils.js",
+                "components/plan/schedule.vue",
+                "components/plan/kBg.vue",
+                "node_modules/vuex/dist/vuex.js"
+            ]
+        },
+        "p11": {
+            "uri": "/pkgs/components/plan/planEditPack.js",
+            "type": "js",
+            "has": [
+                "components/plan/planEdit.vue"
+            ],
+            "deps": [
+                "components/plan/kBg.vue",
+                "components/plan/fieldInputText.vue",
+                "components/plan/fieldColor.vue",
+                "components/plan/schedule.vue",
+                "node_modules/vuex/dist/vuex.js",
+                "modules/helper/utils.js"
+            ]
+        }
+    }
+}
+    // 延迟加载非关键的外部样式表，用了fis3的资源依赖表，代码稍稍被侵入
     let styleLink = document.createElement('link')
 
     styleLink.rel = 'stylesheet'
-    styleLink.href = '/style/common.css'
+    styleLink.href = resources.res['modules/style/common.scss'].uri
 
     document.head.appendChild(styleLink)
 
     // 延迟加载欢迎页图片：相比于等mainJs执行后加载或者preload加载，是种折中的做法
     let welcomeImg = document.querySelector('.l-slide[_v-tempKeep] img')
-    welcomeImg.src = '/images/all-devices.png'
+    welcomeImg.src = resources.res['images/all-devices.png'].uri
   </script>
-<script type="text/javascript" src="/runtime/packages.js"></script>
-<script type="text/javascript" src="/runtime/common.js"></script>
-</body>
+<script type="text/javascript" src="/pkgs/dependencies.js"></script>
+<script type="text/javascript" src="/pkgs/main.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://10.170.1.26:8132/livereload.js"></script></body>
 </html>
