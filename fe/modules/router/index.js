@@ -129,6 +129,8 @@ function switchTransitionName(to, from, cb) {
     store.commit('changeTransitionName', 'slide-right')
   } else if (backRouteFrom.indexOf(toPath) > -1 && backRoute[toPath].indexOf(fromPath) > -1) {
     store.commit('changeTransitionName', 'slide-left')
+  } else if (toPath === '/') {
+    store.commit('changeTransitionName', '')
   } else {
     store.commit('changeTransitionName', 'slide-up')
   }
