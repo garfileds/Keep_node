@@ -6,8 +6,9 @@
         <draggable
          v-model="plansIng"
          :options="draggableOption"
-         :move="planMoveHandler"
-         @choose="planChooseHandler">
+         :move="onPlanMove"
+         @choose="onPlanChoose"
+         @end="onPlanDragEnd">
           <transition-group name="plansList" tag="div">
             <planThumbnail
              v-for="plan in plansIng"
@@ -29,8 +30,9 @@
         <draggable
          v-model="plansIng"
          :options="draggableOption"
-         :move="planMoveHandler"
-         @choose="planChooseHandler">
+         :move="onPlanMove"
+         @choose="onPlanChoose"
+         @end="onPlanDragEnd">
           <transition-group name="plansList" tag="div">
             <planThumbnail
              v-for="planDone in plansDone"
@@ -43,7 +45,7 @@
 
       <section>
         <transition name="fade">
-          <div v-if="!isDragging" class="btn-first add-plan-btn" @click="routerPlanAdd" key="add"></div>
+          <div v-if="!isDeleting" class="btn-first add-plan-btn" @click="routerPlanAdd" key="add"></div>
 
           <draggable
             key="remove"
@@ -51,7 +53,7 @@
             class="btn-first delete-plan-btn"
             id="removeBtn"
             :class="{'hover-btn': deleteBtnIsHover}"
-            @add="dropPlanHandler"
+            @add="onPlanDrop"
             v-else>
           </draggable>
 
@@ -60,14 +62,14 @@
         <transition name="bounceInRight">
           <div
            class="btn-second cancel-btn"
-           @click="cancelDelHandler"
+           @click="onCancelDel"
            v-if="needOpt"></div>
         </transition>
 
         <transition name="bounceInLeft">
           <div
            class="btn-second confirm-btn"
-           @click="confirmDelHandler"
+           @click="onConfirmDel"
            v-if="needOpt"></div>
         </transition>
       </section>
@@ -218,7 +220,7 @@
 
     data: function() {
       return {
-        isDragging: false,
+        isDeleting: false,
 
         deleteBtnIsHover: false,
 
@@ -250,29 +252,34 @@
     },
 
     methods: {
-      planChooseHandler() {
-        this.isDragging = true
+      onPlanChoose() {
+        this.isDeleting = true
       },
 
-      planMoveHandler(evt) {
+      onPlanMove(evt) {
         const movedId = evt.relatedContext.component.$el.id
 
         this.deleteBtnIsHover = movedId === 'removeBtn'
       },
 
-      dropPlanHandler(evt) {
+      onPlanDrop(evt) {
         this.deleteBtnIsHover = false
         this.needOpt = true
         this.toDeleteId = evt.item.dataset.planid
       },
 
-      cancelDelHandler() {
+      onPlanDragEnd() {
+        if (!this.needOpt) this.isDeleting = false
+      },
+
+      onCancelDel() {
+        this.isDeleting = false
         this.needOpt = false
         this.deleteBtnIsHover = false
         this.toDeleteId = ''
       },
 
-      confirmDelHandler() {
+      onConfirmDel() {
         if (this.toDeleteId) {
           this.deletePlan({ planId: this.toDeleteId })
           this.cancelDelHandler()
