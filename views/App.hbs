@@ -18,8 +18,9 @@
   <!--<link rel="preload" href="/images/all-devices@2x.png" as="image" type="image/png">-->
   <!--<link rel="preload" href="/images/bg@1x.jpg" as="image" type="image/jpeg">-->
 
-    <link rel="stylesheet" type="text/css" href="/modules/style/common_d3819b2.css" />
     <style type="text/css">:root {
+  /* Colors
+  ------ */
   --color-warning: #db7093;
   --color-success: #60bd74;
   --color-primary: #61e2e2;
@@ -35,15 +36,23 @@
   --color-base-gray: #dcd7d7;
   --color-dark-gray: #ddd;
   --color-secondary: #d3d3d3;
+  /* Border
+  --------- */
   --border-color-base: var(--color-base-gray);
   --box-shadow-base: 0 2px 10px var(--color-dark-gray);
+  /* Font
+  -------- */
   --font-size-base: 16px;
   --font-color-base: var(--color-white);
   --line-height: 1.2;
   --font-weight-base: 400;
+  /* Button
+  -------- */
   --button-primary-fill: var(--color-primary);
   --button-success-fill: var(--color-success);
   --button-warning-fill: var(--color-warning);
+  /* Schedule
+  ------------ */
   --schedule-unselected-color: rgba(69, 69, 69, 0.4);
   --schedule-done-color: rgba(69, 243, 14, 0.4);
   --schedule-overdue-color: rgba(127, 134, 127, 0.8);
@@ -56,7 +65,7 @@
 
 .c-button {
   background: var(--button-primary-fill);
-  border: 0;
+  border: none;
   padding: .5em;
   color: var(--color-white);
   font-size: 1rem;
@@ -80,6 +89,7 @@
   padding: 0 .75em;
 }
 
+/* base */
 * {
   margin: 0;
   padding: 0;
@@ -101,9 +111,10 @@ a {
 }
 
 :focus {
-  outline: 0;
+  outline: none;
 }
 
+/* layouts */
 .l-wrap {
   width: 100%;
 }
@@ -123,6 +134,7 @@ a {
   top: 0;
 }
 
+/* special */
 .l-slide[_v-tempKeep] {
   margin: 2em 0;
 }
@@ -148,6 +160,12 @@ a {
   text-align: center;
   margin-top: 2em;
 }
+
+.button--login[_v-tempKeep] {
+  margin-top: 1em;
+  background: #eaeceb;
+  color: var(--color-black);
+}
 </style>
 </head>
 <body>
@@ -167,11 +185,6 @@ a {
   </div>
 
   <div id="app"></div>
-
-  <!--
-    @require "modules/style/common.scss"
-    @require "images/all-devices.png"
-  -->
 
 <script src="/viewJs/libs/mod_b37980e.js"></script>
 <script type="text/javascript">/*resourcemap*/
@@ -935,11 +948,7 @@ require.resourceMap({
         },
         "views/App.html": {
             "uri": "/App.html",
-            "type": "html",
-            "deps": [
-                "modules/style/common.scss",
-                "images/all-devices.png"
-            ]
+            "type": "html"
         },
         "node_modules/vue/dist/vue.runtime.common.js": {
             "uri": "/node_modules/vue/dist/vue.runtime.common.js",

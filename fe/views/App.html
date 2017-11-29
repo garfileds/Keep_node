@@ -13,26 +13,7 @@
   <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
   <!-- 由firstScreen.scss转换而来 -->
   <style type="text/css">
-    :root{--color-warning:#db7093;--color-success:#60bd74;--color-primary:#61e2e2;--color-dark-primary:#129fea;--color-light-primary:#53bdbd;--color-opcity-primary:rgba(98,186,206,.8);--color-more-opacity-primary:rgba(98,186,206,.4);--color-white:#fff;--color-green:#76ff7b;--color-black:#000;--color-light-black:#1b1a1a;--color-opcity-black:rgba(0,0,0,.5);--color-base-gray:#dcd7d7;--color-dark-gray:#ddd;--color-secondary:#d3d3d3;--border-color-base:var(--color-base-gray);--box-shadow-base:0 2px 10px var(--color-dark-gray);--font-size-base:16px;--font-color-base:var(--color-white);--line-height:1.2;--font-weight-base:400;--button-primary-fill:var(--color-primary);--button-success-fill:var(--color-success);--button-warning-fill:var(--color-warning);--schedule-unselected-color:rgba(69,69,69,.4);--schedule-done-color:rgba(69,243,14,.4);--schedule-overdue-color:rgba(127,134,127,.8);--schedule-progress-color:rgba(69,243,14,.4)}
-    .c-button-group{padding:0 1em}
-    .c-button{background:var(--button-primary-fill);border:0;padding:.5em;color:var(--color-white);font-size:1rem;text-align:center}
-    .c-button--success{background:var(--button-success-fill)}
-    .c-button--small{font-size:.625em}
-    .l-button--full{display:inline-block;width:100%}
-    .l-button--full-align{padding:0 .75em}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-size:var(--font-size-base);line-height:var(--line-height);color:var(--font-color-base)}
-    section{display:block}
-    a{text-decoration:none}
-    :focus{outline:0}
-    .l-wrap{width:100%}
-    @media (min-width:768px){.l-wrap{max-width:768px;margin-left:auto;margin-right:auto}}
-    .l-absolute{position:absolute;width:100%;left:0;top:0}
-    .l-slide[_v-tempKeep]{margin:2em 0}
-    .stage{position:relative;width:100%}
-    .stage::before{content:'';padding-bottom:56.25%;width:1px;vertical-align:middle}
-    .stage__item{max-height:100%}
-    .description--temp{color:#000;text-align:center;margin-top:2em}
+    @import '../modules/style/firstScreen';
   </style>
 
   <!-- 预加载欢迎页图片和app主背景图片 -->
@@ -57,11 +38,6 @@
 
   <div id="app"></div>
 
-  <!--
-    @require "modules/style/common.scss"
-    @require "images/all-devices.png"
-  -->
-  <script src="./libs/mod.js"></script>
   <script>
     const resources = __RESOURCE_MAP__
     // 延迟加载非关键的外部样式表，用了fis3的资源依赖表，代码稍稍被侵入
@@ -76,6 +52,7 @@
     let welcomeImg = document.querySelector('.l-slide[_v-tempKeep] img')
     welcomeImg.src = resources.res['images/all-devices.png'].uri
   </script>
+  <script src="./libs/mod.js"></script>
   <script src="./main.js"></script>
 </body>
 </html>
