@@ -291,6 +291,7 @@
       },
 
       catPlan(planId, status) {
+        this.isDeleting = false
         this.$router.push(`/planDetail/${planId}?status=${status}`)
       },
 

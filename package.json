@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "gen:sw": "node ./build/gen-service-worker.js dev",
+    "dev": "nodemon ./bin/www",
+    "gen:sw:dev": "node ./build/gen-service-worker.js dev",
+    "gen:sw:dist": "node ./build/gen-service-worker.js dist",
 
-    "prestart": "npm run gen:sw"
+    "start": "pm2 start bin/www --name keep -e logs/err.log -o logs/out.log",
+
+    "predev": "npm run gen:sw:dev",
+    "prestart": "npm run gen:sw:dist"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

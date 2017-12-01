@@ -18,6 +18,7 @@
     "babel-plugin-import": "^1.1.1",
     "fis-parser-babel-6.x": "^6.24.1",
     "fis-parser-node-sass": "^1.0.1",
+    "fis3-deploy-http-push": "^2.0.6",
     "fis3-deploy-local-deliver": "^1.0.0",
     "fis3-deploy-skip-packed": "0.0.5",
     "fis3-hook-commonjs": "^0.1.22",

@@ -6,14 +6,16 @@
 fis
 .set('project.name', 'Keep')
 .set('project.files', ['/modules/**', '/components/**', '/views/**', '/images/**', '/meta/**', '/mock/**', 'map.json'])
-.set('project.fileType.text', 'map, vue')
+.set('project.fileType.text', 'map, vue, hbs')
 
 /* 配置产出路径 */
 const config = {
   publicPrefix: '/public',
   viewPrefix: '/views',
   localDeployMock: 'D:/JavaScript/dist2',
-  localDeploy: 'D:/JavaScript/Keep_node'
+  localDeploy: 'D:/JavaScript/Keep_node',
+  remoteReceiver: 'http://45.78.23.100:8999/receiver',
+  remoteDeploy: '/var/www/dist'
 }
 
 // 支持commonJs
@@ -207,8 +209,14 @@ fis.media('rd-mock')
 })
 
 const medias = ['rd', 'prod']
+
 medias.forEach(media => {
   fis.media(media)
+  .match('/views/(**).html', {
+    rExt: '.hbs',
+    isHtmlLike: true,
+    release: '/$1'
+  })
   .match('/mock/**', {
     release: false
   })
@@ -243,4 +251,30 @@ fis.media('prod')
   optimizer: fis.plugin('clean-css', {
     'keepBreaks': true
   })
+})
+
+fis.media('prod-ol')
+.match('/views/(**).html', {
+  rExt: '.hbs',
+  isHtmlLike: true,
+  release: '/$1'
+})
+.match('/mock/**', {
+  release: false
+})
+.match('**', {
+  deploy: [
+    fis.plugin('http-push', {
+      receiver: config.remoteReceiver,
+      to: config.remoteDeploy + config.publicPrefix
+    })
+  ]
+})
+.match('/views/**.html', {
+  deploy: [
+    fis.plugin('http-push', {
+      receiver: config.remoteReceiver,
+      to: config.remoteDeploy + config.viewPrefix
+    })
+  ]
 })
