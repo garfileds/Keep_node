@@ -21,7 +21,7 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
   @import '../../modules/style/blocks/field';
-  @import '../../node_modules/element-ui/lib/theme-default/date-picker.css';
+  @import url(../../node_modules/element-ui/lib/theme-default/date-picker.css);
 
   .field__content {
     text-align: left;
@@ -39,7 +39,7 @@
     name: 'fieldDatePicker',
 
     data: function () {
-      let defaultDay = formatDate(new Date(), 'yy-mm-dd')
+      let defaultDay = formatDate(new Date())
 
       return {
         val: defaultDay,
@@ -56,24 +56,19 @@
 
     watch: {
       val(selectedDay) {
-        this.$emit('changeDate', formatDate(selectedDay, 'mm/dd/yy'))
+        this.$emit('changeDate', formatDate(selectedDay))
       }
     },
 
     computed: {
-      today() {
-        return this.val.length > 0 ? this.val : formatDate(new Date())
-      },
-
       formatSelectedDay() {
-        return formatDate(new Date(this.val), 'mm/dd/yy')
+        return formatDate(typeof this.val === 'string' ? new Date(this.val) : this.val)
       }
     },
 
     methods: {
       handlePickerVisible(status) {
         this.$emit('changeVisible', status)
-//        this.editorVisible = !statu
       }
     }
   }

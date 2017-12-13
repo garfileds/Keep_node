@@ -1,5 +1,5 @@
 /**
- * Created by chenpeng on 2017/5/31.
+ * Created by adoug on 2017/5/31.
  */
 
 import Vue from 'vue'
@@ -7,14 +7,14 @@ import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 
 import { isPureObject, isEmpty } from '../helper/utils'
-import { md5, cloneDeep, isEqual } from '../helper/esModule'
+import { md5, cloneDeep } from '../helper/esModule'
 import { runQueue } from '../helper/async'
 
 Vue.use(Vuex)
 Vue.use(VueResource)
 /** @namespace Vue.http */
 
-let updateQueue = [initQueueItem()]
+let updateQueue = []
 let plansBackup, commitId
 let syncTimer = 0
 
@@ -97,10 +97,6 @@ const store = new Vuex.Store({
       state.needInit = change
     },
 
-    changeQueueIsRunning(state, change) {
-      state.queueIsRunning = change
-    },
-
     changeLoading(state, payload) {
       state.loading.isLoading = payload.isLoading
       state.loading.tip = payload.tip || ''
@@ -114,19 +110,14 @@ const store = new Vuex.Store({
       state.transitionName = transitionName
     },
 
-    updateHistory(state, routeInfo) {
-      state.prev = routeInfo.to
-    },
-
     coverPlans(state, plans) {
       state.plans = plans || []
     },
 
     addPlan(state, payload) {
-      state.plans.push(payload.plan)
-      let result = backupPlans(state.plans)
-      plansBackup = result[0]
-      commitId = result[1]
+      state.plans.push(payload.plan);
+
+      [ plansBackup, commitId ] = backupPlans(state.plans)
     },
 
     updatePlan(state, payload) {
@@ -197,11 +188,9 @@ const store = new Vuex.Store({
         clearTimeout(syncTimer)
 
         let plans = response.body
-        commit('initPlans', plans)
+        commit('initPlans', plans);
 
-        let result = backupPlans(plans)
-        plansBackup = result[0]
-        commitId = result[1]
+        [plansBackup, commitId] = backupPlans(plans)
       })
     },
 
@@ -230,24 +219,29 @@ const store = new Vuex.Store({
 
 //统一处理同步逻辑（除了addPlans）
 function syncPlans() {
-  if (isEqual([initQueueItem()], updateQueue)) {
-    store.commit('changeQueueIsRunning', false)
+  if (!updateQueue.length) {
     syncTimer = setTimeout(syncPlans, synTime)
     return
   }
 
-  store.commit('changeQueueIsRunning', true)
+  let toUpdateQueue = updateQueue.slice(0, 1)
+  toUpdateQueue.forEach(item => {
+    item.isProcessing = true
 
-  let copyUpdateQueue = cloneDeep(updateQueue)
-  updateQueue = [initQueueItem()]
-  runQueue(copyUpdateQueue, processQueueItem, error => {
+    !item.planStr && ([ item.planStr, item.commitIdTemp ] = backupPlans(store.state.plans))
+  })
+
+  runQueue(toUpdateQueue, processQueueItem, error => {
+    let consoleType
     if (error) {
-      updateQueue.unshift(...copyUpdateQueue.slice(error.index))
+      consoleType = error.type === 'sync' ? 'error' : 'warn'
+      console[consoleType](`type: ${error.type}\nmessage: ${error.message}`)
+
+      if (error.type === 'sync') return
+    } else {
+      updateQueue.shift()
     }
 
-    store.commit('changeQueueIsRunning', false)
-
-    copyUpdateQueue = null
     syncTimer = setTimeout(syncPlans, synTime)
   })
 }
@@ -259,46 +253,38 @@ function syncPlans() {
  * @param next
  */
 function processQueueItem(item, index, next) {
-  if (isEqual(initQueueItem(), item)) {
-    return next()
+  const localInfo = {
+    update: item.update,
+    remove: item.remove
   }
 
   Vue.http.post(apiPostPlans, {
     commit_id: commitId,
     type: 'local',
-    update_info: item
+    update_info: localInfo
   })
   .then(response => {
-    let plansStr, commitIdTemp,
-        plansServer, plansMerge
+    let commitIdTemp,
+      plansServer, plansMerge
 
     if (response.body.code === 'ok') {
-      //如果服务器端和plansBackup一致
-      let result = backupPlans(store.state.plans)
-      plansStr = result[0]
-      commitIdTemp = result[1]
-
-      if (commitIdTemp !== response.body.commit_id) {
-        console.error('expected synchronization')
+      // 如果服务器端和plansBackup一致
+      if (item.commitIdTemp !== response.body.commit_id) {
         next({
+          type: 'sync',
           index: index,
-          message: 'synchronize fail'
+          message: 'expected synchronization during local update since accepting ok response'
         })
       } else {
-        plansBackup = plansStr
-        commitId = commitIdTemp
+        ({ planStr: plansBackup, commitIdTemp: commitId } = item)
 
         next()
       }
     } else if (response.body.code === 'not synchronized') {
-      //如果服务器端和plansBackup不一致
+      // 如果服务器端和plansBackup不一致
       plansServer = response.body.plans
       plansMerge = mergePlans(plansServer, store.state.plans)
       commitIdTemp = response.body.commit_id
-
-      for (const infoKey of plansMerge.keys()) {
-        plansMerge[infoKey].user_id = store.state.user.id
-      }
 
       return Vue.http.post(apiPostPlans, {
         type: 'global',
@@ -306,50 +292,52 @@ function processQueueItem(item, index, next) {
         update_info: plansMerge
       }).then(response => {
         if (response.status === 200) {
-          let result = backupPlans(plansMerge)
-          plansStr = result[0]
-          commitIdTemp = result[1]
+          let [ planStr, commitIdTemp ] = backupPlans(plansMerge)
 
           if (commitIdTemp !== response.body.commit_id) {
-            console.error('expected synchronization after merge')
             next({
+              type: 'sync',
               index: index,
-              message: 'synchronize fail'
+              message: 'expected synchronization after merge during global update'
             })
           } else {
-            plansBackup = plansStr
-            commitId = commitIdTemp
+            [ plansBackup, commitId ] = [planStr, commitIdTemp]
             store.commit('coverPlans', plansMerge)
 
+            // 清空updateQueue
+            updateQueue = []
             next()
           }
         }
       }, () => {
         next({
+          type: 'network',
           index: index,
-          message: 'synchronize fail'
+          message: 'bad network during global update'
         })
       })
     }
   }, () => {
-    //同步过程中出错，交给cb处理
     next({
+      type: 'network',
       index: index,
-      message: 'synchronize fail'
+      message: 'bad network during global update'
     })
   })
 }
 
 function initQueueItem() {
   return {
+    'isProcessing': false,
     'update': {},
     'remove': []
   }
 }
 
 /**
- * @fn 合并plans，以serverPlans为主，serverPlans一般是最新的
- * @fn 当localPlans中有serverPlans没有的key-value时，添加到serverPlans
+ * 合并plans
+ * 当localPlans中有serverPlans没有的key-value时，添加到serverPlans
+ * 当localPlans同serverPlans冲突时，以serverPlans为主
  * @param serverPlans（已按plan.id递增排序）
  * @param clientPlans（已按plan.id递增排序）
  */
@@ -433,7 +421,11 @@ function backupPlans(plans) {
  * @returns
  */
 function inQueue(operation, info) {
-  let queueItem = updateQueue[updateQueue.length - 1]
+  let queueItem,
+    needNewItem = !updateQueue.length || updateQueue[updateQueue.length - 1].isProcessing
+
+  needNewItem && updateQueue.push(initQueueItem())
+  queueItem = updateQueue[updateQueue.length - 1]
 
   if (operation === 'delete') {
     return queueItem.remove.push(info)
@@ -445,8 +437,6 @@ function inQueue(operation, info) {
   if (operation === 'update') {
     Object.assign(plan, info.updateInfo)
   } else if (operation === 'done') {
-    /** @namespace info.plandId */
-    delete info.plandId
     Object.assign(plan, {
       'progress.done': info.done,
       status: info.status

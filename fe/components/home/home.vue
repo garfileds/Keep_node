@@ -282,7 +282,7 @@
       onConfirmDel() {
         if (this.toDeleteId) {
           this.deletePlan({ planId: this.toDeleteId })
-          this.cancelDelHandler()
+          this.onCancelDel()
         }
       },
 

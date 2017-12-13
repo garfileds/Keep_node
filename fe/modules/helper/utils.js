@@ -22,7 +22,7 @@ let isDescendant = function (parent, child) {
  * @returns {string}
  */
 let formatDate = function (date, format) {
-  format = format || 'yy-mm-dd'
+  format = format || 'yy/mm/dd'
 
   return format.replace(/(yy)|(mm)|(dd)/g, function (match, yy, mm, dd) {
     if (yy) return date.getFullYear()

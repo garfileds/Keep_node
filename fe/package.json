@@ -4,8 +4,8 @@
   "description": "a web app generates review plan",
   "scripts": {
     "build": "fis3 release prod -u",
-    "build:dev": "fis3 release rd -u -wL",
-    "dev": "npm run build:dev"
+    "dev": "fis3 release rd -u -wL",
+    "deploy": "fis3 release prod-ol"
   },
   "keywords": [
     "webapp",

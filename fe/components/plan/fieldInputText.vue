@@ -44,7 +44,7 @@
         let computedWidth
 
         if (!!statu) {
-          this.styleObj.width = '78%'
+          this.styleObj.width = '76%'
         } else {
           computedWidth = this.val.length ? this.val.length + 2 + 'em' : '30%'
           this.styleObj.width = computedWidth

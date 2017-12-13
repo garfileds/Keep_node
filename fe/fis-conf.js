@@ -15,7 +15,7 @@ const config = {
   localDeployMock: 'D:/JavaScript/dist2',
   localDeploy: 'D:/JavaScript/Keep_node',
   remoteReceiver: 'http://45.78.23.100:8999/receiver',
-  remoteDeploy: '/var/www/dist'
+  remoteDeploy: '/var/www/adoug.info'
 }
 
 // 支持commonJs
@@ -236,20 +236,24 @@ medias.forEach(media => {
   })
 })
 
-fis.media('prod')
-.match('{{/components,/images,/modules,/pkgs}/**,/views/**.js}', {
-  useHash: true
-})
-.match('**.{js,vue:js}', {
-  optimizer: fis.plugin('uglify-js', {
-    sourceMap: {
-      url: 'inline'
-    }
+const mediaProd = ['prod', 'prod-ol']
+
+mediaProd.forEach(media => {
+  fis.media(media)
+  .match('{{/components,/images,/modules,/pkgs}/**,/views/**.js}', {
+    useHash: true
   })
-})
-.match('**.{scss,css,vue:scss}', {
-  optimizer: fis.plugin('clean-css', {
-    'keepBreaks': true
+  .match('**.{js,vue:js}', {
+    optimizer: fis.plugin('uglify-js', {
+      sourceMap: {
+        url: 'inline'
+      }
+    })
+  })
+  .match('**.{scss,css,vue:scss}', {
+    optimizer: fis.plugin('clean-css', {
+      'keepBreaks': true
+    })
   })
 })
 

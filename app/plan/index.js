@@ -34,6 +34,10 @@ module.exports.updatePlans = function updatePlans(req, res, next) {
   let user = req.user
 
   if (type === 'global') {
+    for (const infoKey of updateInfo.keys()) {
+      updateInfo[infoKey].user_id = user._id
+    }
+
     Plan
     .remove({user_id: user._id})
     .exec()
@@ -200,6 +204,7 @@ function backupPlans(plans) {
   let plansObject = plans.map(planModel => {
     let plan = planModel.toObject()
     plan.__v !== undefined && delete plan.__v
+    plan.user_id && delete plan.user_id
 
     return plan
   })

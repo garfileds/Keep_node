@@ -233,8 +233,8 @@
       },
 
       handleDelete() {
-        this.deletePlan({ planId: this.plan.id })
         this.$router.push('/home')
+        this.deletePlan({ planId: this.plan.id })
       },
 
       handleAdd() {
