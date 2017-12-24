@@ -5,7 +5,14 @@
   "scripts": {
     "build": "fis3 release prod -u",
     "dev": "fis3 release rd -u -wL",
-    "deploy": "fis3 release prod-ol"
+    "deploy": "fis3 release prod-ol",
+
+    "predev": "gulp images",
+    "predeploy": "npm run build",
+    "postdeploy": "npm run gen:sw:dist && npm run upload:sw",
+
+    "gen:sw:dist": "node ../build/gen-service-worker.js dist",
+    "upload:sw": "node ../build/upload-service-worker.js"
   },
   "keywords": [
     "webapp",
@@ -23,6 +30,7 @@
     "fis3-deploy-skip-packed": "0.0.5",
     "fis3-hook-commonjs": "^0.1.22",
     "fis3-hook-node_modules": "^2.2.3",
+    "fis3-optimizer-minifier": "^1.1.7",
     "fis3-packager-deps-pack": "^0.1.2",
     "fis3-parser-vue-component": "^5.2.0",
     "fis3-postpackager-loader": "^1.5.2",
@@ -34,6 +42,7 @@
     "gulp-rename": "^1.2.2",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-webp": "^4.0.0",
     "loaders.css": "^0.1.2",
     "node-sass": "^4.5.3",
     "normalize.css": "^7.0.0",

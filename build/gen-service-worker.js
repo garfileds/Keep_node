@@ -7,8 +7,8 @@ let packageJson = require('../package.json')
 let path = require('path')
 let swPrecache = require('sw-precache')
 
-let DEV_DIR = 'public'
-let DIST_DIR = 'public'
+let DEV_DIR = path.resolve(__dirname, '../public')
+let DIST_DIR = path.resolve(__dirname, '../public')
 
 const selectedType = process.argv[1]
 

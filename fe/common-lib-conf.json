@@ -1,10 +1,12 @@
 [
+  "blueimp-md5",
   "es6-promise",
-  "vue",
-  "vuex",
-  "vue-router",
-  "vue-resource",
   "lodash.isequal",
   "lodash.clonedeep",
-  "blueimp-md5"
+  "vuex",
+
+  "vue",
+
+  "vue-router",
+  "vue-resource"
 ]

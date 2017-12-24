@@ -81,7 +81,7 @@ fis.match('({/modules,/components}/**).{js,vue}', {
   })]
 })
 .match('/views/(*.js)', {
-  isMod: false,
+  isMod: true,
   parser: [fis.plugin('babel-6.x')],
   release: '/viewJs/$1'
 })
@@ -104,11 +104,11 @@ fis.match('{/modules/style/**.scss,/components/**.vue:scss,/views/*.html:css}', 
 })
 
 /* 配置图片 */
-fis.match('/images/**', {
+fis.match('/images/**.{jpg,png,svg,webp}', {
   release: '$0'
 })
 // 首屏加载需要异步该图片
-.match('/images/all-devices.png', {
+.match('/images/bg_medium@1x.jpg', {
   useMap: true
 })
 
@@ -116,7 +116,8 @@ fis.match('/images/**', {
 fis.match('::package', {
   postpackager: fis.plugin('loader', {
     resourceType: 'mod',
-    useInlineMap: true
+    useInlineMap: true,
+    obtainScript: false
   })
 })
 
@@ -125,9 +126,22 @@ fis.match('::package', {
 
   packager: fis.plugin('deps-pack', {
     // node_modules 库, 只打包部分文件, 有的文件不是全局依赖还是按需加载
-    '/pkgs/dependencies.js': [
-      '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js',
+    // 为什么分3份？
+    // Reason1: 单独一份524 KB，拆分一下并行加快下载速度（带宽非独占...sad...）
+    // Reason2: 占满并行下载，可以利用prefetch又不担心其抢占带宽
+    /*'/pkgs/dependenciesPre.js': [
+      '/node_modules/vue-router/!**.js',
+      '/node_modules/vue-resource/!**.js',
       '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js:deps'
+    ],
+    '/pkgs/dependencies.js': [
+      '/node_modules/vue/!**.js',
+      '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/!**.js',
+    ],*/
+
+    '/pkgs/dependencies.js': [
+      '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js:deps',
+      '/node_modules/{' + require('./common-lib-conf.json').join(',') + '}/**.js',
     ],
 
     '/pkgs/libs/elementDatepickerPack.js': [
@@ -243,6 +257,9 @@ mediaProd.forEach(media => {
   .match('{{/components,/images,/modules,/pkgs}/**,/views/**.js}', {
     useHash: true
   })
+  .match('/images/**.webp', {
+    useHash: false
+  })
   .match('**.{js,vue:js}', {
     optimizer: fis.plugin('uglify-js', {
       sourceMap: {
@@ -253,6 +270,11 @@ mediaProd.forEach(media => {
   .match('**.{scss,css,vue:scss}', {
     optimizer: fis.plugin('clean-css', {
       'keepBreaks': true
+    })
+  })
+  .match('/views/**.html', {
+    optimizer : fis.plugin('minifier', {
+      removeComments: false
     })
   })
 })
