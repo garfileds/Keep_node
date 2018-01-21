@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('App', { title: 'Express' });
-});
+  res.sendFile('index.html', {
+    root: __dirname + '../public/'
+  })
+})
 
-module.exports = router;
+module.exports = router

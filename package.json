@@ -6,11 +6,7 @@
     "dev": "nodemon ./bin/www",
     "gen:sw:dev": "node ./build/gen-service-worker.js dev",
     "gen:sw:dist": "node ./build/gen-service-worker.js dist",
-
-    "start": "pm2 start bin/www --name keep -e logs/err.log -o logs/out.log",
-
-    "predev": "npm run gen:sw:dev",
-    "prestart": "npm run gen:sw:dist"
+    "start": "pm2 start bin/www --name keep -e logs/err.log -o logs/out.log"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -39,6 +35,7 @@
     "gulp-load-plugins": "^1.5.0",
     "nodemon": "^1.11.0",
     "sw-precache": "^5.2.0",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
+    "webpack": "^3.10.0"
   }
 }

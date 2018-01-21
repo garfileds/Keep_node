@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>努力！奋斗！</title>
+
+  <link rel="manifest" href="/meta/manifest.json">
+  <!-- Add to home screen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#2196f3">
+  <meta name="apple-mobile-web-app-title" content="Up!Up!">
+  <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+</head>
+<body>
+  <div id="appTemp">
+    <main class="l-wrap l-absolute">
+      <section class="l-slide" _v-tempKeep>
+        <div class="stage">
+          <img class="response-img stage__item" src="../images/all-devices_medium@1x.png"
+               alt="多端适用"
+               srcset="${require('../images/all-devices_medium@1x.png')} 720w, ${require('../images/all-devices_medium@2x.png')} 1440w, ${require('../images/all-devices_xlarge@2x.png')} 2048w"
+               sizes="100vw">
+        </div>
+        <p class="description--temp">随时随地使用...</p>
+        <div class="bar"></div>
+      </section>
+      <section class="c-button-group">
+        <a href="" class="c-button l-button--full">创建账户</a>
+        <a href="" class="c-button l-button--full button--login" _v-tempKeep style="margin-top: 1em; background: #eaeceb; color: #000;">登录</a>
+      </section>
+    </main>
+  </div>
+
+  <div id="app"></div>
+
+  <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
+</body>
+</html>
