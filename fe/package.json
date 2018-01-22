@@ -2,13 +2,18 @@
   "name": "keep",
   "version": "1.0.0",
   "description": "a web app generates review plan",
+  "config": {
+    "qa": ""
+  },
   "scripts": {
     "build": "fis3 release prod -u",
     "dev": "fis3 release rd -u -wL",
+    "dev-qa": "fis3 release rd-qa -u -wL",
+    "build-qa": "fis3 release prod-qa -u",
     "deploy": "fis3 release prod-ol",
 
     "predev": "gulp images",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build-qa",
     "postdeploy": "npm run gen:sw:dist && npm run upload:sw",
 
     "gen:sw:dist": "node ../build/gen-service-worker.js dist",

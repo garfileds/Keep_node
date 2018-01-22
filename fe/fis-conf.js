@@ -2,18 +2,21 @@
  * Created by adoug on 2017/11/20.
  */
 
+const path = require('path')
+
 /* 配置环境变量 */
 fis
 .set('project.name', 'Keep')
 .set('project.files', ['/modules/**', '/components/**', '/views/**', '/images/**', '/meta/**', '/mock/**', 'map.json'])
 .set('project.fileType.text', 'map, vue, hbs')
+.set('project.ignore', ['/dist/**'])
 
 /* 配置产出路径 */
 const config = {
   publicPrefix: '/public',
   viewPrefix: '/views',
-  localDeployMock: 'D:/JavaScript/dist2',
-  localDeploy: 'D:/JavaScript/Keep_node',
+  localRelease: path.resolve(__dirname, './dist'),
+  localDeploy: path.resolve(__dirname, '../'),
   remoteReceiver: 'http://45.78.23.100:8999/receiver',
   remoteDeploy: '/var/www/adoug.info'
 }
@@ -208,21 +211,22 @@ fis.match('::package', {
 })
 
 /**
- * rd-mock环境：api由mock提供，http://fis.baidu.com/fis3/docs/node-mock.html
- * rd环境：api非mock，直接部署到后端项目
- * prod环境：在rd的基础上压缩
+ * rd环境：api由mock提供，http://fis.baidu.com/fis3/docs/node-mock.html
+ * prod环境：在rd环境基础上压缩优化
+ * *-qa环境：构建后的文件部署到本地后端项目中
+ * prod-ol环境：将prod环境构建的文件部署到远程服务器
  **/
 
-fis.media('rd-mock')
+fis.media('rd')
 .match('**', {
   deploy: [
     fis.plugin('local-deliver', {
-      to: config.localDeployMock
+      to: config.localRelease
     })
   ]
 })
 
-const medias = ['rd', 'prod']
+const medias = ['rd-qa', 'prod-qa']
 
 medias.forEach(media => {
   fis.media(media)
@@ -250,7 +254,7 @@ medias.forEach(media => {
   })
 })
 
-const mediaProd = ['prod', 'prod-ol']
+const mediaProd = ['prod', 'prod-qa', 'prod-ol']
 
 mediaProd.forEach(media => {
   fis.media(media)
@@ -277,6 +281,15 @@ mediaProd.forEach(media => {
       removeComments: false
     })
   })
+})
+
+fis.media('prod')
+.match('**', {
+  deploy: [
+    fis.plugin('local-deliver', {
+      to: config.localRelease
+    })
+  ]
 })
 
 fis.media('prod-ol')

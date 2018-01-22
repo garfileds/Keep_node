@@ -7,8 +7,10 @@ let packageJson = require('../package.json')
 let path = require('path')
 let swPrecache = require('sw-precache')
 
-let DEV_DIR = path.resolve(__dirname, '../public')
-let DIST_DIR = path.resolve(__dirname, '../public')
+let DEV_DIR = pathParse(path.resolve(__dirname, '../public'))
+let DIST_DIR = pathParse(path.resolve(__dirname, '../public'))
+
+console.log(DEV_DIR)
 
 const selectedType = process.argv[1]
 
@@ -45,10 +47,7 @@ function writeServiceWorkerFile(rootDir, handleFetch, callback) {
       }
     }],
     staticFileGlobs: [
-      rootDir + '/pkgs/**.*',
-      rootDir + '/images/**.*',
-      rootDir + '/modules/style/**.*',
-      rootDir + '/node_modules/**.*'
+      rootDir + '/**/*.{css,js,html,png,jpg,webp,svg}'
     ],
     stripPrefix: rootDir + '/',
     // verbose defaults to false, but for the purposes of this demo, log more.
@@ -56,4 +55,12 @@ function writeServiceWorkerFile(rootDir, handleFetch, callback) {
   }
 
   swPrecache.write(path.join(rootDir, 'service-worker.js'), config, callback)
+}
+
+function pathParse(pth) {
+  if (pth) {
+    pth = path.normalize(pth.replace(/[\/\\]+/g, '/')).replace(/\\/g, '/')
+  }
+
+  return pth
 }
