@@ -56,12 +56,9 @@ app.use(jwtCheck.unless({
     { url: '/api/user/token', methods: ['POST'] },
     '/api/user',
     '/api/user/emailStatus',
-    /\/pkgs\/.+/,
     '/',
-    /\/modules\/.*/,
-    /\/viewJs\/.*/,
-    /\/node_modules\/.*/,
-    /\/service-worker\.js/
+    /\/\.(js|css)$/,
+    /\/images\//
   ]
 }))
 app.use(tokenUtils.middleware().unless({
@@ -69,12 +66,9 @@ app.use(tokenUtils.middleware().unless({
     { url: '/api/user/token', methods: ['POST'] },
     '/api/user',
     '/api/user/emailStatus',
-    /\/pkgs\/.+/,
     '/',
-    /\/modules\/.*/,
-    /\/viewJs\/.*/,
-    /\/node_modules\/.*/,
-    /\/service-worker\.js/
+    /\/\.(js|css)$/,
+    /\/images\//
   ]
 }))
 

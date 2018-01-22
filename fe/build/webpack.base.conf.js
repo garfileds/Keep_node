@@ -52,7 +52,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('images/[name].[ext]')
+          name: utils.assetsPath('images/[name]_[hash:7].[ext]')
         }
       },
       {
@@ -60,7 +60,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          name: utils.assetsPath('fonts/[name]_[hash:7].[ext]')
         }
       }
     ]

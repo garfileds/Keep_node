@@ -6,13 +6,13 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 // const WebpackMd5Hash = require('webpack-md5-hash')
-const MD5HashPlugin = require('md5-hash-webpack-plugin')
+// const MD5HashPlugin = require('md5-hash-webpack-plugin')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 // const AfterChunkHashPlugin = require('webpack-after-chunk-hash-plugin')
-const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin')
+// const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin')
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
@@ -20,7 +20,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const loadMinified = require('./load-minified')
 const env = config.build.env
 
-/*const criticalCss = new ExtractTextPlugin('css/critical.[contenthash:7].css')
+/*const criticalCss = new ExtractTextPlugin('css/critical_[contenthash:7].css')
 const criticalCssRule = {
   test: /firstScreen\.scss$/,
   loader: criticalCss.extract(`sass-loader${config.build.productionSourceMap ? '?sourceMap' : ''}`, 'css-loader', 'style-loader')
@@ -40,8 +40,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash:7].js'),
-    chunkFilename: utils.assetsPath('js/components/[name].[chunkhash:7].js')
+    filename: utils.assetsPath('js/[name]_[chunkhash:7].js'),
+    chunkFilename: utils.assetsPath('js/components/[name]_[chunkhash:7].js')
   },
   plugins: [
     // fix issue https://github.com/webpack/webpack/issues/959
@@ -60,7 +60,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // extract css into its own file
     // criticalCss,
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash:7].css'),
+      filename: utils.assetsPath('css/[name]_[contenthash:7].css'),
       allChunks: true
     }),
     // Compress extracted CSS. We are using this plugin so that possible
@@ -112,7 +112,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // split base js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'base',
-      minChunks: function (module, count) {
+      minChunks: function (module) {
         // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
@@ -161,10 +161,10 @@ const webpackConfig = merge(baseWebpackConfig, {
 
 /*webpackConfig.output.chunkFilename = function (chunk) {
   if (chunck.name.indexOf('async') > -1) {
-    return utils.assetsPath('js/async/[name].[chunkhash:7].js')
+    return utils.assetsPath('js/async/[name]_[chunkhash:7].js')
   }
 
-  return utils.assetsPath('js/components/[name].[chunkhash:7].js')
+  return utils.assetsPath('js/components/[name]_[chunkhash:7].js')
 }*/
 
 if (config.build.productionGzip) {
