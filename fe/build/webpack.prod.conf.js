@@ -28,6 +28,7 @@ const criticalCssRule = {
 
 const webpackConfig = merge(baseWebpackConfig, {
   entry: {
+    // fieldDatePicker: './src/components/plan/fieldDatePicker.vue',
     asyncAssets: './src/asyncAssets'
   },
   module: {
@@ -95,13 +96,15 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackExcludeAssetsPlugin(),
     // new StyleExtHtmlWebpackPlugin(),
     // keep module.id stable when vendor modules does not change
-    // new webpack.HashedModuleIdsPlugin(),
+    new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
-    // new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     // fix issue https://github.com/webpack/webpack/issues/959
+
     // split base js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'base',
+      chunks: ['app'],
       minChunks: function (module) {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -117,7 +120,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
-      chunks: ['base']
+      minChunks: Infinity
     }),
     // extract common of async chunks
     new webpack.optimize.CommonsChunkPlugin({
@@ -126,6 +129,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       async: 'base-async',
       minChunks: 2
     }),
+    // extract filedDatePicker
+    /*new webpack.optimize.CommonsChunkPlugin({
+      name: 'fieldDatePicker',
+      chunks: ['fieldDatePicker', 'planAdd']
+    }),*/
     // new AfterChunkHashPlugin(),
     // copy custom static assets
     new CopyWebpackPlugin([
