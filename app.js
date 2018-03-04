@@ -16,7 +16,10 @@ const config = require('./config.json'),
 debug('Loading Mongoose functionality')
 const mongoose = require('mongoose')
 mongoose.set('debug', true)
-mongoose.connect(mongoose_uri)
+mongoose.connect(mongoose_uri, {
+  user: config.dbUser,
+  pass: config.dbPass
+})
 mongoose.connection.on('error', function () {
   debug('Mongoose connection error')
 })
