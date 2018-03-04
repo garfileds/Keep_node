@@ -28,8 +28,7 @@ const criticalCssRule = {
 
 const webpackConfig = merge(baseWebpackConfig, {
   entry: {
-    asyncAssets: './src/asyncAssets',
-    criticalCss: './src/modules/style/firstScreen.scss'
+    asyncAssets: './src/asyncAssets'
   },
   module: {
     rules: utils.styleLoaders({
@@ -60,8 +59,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // extract css into its own file
     // criticalCss,
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name]_[contenthash:7].css'),
-      allChunks: true
+      filename: utils.assetsPath('css/[name]_[contenthash:7].css')
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -82,21 +80,13 @@ const webpackConfig = merge(baseWebpackConfig, {
         collapseWhitespace: true,
         removeAttributeQuotes: true
       },
-      excludeAssets: [/criticalCss.*js/],
-      inlineSource: '((asyncAssets|manifest).*js$)|(criticalCss.*css)',
+      inlineSource: '((asyncAssets|manifest).*js$)|(app.*css)',
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       // chunksSortMode: 'dependency',
       chunksSortMode: function (chunk1, chunk2) {
         var orders = ['manifest', 'asyncAssets', 'base', 'app']
-        var order1 = orders.indexOf(chunk1.names[0])
-        var order2 = orders.indexOf(chunk2.names[0])
-        if (order1 > order2) {
-          return 1
-        } else if (order1 < order2) {
-          return -1
-        } else {
-          return 0
-        }
+
+        return orders.indexOf(chunk1.names[0]) - orders.indexOf(chunk2.names[0])
       },
       serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
         './service-worker-prod.js'))}</script>`
@@ -150,11 +140,33 @@ const webpackConfig = merge(baseWebpackConfig, {
     ]),
     // service worker caching
     new SWPrecacheWebpackPlugin({
-      cacheId: 'pwa',
+      cacheId: 'keep',
       filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
+      staticFileGlobs: ['dist/**/*.{js,html,css,svg,webp}'],
       minify: true,
-      stripPrefix: 'dist/'
+      stripPrefix: 'dist/',
+
+      // runtime cache
+      handleFetch: true,
+      runtimeCaching: [{
+        urlPattern: /\/api\/plans/,
+        handler: 'fastest',
+        options: {
+          cache: {
+            maxEntries: 2,
+            name: 'plans-cache'
+          }
+        }
+      }, {
+        urlPattern: /\/api\/pokemen/,
+        handler: 'fastest',
+        options: {
+          cache: {
+            maxEntries: 2,
+            name: 'pokemen-cache'
+          }
+        }
+      }],
     })
   ]
 })

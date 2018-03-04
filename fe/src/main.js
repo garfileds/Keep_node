@@ -3,7 +3,7 @@
  */
 
 // 所需css
-// import '@/modules/style/firstScreen.scss'
+import '@/modules/style/firstScreen.scss'
 import '@/modules/style/common.scss'
 
 import Vue from 'vue'
