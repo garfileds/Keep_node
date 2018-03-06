@@ -1,7 +1,6 @@
 const debug = require('debug')('app:' + process.pid),
       path = require('path'),
       bodyParser = require('body-parser'),
-      favicon = require('serve-favicon'),
       logger = require('morgan')
 
 const jwt = require('express-jwt'),
@@ -35,7 +34,6 @@ debug('Setup view engine')
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
 
-app.use(favicon(path.join(__dirname, 'public/meta', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

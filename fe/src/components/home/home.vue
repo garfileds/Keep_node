@@ -209,7 +209,7 @@
 </style>
 
 <script>
-  import kHeader from './kHeader'
+  import kHeader from './homeHeader'
   import planThumbnail from './planThumbnail'
   import draggable from 'vuedraggable'
 

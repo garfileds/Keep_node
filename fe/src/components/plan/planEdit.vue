@@ -59,7 +59,7 @@
   import kBg from './kBg'
   import fieldInputText from './fieldInputText'
   import fieldColor from './fieldColor'
-  import schedule from './schedule'
+  import schedule from './kSchedule'
 
   import { mapMutations } from 'vuex'
   import { form2 } from '@/modules/helper/utils'

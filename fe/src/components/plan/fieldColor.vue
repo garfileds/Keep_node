@@ -59,7 +59,7 @@
 <script>
   import { colorGenerator } from '@/modules/helper/utils'
 
-  import colorPanelItem from './colorPanelItem'
+  import colorPanelItem from './itemColorPanel'
 
   export default {
     name: 'fieldColor',

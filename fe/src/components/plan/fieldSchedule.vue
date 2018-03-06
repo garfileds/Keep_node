@@ -56,7 +56,7 @@
 <script>
   import Vue from 'vue'
   import SmoothPicker from 'vue-smooth-picker'
-  import schedule from './schedule'
+  import schedule from './kSchedule'
 
   Vue.use(SmoothPicker)
 

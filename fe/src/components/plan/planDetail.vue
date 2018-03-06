@@ -161,7 +161,7 @@
 
 <script>
   import kBg from './kBg'
-  import schedule from './schedule'
+  import schedule from './kSchedule'
 
   import { mapMutations } from 'vuex'
   import { formatDate, withinParent } from '@/modules/helper/utils'

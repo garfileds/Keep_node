@@ -1,6 +1,6 @@
-<template>
+<template functional>
   <div class="color-panel__item"
-   :style="{ backgroundColor: color}"></div>
+   :style="{ backgroundColor: props.color}"></div>
 </template>
 
 <style>
@@ -14,6 +14,8 @@
   export default {
     name: 'colorPanelItem',
 
-    props: ['color']
+    props: {
+      color: String
+    }
   }
 </script>
