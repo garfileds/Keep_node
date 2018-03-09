@@ -3,7 +3,7 @@
     <kBg></kBg>
     <nav class="l-icon" v-show="!editAreaVisible">
       <p class="c-icon c-icon--menu c-icon--large"
-       @click="navHome">Up!Up!</p>
+       @click.prevent="navHome">Up!Up!</p>
     </nav>
     <article v-show="!editAreaVisible">
       <section class="title l-title">
@@ -77,8 +77,8 @@
   @import '~style/blocks/icon';
 
   .l-schedule {
-    position: fixed;
-    bottom: 8rem
+    position: fixed !important;
+    bottom: 8rem;
   }
 
   .l-icon {
