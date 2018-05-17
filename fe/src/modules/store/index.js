@@ -18,6 +18,8 @@ let updateQueue = []
 let plansBackup, commitId
 let syncTimer = 0
 
+let waiting = false
+
 const apiGetPokemen = '/api/pokemen'
 
 const apiGetPlans = '/api/plans'
@@ -219,12 +221,9 @@ const store = new Vuex.Store({
 
 //统一处理同步逻辑（除了addPlans）
 function syncPlans() {
-  if (!updateQueue.length) {
-    syncTimer = setTimeout(syncPlans, synTime)
-    return
-  }
+  let toUpdateQueue = updateQueue.slice()
+  updateQueue.length = 0
 
-  let toUpdateQueue = updateQueue.slice(0, 1)
   toUpdateQueue.forEach(item => {
     item.isProcessing = true
 
@@ -237,12 +236,8 @@ function syncPlans() {
       consoleType = error.type === 'sync' ? 'error' : 'warn'
       console[consoleType](`type: ${error.type}\nmessage: ${error.message}`)
 
-      if (error.type === 'sync') return
-    } else {
-      updateQueue.shift()
+      updateQueue = toUpdateQueue.slice(error.index).concat(updateQueue)
     }
-
-    syncTimer = setTimeout(syncPlans, synTime)
   })
 }
 
@@ -270,7 +265,7 @@ function processQueueItem(item, index, next) {
     if (response.body.code === 'ok') {
       // 如果服务器端和plansBackup一致
       if (item.commitIdTemp !== response.body.commit_id) {
-        next({
+        console.error({
           type: 'sync',
           index: index,
           message: 'expected synchronization during local update since accepting ok response'
@@ -328,7 +323,6 @@ function processQueueItem(item, index, next) {
 
 function initQueueItem() {
   return {
-    'isProcessing': false,
     'update': {},
     'remove': []
   }
@@ -422,7 +416,7 @@ function backupPlans(plans) {
  */
 function inQueue(operation, info) {
   let queueItem,
-    needNewItem = !updateQueue.length || updateQueue[updateQueue.length - 1].isProcessing
+    needNewItem = !updateQueue.length
 
   needNewItem && updateQueue.push(initQueueItem())
   queueItem = updateQueue[updateQueue.length - 1]
@@ -441,6 +435,11 @@ function inQueue(operation, info) {
       'progress.done': info.done,
       status: info.status
     })
+  }
+
+  if (!waiting) {
+    waiting = true
+    setTimeout(syncPlans, syncTime)
   }
 }
 
